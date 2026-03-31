@@ -988,8 +988,7 @@ function renderServiceList() {
     return `<div class="service-item" id="svc-${s.id}" onclick="selectService('${s.id}')">
       <span class="sname">${s.name}</span>
       <span class="sprice">${price}</span><br>
-      <span class="sweight">Max: ${s```html
-.max_weight || '70 lbs'}</span>
+      <span class="sweight">Max: ${s.max_weight || '70 lbs'}</span>
       ${time ? `<div class="stime">⏱ ${time}</div>` : ''}
     </div>`;
   }).join('');
@@ -1829,3 +1828,4 @@ document.addEventListener('DOMContentLoaded', () => {
 </script>
 </body>
 </html>
+

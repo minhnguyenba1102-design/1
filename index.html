@@ -996,17 +996,6 @@ function extractOrderData(json) {
   const d = json.data || json.result || json.order || json || {};
 
   // Tracking ID — thử nhiều tên field
-  const tracking
-<!-- tiếp theo từ extractOrderData -->
-<script>
-// ============================================================
-// ✅ FIX: EXTRACT TRACKING ID & PDF từ nhiều cấu trúc response
-// ============================================================
-function extractOrderData(json) {
-  // Thử các cấu trúc response phổ biến
-  const d = json.data || json.result || json.order || json || {};
-
-  // Tracking ID — thử nhiều tên field
   const tracking_id =
     d.tracking_id   ||
     d.trackingId    ||

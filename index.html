@@ -167,7 +167,7 @@
     .service-item .sname  { font-weight: 600; font-size: 0.92rem; }
     .service-item .sprice { color: #2e7d32; font-weight: 700; font-size: 0.9rem; float: right; }
     .service-item .sweight { color: #888; font-size: 0.8rem; }
-    .service-item .stime  { color: #1a73e8; font-size: 0.78rem; margin-top:2px; }
+    .service-item .stime  { color: #1a73e8; font-size: 0.78rem; margin-top: 2px; }
 
     .key-badge {
       font-family: monospace; background: #f3e5f5; color: #6a1b9a;
@@ -179,6 +179,11 @@
       border-radius: 6px; font-size: 0.88rem; text-align: center; outline: none; transition: border .2s;
     }
     .price-input:focus { border-color: #1a73e8; background: #e8f0fe; }
+
+    .weight-label {
+      font-weight: 600; font-size: 0.85rem; color: #555;
+      background: #f5f7fa; padding: 5px 10px; border-radius: 6px; white-space: nowrap;
+    }
 
     .price-estimate-box {
       display: none; margin-top: 14px; padding: 12px 16px;
@@ -274,7 +279,7 @@
       <button class="tab-btn"        id="tab-settings" onclick="openTab('settings-tab')" style="display:none">⚙️ Cài đặt</button>
     </div>
 
-    <!-- ===== CREATE TAB ===== -->
+    <!-- CREATE TAB -->
     <div class="tab-content active" id="create-tab">
       <div id="create-msg"></div>
       <div class="balance-card">
@@ -344,7 +349,7 @@
       </button>
     </div>
 
-    <!-- ===== ORDERS TAB ===== -->
+    <!-- ORDERS TAB -->
     <div class="tab-content" id="orders-tab">
       <div class="card">
         <h2>📦 Lịch sử đơn hàng</h2>
@@ -369,7 +374,7 @@
       </div>
     </div>
 
-    <!-- ===== SERVICES TAB ===== -->
+    <!-- SERVICES TAB -->
     <div class="tab-content" id="services-tab">
       <div class="card">
         <h2>🚀 Danh sách dịch vụ & Bảng giá</h2>
@@ -379,7 +384,7 @@
       </div>
     </div>
 
-    <!-- ===== ADMIN TAB ===== -->
+    <!-- ADMIN TAB -->
     <div class="tab-content" id="admin-tab">
       <div class="card">
         <h2>👥 Quản lý người dùng</h2>
@@ -401,7 +406,7 @@
       </div>
     </div>
 
-    <!-- ===== API KEYS TAB ===== -->
+    <!-- API KEYS TAB -->
     <div class="tab-content" id="apikeys-tab">
       <div class="card">
         <h2>🔑 Quản lý API Keys</h2>
@@ -423,7 +428,7 @@
       </div>
     </div>
 
-    <!-- ===== PRICING TAB ===== -->
+    <!-- PRICING TAB -->
     <div class="tab-content" id="pricing-tab">
       <div class="card">
         <h2>💲 Quản lý bảng giá</h2>
@@ -473,7 +478,7 @@
       </div>
     </div>
 
-    <!-- ===== SETTINGS TAB ===== -->
+    <!-- SETTINGS TAB -->
     <div class="tab-content" id="settings-tab">
       <div class="card">
         <h2>⚙️ Cài đặt hệ thống</h2>
@@ -496,11 +501,10 @@
         <div id="settings-msg" style="margin-top:12px"></div>
       </div>
     </div>
-
   </div>
 </div>
 
-<!-- ===== MODALS ===== -->
+<!-- MODALS -->
 <div class="modal-overlay" id="order-modal">
   <div class="modal">
     <h3>📋 Chi tiết đơn hàng</h3>
@@ -650,14 +654,12 @@ function getDB() {
 function saveDB(db) { localStorage.setItem(DB_KEY, JSON.stringify(db)); }
 function initDB() {
   const existing = localStorage.getItem(DB_KEY);
-  if (existing) {
-    try { return JSON.parse(existing); } catch(e) {}
-  }
+  if (existing) { try { return JSON.parse(existing); } catch(e) {} }
   const db = {
     settings: { master_api: DEFAULT_MASTER_API, invite_code: 'SHIP', open_register: false },
     users: [{
       username:'admin', password:btoa('admin'), name:'Administrator',
-      email:'admin@shiplabel.net', role:'admin', balance:100,
+      email:'admin@shiplabel.net', role:'admin', balance:0,
       apiKeyId:null, orders:[], topup_history:[]
     }],
     api_keys: [],
@@ -674,9 +676,8 @@ function getMasterKey() {
   const db = getDB();
   return (db.settings && db.settings.master_api) ? db.settings.master_api : DEFAULT_MASTER_API;
 }
-
 function getApiKeyForUser(username) {
-  const db   = getDB();
+  const db = getDB();
   const user = db.users.find(u => u.username === username);
   if (!user) return getMasterKey();
   if (user.apiKeyId) {
@@ -687,9 +688,8 @@ function getApiKeyForUser(username) {
   if (assigned) return assigned.key;
   return getMasterKey();
 }
-
 function getApiKeyLabelForUser(username) {
-  const db   = getDB();
+  const db = getDB();
   const user = db.users.find(u => u.username === username);
   if (!user) return 'Master Key';
   if (user.apiKeyId) {
@@ -700,39 +700,28 @@ function getApiKeyLabelForUser(username) {
   if (assigned) return assigned.label;
   return 'Master Key';
 }
-
 function maskKey(key) {
   if (!key || key.length < 10) return key || '—';
-  return key.substring(0, 6) + '••••••••' + key.slice(-4);
+  return key.substring(0,6) + '••••••••' + key.slice(-4);
 }
-
 function openModal(id)  { document.getElementById(id).classList.add('open'); }
 function closeModal(id) { document.getElementById(id).classList.remove('open'); }
-
 function showMsg(id, text, type) {
   const el = document.getElementById(id);
   if (!el) return;
-  el.innerHTML = text;
-  el.className = 'msg ' + type;
+  el.innerHTML = text; el.className = 'msg ' + type;
 }
 function clearMsg(id) {
   const el = document.getElementById(id);
   if (!el) return;
-  el.innerHTML = '';
-  el.className = 'msg';
+  el.innerHTML = ''; el.className = 'msg';
 }
-
 function showToast(msg, duration = 2800) {
   let toast = document.getElementById('toast-global');
   if (!toast) {
     toast = document.createElement('div');
     toast.id = 'toast-global';
-    toast.style.cssText = [
-      'position:fixed', 'bottom:28px', 'right:28px', 'z-index:99999',
-      'background:#323232', 'color:#fff', 'padding:12px 22px',
-      'border-radius:8px', 'font-size:0.92rem', 'box-shadow:0 4px 18px rgba(0,0,0,0.22)',
-      'opacity:0', 'transition:opacity 0.3s', 'pointer-events:none'
-    ].join(';');
+    toast.style.cssText = 'position:fixed;bottom:28px;right:28px;z-index:99999;background:#323232;color:#fff;padding:12px 22px;border-radius:8px;font-size:0.92rem;box-shadow:0 4px 18px rgba(0,0,0,0.22);opacity:0;transition:opacity 0.3s;pointer-events:none';
     document.body.appendChild(toast);
   }
   toast.textContent = msg;
@@ -740,19 +729,15 @@ function showToast(msg, duration = 2800) {
   clearTimeout(toast._t);
   toast._t = setTimeout(() => { toast.style.opacity = '0'; }, duration);
 }
-
 function copyToClipboard(text) {
   if (!text) return;
   navigator.clipboard.writeText(text)
     .then(() => showToast('📋 Đã sao chép vào clipboard!'))
     .catch(() => {
       const el = document.createElement('textarea');
-      el.value = text;
-      el.style.cssText = 'position:fixed;opacity:0';
-      document.body.appendChild(el);
-      el.select();
-      document.execCommand('copy');
-      document.body.removeChild(el);
+      el.value = text; el.style.cssText = 'position:fixed;opacity:0';
+      document.body.appendChild(el); el.select();
+      document.execCommand('copy'); document.body.removeChild(el);
       showToast('📋 Đã sao chép!');
     });
 }
@@ -764,7 +749,6 @@ function getPricingDB() {
   const db = getDB();
   return db.pricing || JSON.parse(JSON.stringify(DEFAULT_PRICING));
 }
-
 function calcPrice(serviceKey, weight) {
   const pricing = getPricingDB();
   const svc = pricing[serviceKey];
@@ -775,14 +759,12 @@ function calcPrice(serviceKey, weight) {
   }
   return svc.prices[WEIGHT_RANGES.length - 1] || 0;
 }
-
 function getServiceKeyByApiId(apiId) {
   for (const [key, id] of Object.entries(SERVICE_API_MAP)) {
     if (id === String(apiId)) return key;
   }
   return null;
 }
-
 function getPriceForOrder(apiLabelId, weight) {
   const sk = getServiceKeyByApiId(apiLabelId);
   if (!sk) return null;
@@ -790,27 +772,7 @@ function getPriceForOrder(apiLabelId, weight) {
 }
 
 // ============================================================
-// EXTRACT ORDER DATA
-// ============================================================
-function extractOrderData(json) {
-  const d = json.data || json.result || json.order || json.label || json || {};
-  const tracking_id =
-    d.tracking_id    || d.trackingId     || d.tracking        ||
-    d.TrackingId     || d.trackingNumber || d.tracking_number ||
-    d.TrackingNumber || d.barcode        || '';
-  const pdf =
-    d.pdf        || d.pdf_url     || d.label_url  ||
-    d.labelUrl   || d.label       || d.file       ||
-    d.download_url || d.url       || '';
-  const fromName = d.fromName || d.from_name || d.sender_name   || (lastPayload ? lastPayload.fromName : '');
-  const toName   = d.toName   || d.to_name   || d.receiver_name || (lastPayload ? lastPayload.toName   : '');
-  const weight   = d.weight   || d.Weight    || (lastPayload ? lastPayload.weight : 0);
-  const price    = d.price    || d.amount    || d.cost          || 0;
-  return { ...d, tracking_id, pdf, fromName, toName, weight, price };
-}
-
-// ============================================================
-// CHECK SUCCESS
+// ✅ CHECK SUCCESS — nhận diện mọi kiểu response
 // ============================================================
 function isResponseSuccess(json) {
   if (!json) return false;
@@ -826,76 +788,115 @@ function isResponseSuccess(json) {
   if (json.error   === false)     return true;
   if (json.error   === 0)         return true;
   if (json.error   === null)      return true;
+
+  // ✅ Loop qua tất cả lớp có thể chứa data (kể cả root)
+  const candidates = [json, json.data, json.result, json.order, json.label].filter(Boolean);
+  for (const d of candidates) {
+    const hasTracking = !!(
+      d.tracking_id    || d.trackingId     || d.tracking        ||
+      d.TrackingId     || d.trackingNumber || d.tracking_number ||
+      d.TrackingNumber || d.barcode
+    );
+    const hasPdf = !!(
+      d.pdf          || d.pdf_url    || d.label_url ||
+      d.labelUrl     || d.label      || d.file      ||
+      d.download_url || d.url
+    );
+    if (hasTracking || hasPdf) return true;
+  }
+  return false;
+}
+
+// ============================================================
+// ✅ EXTRACT ORDER DATA — tìm pdf/tracking ở mọi lớp
+// ============================================================
+function extractOrderData(json) {
+  const candidates = [json, json.data, json.result, json.order, json.label].filter(Boolean);
+
+  let tracking_id = '';
+  let pdf         = '';
+
+  for (const d of candidates) {
+    if (!tracking_id)
+      tracking_id =
+        d.tracking_id    || d.trackingId     || d.tracking        ||
+        d.TrackingId     || d.trackingNumber || d.tracking_number ||
+        d.TrackingNumber || d.barcode        || '';
+    if (!pdf)
+      pdf =
+        d.pdf          || d.pdf_url    || d.label_url ||
+        d.labelUrl     || d.label      || d.file      ||
+        d.download_url || d.url        || '';
+    if (tracking_id && pdf) break;
+  }
+
+  // Lấy các field phụ — ưu tiên root vì API này trả flat
   const d = json.data || json.result || json.order || json.label || json || {};
-  const hasTracking = !!(d.tracking_id || d.trackingId || d.tracking ||
-                         d.TrackingId  || d.trackingNumber || d.tracking_number || d.barcode);
-  const hasPdf      = !!(d.pdf || d.pdf_url || d.label_url || d.labelUrl ||
-                         d.label || d.file   || d.download_url || d.url);
-  return hasTracking || hasPdf;
+  const fromName = d.fromName  || d.from_name  || d.sender_name   || (lastPayload ? lastPayload.fromName : '');
+  const toName   = d.toName    || d.to_name    || d.receiver_name || (lastPayload ? lastPayload.toName   : '');
+  const weight   = d.weight    || d.Weight     || (lastPayload ? lastPayload.weight : 0);
+  const price    = d.price     || d.amount     || d.cost          || 0;
+
+  return { ...d, tracking_id, pdf, fromName, toName, weight, price };
 }
 
 // ============================================================
 // AUTH
 // ============================================================
 function switchAuthTab(tab) {
-  document.querySelectorAll('.auth-tab').forEach((t, i) => {
-    t.classList.toggle('active', (tab === 'login' && i === 0) || (tab === 'register' && i === 1));
+  document.querySelectorAll('.auth-tab').forEach((t,i) => {
+    t.classList.toggle('active', (tab==='login'&&i===0)||(tab==='register'&&i===1));
   });
-  document.getElementById('login-form').style.display    = tab === 'login'    ? 'block' : 'none';
-  document.getElementById('register-form').style.display = tab === 'register' ? 'block' : 'none';
+  document.getElementById('login-form').style.display    = tab==='login'    ? 'block':'none';
+  document.getElementById('register-form').style.display = tab==='register' ? 'block':'none';
   clearMsg('auth-msg');
 }
-
 function doLogin() {
   const u = document.getElementById('login-user').value.trim();
   const p = document.getElementById('login-pass').value;
-  if (!u || !p) return showMsg('auth-msg', 'Vui lòng nhập đầy đủ thông tin', 'error');
-  const db   = getDB();
-  const user = db.users.find(x => x.username === u && x.password === btoa(p));
-  if (!user) return showMsg('auth-msg', 'Sai tên đăng nhập hoặc mật khẩu', 'error');
+  if (!u||!p) return showMsg('auth-msg','Vui lòng nhập đầy đủ thông tin','error');
+  const db = getDB();
+  const user = db.users.find(x => x.username===u && x.password===btoa(p));
+  if (!user) return showMsg('auth-msg','Sai tên đăng nhập hoặc mật khẩu','error');
   currentUser = JSON.parse(JSON.stringify(user));
   enterApp();
 }
-
 function doRegister() {
   const u   = document.getElementById('reg-user').value.trim();
   const n   = document.getElementById('reg-name').value.trim();
   const e   = document.getElementById('reg-email').value.trim();
   const p   = document.getElementById('reg-pass').value;
   const inv = document.getElementById('reg-invite').value.trim();
-  if (!u || !n || !p) return showMsg('auth-msg', 'Vui lòng nhập đầy đủ thông tin bắt buộc', 'error');
+  if (!u||!n||!p) return showMsg('auth-msg','Vui lòng nhập đầy đủ thông tin bắt buộc','error');
   const db = getDB();
   if (!db.settings.open_register) {
-    if (!inv) return showMsg('auth-msg', 'Cần mã mời để đăng ký', 'error');
-    if (inv !== db.settings.invite_code) return showMsg('auth-msg', 'Mã mời không hợp lệ', 'error');
+    if (!inv) return showMsg('auth-msg','Cần mã mời để đăng ký','error');
+    if (inv !== db.settings.invite_code) return showMsg('auth-msg','Mã mời không hợp lệ','error');
   }
-  if (db.users.find(x => x.username === u)) return showMsg('auth-msg', 'Tên đăng nhập đã tồn tại', 'error');
+  if (db.users.find(x=>x.username===u)) return showMsg('auth-msg','Tên đăng nhập đã tồn tại','error');
   const newUser = {
-    username: u, password: btoa(p), name: n, email: e,
-    role: 'user', balance: 0, apiKeyId: null, orders: [], topup_history: []
+    username:u, password:btoa(p), name:n, email:e,
+    role:'user', balance:0, apiKeyId:null, orders:[], topup_history:[]
   };
-  db.users.push(newUser);
-  saveDB(db);
-  showMsg('auth-msg', '✅ Tạo tài khoản thành công! Đang đăng nhập...', 'success');
+  db.users.push(newUser); saveDB(db);
+  showMsg('auth-msg','✅ Tạo tài khoản thành công! Đang đăng nhập...','success');
   setTimeout(() => { currentUser = JSON.parse(JSON.stringify(newUser)); enterApp(); }, 1000);
 }
-
 function doLogout() {
-  currentUser = null; services = []; selectedService = null; lastPayload = null;
+  currentUser=null; services=[]; selectedService=null; lastPayload=null;
   document.getElementById('app-screen').style.display  = 'none';
   document.getElementById('auth-screen').style.display = 'flex';
   document.getElementById('login-user').value = '';
   document.getElementById('login-pass').value = '';
   clearMsg('auth-msg');
 }
-
 function enterApp() {
   document.getElementById('auth-screen').style.display = 'none';
   document.getElementById('app-screen').style.display  = 'block';
   document.getElementById('topbar-username').textContent = '👤 ' + currentUser.name;
   const isAdmin = currentUser.role === 'admin';
   document.getElementById('admin-bar-wrap').style.display = isAdmin ? 'block' : 'none';
-  ['tab-admin', 'tab-apikeys', 'tab-pricing', 'tab-settings'].forEach(id => {
+  ['tab-admin','tab-apikeys','tab-pricing','tab-settings'].forEach(id => {
     document.getElementById(id).style.display = isAdmin ? 'block' : 'none';
   });
   openTab('create-tab');
@@ -913,23 +914,15 @@ function openTab(id) {
   const el = document.getElementById(id);
   if (el) el.classList.add('active');
   const map = {
-    'create-tab':   'tab-create',
-    'orders-tab':   'tab-orders',
-    'services-tab': 'tab-services',
-    'admin-tab':    'tab-admin',
-    'apikeys-tab':  'tab-apikeys',
-    'pricing-tab':  'tab-pricing',
-    'settings-tab': 'tab-settings'
+    'create-tab':'tab-create','orders-tab':'tab-orders','services-tab':'tab-services',
+    'admin-tab':'tab-admin','apikeys-tab':'tab-apikeys','pricing-tab':'tab-pricing','settings-tab':'tab-settings'
   };
-  if (map[id]) {
-    const btn = document.getElementById(map[id]);
-    if (btn) btn.classList.add('active');
-  }
-  if (id === 'services-tab') renderServicesTable();
-  if (id === 'admin-tab')    renderUsersTable();
-  if (id === 'apikeys-tab')  renderApiKeysTable();
-  if (id === 'pricing-tab')  renderPricingEditor();
-  if (id === 'settings-tab') loadSettings();
+  if (map[id]) { const btn=document.getElementById(map[id]); if(btn) btn.classList.add('active'); }
+  if (id==='services-tab') renderServicesTable();
+  if (id==='admin-tab')    renderUsersTable();
+  if (id==='apikeys-tab')  renderApiKeysTable();
+  if (id==='pricing-tab')  renderPricingEditor();
+  if (id==='settings-tab') loadSettings();
 }
 
 // ============================================================
@@ -937,10 +930,10 @@ function openTab(id) {
 // ============================================================
 function updateBalance() {
   const db = getDB();
-  const u  = db.users.find(x => x.username === currentUser.username);
+  const u  = db.users.find(x => x.username===currentUser.username);
   if (u) currentUser.balance = u.balance;
-  document.getElementById('user-balance').textContent = '$' + (currentUser.balance || 0).toFixed(2);
-  document.getElementById('active-key-info').textContent = '🔑 Key: ' + getApiKeyLabelForUser(currentUser.username);
+  document.getElementById('user-balance').textContent = '$'+(currentUser.balance||0).toFixed(2);
+  document.getElementById('active-key-info').textContent = '🔑 Key: '+getApiKeyLabelForUser(currentUser.username);
 }
 
 // ============================================================
@@ -951,23 +944,18 @@ async function loadServices() {
   document.getElementById('service-list').style.display    = 'none';
   const apiKey = getApiKeyForUser(currentUser.username);
   try {
-    const res  = await fetch(API_BASE + '/services', {
-      method:  'POST',
-      headers: { 'Authorization': 'Bearer ' + apiKey, 'Content-Type': 'application/json' },
-      body:    JSON.stringify({})
+    const res  = await fetch(API_BASE+'/services', {
+      method:'POST',
+      headers:{'Authorization':'Bearer '+apiKey,'Content-Type':'application/json'},
+      body:JSON.stringify({})
     });
     const json = await res.json();
-    if (json.success && json.data) {
-      services = json.data;
-    } else throw new Error('API error');
+    if (json.success && json.data) { services = json.data; }
+    else throw new Error('API error');
   } catch(e) {
-    // Fallback: build từ config nội bộ
     services = Object.entries(SERVICE_API_MAP).map(([sk, apiId]) => {
       const svc = DEFAULT_PRICING[sk];
-      return {
-        id: apiId, name: svc ? svc.name : sk,
-        max_weight: '70.00 lbs', serviceKey: sk
-      };
+      return { id:apiId, name:svc?svc.name:sk, max_weight:'70.00 lbs', serviceKey:sk };
     });
   }
   document.getElementById('service-loading').style.display = 'none';
@@ -982,7 +970,7 @@ function renderServiceList() {
     const sk   = getServiceKeyByApiId(s.id);
     const svcP = sk ? pricing[sk] : null;
     const price = svcP
-      ? '$' + svcP.prices[0].toFixed(2) + ' – $' + svcP.prices[svcP.prices.length - 1].toFixed(2)
+      ? '$'+svcP.prices[0].toFixed(2)+' – $'+svcP.prices[svcP.prices.length-1].toFixed(2)
       : 'N/A';
     const time = svcP ? svcP.time : '';
     return `<div class="service-item" id="svc-${s.id}" onclick="selectService('${s.id}')">
@@ -996,9 +984,9 @@ function renderServiceList() {
 
 function selectService(id) {
   document.querySelectorAll('.service-item').forEach(el => el.classList.remove('selected'));
-  const el = document.getElementById('svc-' + id);
+  const el = document.getElementById('svc-'+id);
   if (el) el.classList.add('selected');
-  selectedService = services.find(s => s.id === id);
+  selectedService = services.find(s => s.id===id);
   updatePriceEstimate();
 }
 
@@ -1025,9 +1013,9 @@ function renderServicesTable() {
             <td><span class="badge badge-pending">${s.id}</span></td>
             <td><strong>${s.name}</strong></td>
             <td><small style="color:#888">${svcP ? svcP.time : '-'}</small></td>
-            ${WEIGHT_RANGES.map((_, i) =>
+            ${WEIGHT_RANGES.map((_,i) =>
               `<td style="text-align:center">
-                <strong style="color:#1a73e8">${svcP ? '$' + svcP.prices[i].toFixed(2) : '-'}</strong>
+                <strong style="color:#1a73e8">${svcP ? '$'+svcP.prices[i].toFixed(2) : '-'}</strong>
               </td>`
             ).join('')}
           </tr>`;
@@ -1042,11 +1030,11 @@ function renderServicesTable() {
 function updatePriceEstimate() {
   const box = document.getElementById('price-estimate');
   if (!box) return;
-  if (!selectedService) { box.style.display = 'none'; return; }
+  if (!selectedService) { box.style.display='none'; return; }
   const weight = parseFloat(document.getElementById('weight').value) || 0;
-  if (weight <= 0) { box.style.display = 'none'; return; }
+  if (weight <= 0) { box.style.display='none'; return; }
   const price = getPriceForOrder(selectedService.id, weight);
-  if (price === null) { box.style.display = 'none'; return; }
+  if (price === null) { box.style.display='none'; return; }
   box.style.display = 'block';
   box.innerHTML = `💡 Giá dự kiến: <strong style="color:#2e7d32;font-size:1.1rem">$${price.toFixed(2)}</strong>
     <span style="color:#888;font-size:0.82rem"> — ${selectedService.name} / ${weight} lbs</span>`;
@@ -1059,19 +1047,19 @@ async function createOrder() {
   clearMsg('create-msg');
 
   if (!selectedService)
-    return showMsg('create-msg', '⚠️ Vui lòng chọn dịch vụ vận chuyển', 'error');
+    return showMsg('create-msg','⚠️ Vui lòng chọn dịch vụ vận chuyển','error');
 
   const required = ['fromName','fromAddress','fromCity','fromState','fromZip',
                     'toName','toAddress','toCity','toState','toZip','weight'];
   for (const f of required) {
     if (!document.getElementById(f).value.trim())
-      return showMsg('create-msg', `⚠️ Vui lòng điền: ${f}`, 'error');
+      return showMsg('create-msg',`⚠️ Vui lòng điền: ${f}`,'error');
   }
 
   const db = getDB();
-  const u  = db.users.find(x => x.username === currentUser.username);
-  if (!u || (u.balance || 0) <= 0)
-    return showMsg('create-msg', '⚠️ Số dư không đủ. Liên hệ admin để nạp tiền.', 'error');
+  const u  = db.users.find(x => x.username===currentUser.username);
+  if (!u || (u.balance||0) <= 0)
+    return showMsg('create-msg','⚠️ Số dư không đủ. Liên hệ admin để nạp tiền.','error');
 
   const btn = document.getElementById('create-btn');
   btn.disabled = true;
@@ -1108,10 +1096,10 @@ async function createOrder() {
   };
 
   try {
-    const res = await fetch(API_BASE + '/create-order', {
-      method:  'POST',
-      headers: { 'Authorization': 'Bearer ' + apiKey, 'Content-Type': 'application/json' },
-      body:    JSON.stringify(lastPayload)
+    const res = await fetch(API_BASE+'/create-order', {
+      method:'POST',
+      headers:{'Authorization':'Bearer '+apiKey,'Content-Type':'application/json'},
+      body:JSON.stringify(lastPayload)
     });
 
     const rawText = await res.text();
@@ -1122,9 +1110,9 @@ async function createOrder() {
       json = JSON.parse(rawText);
     } catch(parseErr) {
       showMsg('create-msg',
-        `❌ Server trả về dữ liệu không hợp lệ (HTTP ${res.status}). ` +
-        `<button onclick="showDebug('${encodeURIComponent(rawText.substring(0, 2000))}')" ` +
-        `style="margin-left:8px;padding:3px 10px;background:#1a73e8;color:#fff;border:none;` +
+        `❌ Server trả về dữ liệu không hợp lệ (HTTP ${res.status}). `+
+        `<button onclick="showDebug('${encodeURIComponent(rawText.substring(0,2000))}')" `+
+        `style="margin-left:8px;padding:3px 10px;background:#1a73e8;color:#fff;border:none;`+
         `border-radius:5px;cursor:pointer;font-size:0.82rem">🔍 Xem chi tiết</button>`,
         'error');
       btn.disabled = false;
@@ -1132,17 +1120,17 @@ async function createOrder() {
       return;
     }
 
-    console.log('=== PARSED JSON ===\n', JSON.stringify(json, null, 2));
+    console.log('=== PARSED JSON ===\n', JSON.stringify(json,null,2));
 
     if (isResponseSuccess(json)) {
       const d          = extractOrderData(json);
       const localPrice = getPriceForOrder(selectedService.id, weight);
-      const finalPrice = (localPrice !== null) ? localPrice : (parseFloat(d.price) || 0);
+      const finalPrice = (localPrice !== null) ? localPrice : (parseFloat(d.price)||0);
 
       const db2 = getDB();
-      const u2  = db2.users.find(x => x.username === currentUser.username);
+      const u2  = db2.users.find(x => x.username===currentUser.username);
       if (u2) {
-        u2.balance = Math.max(0, (u2.balance || 0) - finalPrice);
+        u2.balance = Math.max(0, (u2.balance||0) - finalPrice);
         if (!u2.orders) u2.orders = [];
         u2.orders.unshift({
           tracking_id:   d.tracking_id || '',
@@ -1180,25 +1168,25 @@ async function createOrder() {
       const errMsg =
         json.message ||
         json.msg ||
-        (typeof json.error === 'string' ? json.error : null) ||
+        (typeof json.error==='string' ? json.error : null) ||
         (json.errors
-          ? (typeof json.errors === 'string' ? json.errors : JSON.stringify(json.errors))
+          ? (typeof json.errors==='string' ? json.errors : JSON.stringify(json.errors))
           : null) ||
         (json.data && json.data.message) ||
         (json.data && json.data.error)   ||
         `HTTP ${res.status} — Không thể tạo nhãn`;
 
       showMsg('create-msg',
-        `❌ ${errMsg} ` +
-        `<button onclick="showDebug('${encodeURIComponent(JSON.stringify(json, null, 2).substring(0, 3000))}')" ` +
-        `style="margin-left:8px;padding:3px 10px;background:#c62828;color:#fff;border:none;` +
+        `❌ ${errMsg} `+
+        `<button onclick="showDebug('${encodeURIComponent(JSON.stringify(json,null,2).substring(0,3000))}')" `+
+        `style="margin-left:8px;padding:3px 10px;background:#c62828;color:#fff;border:none;`+
         `border-radius:5px;cursor:pointer;font-size:0.82rem">🔍 Xem response</button>`,
         'error');
       console.error('❌ API Error Response:', json);
     }
 
   } catch(e) {
-    showMsg('create-msg', '❌ Lỗi kết nối: ' + e.message, 'error');
+    showMsg('create-msg','❌ Lỗi kết nối: '+e.message,'error');
     console.error('Fetch error:', e);
   }
 
@@ -1262,19 +1250,19 @@ function showLabelModal(d, finalPrice) {
   openModal('label-modal');
 }
 
-function downloadPDF() { if (lastPDF) window.open(lastPDF, '_blank'); }
+function downloadPDF() { if (lastPDF) window.open(lastPDF,'_blank'); }
 
 // ============================================================
 // ORDERS
 // ============================================================
 function loadOrders() {
   const db = getDB();
-  const u  = db.users.find(x => x.username === currentUser.username);
+  const u  = db.users.find(x => x.username===currentUser.username);
   renderOrdersTable((u && u.orders) ? u.orders : []);
 }
 
 function renderOrdersTable(orders) {
-  const search   = (document.getElementById('search-order') || {}).value || '';
+  const search   = (document.getElementById('search-order')||{}).value || '';
   const filtered = orders.filter(o =>
     !search || (o.tracking_id && o.tracking_id.toLowerCase().includes(search.toLowerCase()))
   );
@@ -1283,20 +1271,20 @@ function renderOrdersTable(orders) {
     tbody.innerHTML = '<tr><td colspan="9" style="text-align:center;color:#aaa;padding:30px">Chưa có đơn hàng nào</td></tr>';
     return;
   }
-  tbody.innerHTML = filtered.map((o, i) => `
+  tbody.innerHTML = filtered.map((o,i) => `
     <tr>
-      <td>${i + 1}</td>
-      <td><code style="font-size:0.8rem;color:#1a73e8;word-break:break-all">${o.tracking_id || '—'}</code></td>
-      <td>${o.fromName || '-'}<br>
-        <small style="color:#aaa">${o.fromCity || ''}, ${o.fromState || ''} ${o.fromZip || ''}</small>
+      <td>${i+1}</td>
+      <td><code style="font-size:0.8rem;color:#1a73e8;word-break:break-all">${o.tracking_id||'—'}</code></td>
+      <td>${o.fromName||'-'}<br>
+        <small style="color:#aaa">${o.fromCity||''}, ${o.fromState||''} ${o.fromZip||''}</small>
       </td>
-      <td>${o.toName || '-'}<br>
-        <small style="color:#aaa">${o.toCity || ''}, ${o.toState || ''} ${o.toZip || ''}</small>
+      <td>${o.toName||'-'}<br>
+        <small style="color:#aaa">${o.toCity||''}, ${o.toState||''} ${o.toZip||''}</small>
       </td>
-      <td><small>${o.service || '-'}</small></td>
-      <td><small>${o.weight || 0} lbs</small></td>
-      <td><strong style="color:#2e7d32">$${parseFloat(o.price || 0).toFixed(2)}</strong></td>
-      <td><small style="color:#888">${o.created_at || '-'}</small></td>
+      <td><small>${o.service||'-'}</small></td>
+      <td><small>${o.weight||0} lbs</small></td>
+      <td><strong style="color:#2e7d32">$${parseFloat(o.price||0).toFixed(2)}</strong></td>
+      <td><small style="color:#888">${o.created_at||'-'}</small></td>
       <td>
         <div style="display:flex;gap:4px;flex-wrap:wrap">
           ${o.pdf ? `<button class="btn-sm btn-success" onclick="window.open('${o.pdf}','_blank')">📄 PDF</button>` : ''}
@@ -1308,37 +1296,37 @@ function renderOrdersTable(orders) {
 
 function viewOrderDetail(idx) {
   const db     = getDB();
-  const u      = db.users.find(x => x.username === currentUser.username);
+  const u      = db.users.find(x => x.username===currentUser.username);
   const orders = u && u.orders ? u.orders : [];
   const o      = orders[idx];
   if (!o) return;
   document.getElementById('order-detail-content').innerHTML = `
     <div class="detail-row"><span class="key">Tracking ID</span>
-      <span class="val" style="color:#1a73e8">${o.tracking_id || '—'}</span></div>
+      <span class="val" style="color:#1a73e8">${o.tracking_id||'—'}</span></div>
     <div class="detail-row"><span class="key">Dịch vụ</span>
-      <span class="val">${o.service || '-'}</span></div>
+      <span class="val">${o.service||'-'}</span></div>
     <div class="detail-row"><span class="key">Ngày tạo</span>
-      <span class="val">${o.created_at || '-'}</span></div>
+      <span class="val">${o.created_at||'-'}</span></div>
     <div class="detail-row"><span class="key">API Key</span>
-      <span class="val">${o.api_key_label || 'Master Key'}</span></div>
+      <span class="val">${o.api_key_label||'Master Key'}</span></div>
     <hr style="margin:10px 0;border:none;border-top:1px solid #eee">
     <div class="detail-row"><span class="key">Người gửi</span>
-      <span class="val">${o.fromName || '-'}</span></div>
+      <span class="val">${o.fromName||'-'}</span></div>
     <div class="detail-row"><span class="key">Địa chỉ gửi</span>
-      <span class="val">${o.fromAddress || ''}, ${o.fromCity || ''}, ${o.fromState || ''} ${o.fromZip || ''}</span></div>
+      <span class="val">${o.fromAddress||''}, ${o.fromCity||''}, ${o.fromState||''} ${o.fromZip||''}</span></div>
     <hr style="margin:10px 0;border:none;border-top:1px solid #eee">
     <div class="detail-row"><span class="key">Người nhận</span>
-      <span class="val">${o.toName || '-'}</span></div>
+      <span class="val">${o.toName||'-'}</span></div>
     <div class="detail-row"><span class="key">Địa chỉ nhận</span>
-      <span class="val">${o.toAddress || ''}, ${o.toCity || ''}, ${o.toState || ''} ${o.toZip || ''}</span></div>
+      <span class="val">${o.toAddress||''}, ${o.toCity||''}, ${o.toState||''} ${o.toZip||''}</span></div>
     <hr style="margin:10px 0;border:none;border-top:1px solid #eee">
     <div class="detail-row"><span class="key">Cân nặng</span>
-      <span class="val">${o.weight || 0} lbs</span></div>
+      <span class="val">${o.weight||0} lbs</span></div>
     <div class="detail-row"><span class="key">Kích thước</span>
-      <span class="val">${o.length || 0}" × ${o.width || 0}" × ${o.height || 0}"</span></div>
+      <span class="val">${o.length||0}" × ${o.width||0}" × ${o.height||0}"</span></div>
     <div class="detail-row"><span class="key">Giá thanh toán</span>
       <span class="val" style="color:#2e7d32;font-size:1.1rem">
-        $${parseFloat(o.price || 0).toFixed(2)}
+        $${parseFloat(o.price||0).toFixed(2)}
       </span></div>
     ${o.pdf
       ? `<div style="margin-top:12px;text-align:center">
@@ -1365,20 +1353,20 @@ function renderUsersTable() {
     return `<tr>
       <td><strong>${u.username}</strong></td>
       <td>${u.name}</td>
-      <td>${u.email || '-'}</td>
-      <td><strong style="color:#2e7d32">$${(u.balance || 0).toFixed(2)}</strong></td>
-      <td><span class="badge ${u.role === 'admin' ? 'badge-error' : 'badge-success'}">${u.role}</span></td>
+      <td>${u.email||'-'}</td>
+      <td><strong style="color:#2e7d32">$${(u.balance||0).toFixed(2)}</strong></td>
+      <td><span class="badge ${u.role==='admin'?'badge-error':'badge-success'}">${u.role}</span></td>
       <td>
-        <span class="key-badge" style="${isMaster ? 'background:#e3f2fd;color:#1565c0' : ''}">
+        <span class="key-badge" style="${isMaster?'background:#e3f2fd;color:#1565c0':''}">
           ${keyLabel}
         </span>
       </td>
-      <td>${(u.orders || []).length}</td>
+      <td>${(u.orders||[]).length}</td>
       <td>
         <div class="user-actions">
           <button class="btn-sm btn-success" onclick="openTopup('${u.username}')">💰 Nạp</button>
           <button class="btn-sm btn-outline" onclick="editUser('${u.username}')">✏️ Sửa</button>
-          ${u.username !== 'admin'
+          ${u.username!=='admin'
             ? `<button class="btn-sm btn-danger" onclick="deleteUser('${u.username}')">🗑️</button>`
             : ''}
         </div>
@@ -1388,34 +1376,34 @@ function renderUsersTable() {
 }
 
 function openAddUserModal() {
-  document.getElementById('user-modal-title').textContent    = '➕ Thêm người dùng';
-  document.getElementById('um-username').value               = '';
-  document.getElementById('um-username').disabled            = false;
-  document.getElementById('um-name').value                   = '';
-  document.getElementById('um-email').value                  = '';
-  document.getElementById('um-pass').value                   = '';
-  document.getElementById('um-balance').value                = '0';
-  document.getElementById('um-role').value                   = 'user';
-  document.getElementById('um-username').dataset.edit        = '';
-  populateApiKeySelect('um-apikey', '');
+  document.getElementById('user-modal-title').textContent = '➕ Thêm người dùng';
+  document.getElementById('um-username').value            = '';
+  document.getElementById('um-username').disabled         = false;
+  document.getElementById('um-name').value                = '';
+  document.getElementById('um-email').value               = '';
+  document.getElementById('um-pass').value                = '';
+  document.getElementById('um-balance').value             = '0';
+  document.getElementById('um-role').value                = 'user';
+  document.getElementById('um-username').dataset.edit     = '';
+  populateApiKeySelect('um-apikey','');
   clearMsg('user-modal-msg');
   openModal('user-modal');
 }
 
 function editUser(username) {
   const db = getDB();
-  const u  = db.users.find(x => x.username === username);
+  const u  = db.users.find(x => x.username===username);
   if (!u) return;
-  document.getElementById('user-modal-title').textContent    = '✏️ Sửa: ' + username;
-  document.getElementById('um-username').value               = u.username;
-  document.getElementById('um-username').disabled            = true;
-  document.getElementById('um-name').value                   = u.name;
-  document.getElementById('um-email').value                  = u.email || '';
-  document.getElementById('um-pass').value                   = '';
-  document.getElementById('um-balance').value                = (u.balance || 0).toFixed(2);
-  document.getElementById('um-role').value                   = u.role;
-  document.getElementById('um-username').dataset.edit        = username;
-  populateApiKeySelect('um-apikey', u.apiKeyId || '');
+  document.getElementById('user-modal-title').textContent = '✏️ Sửa: '+username;
+  document.getElementById('um-username').value            = u.username;
+  document.getElementById('um-username').disabled         = true;
+  document.getElementById('um-name').value                = u.name;
+  document.getElementById('um-email').value               = u.email||'';
+  document.getElementById('um-pass').value                = '';
+  document.getElementById('um-balance').value             = (u.balance||0).toFixed(2);
+  document.getElementById('um-role').value                = u.role;
+  document.getElementById('um-username').dataset.edit     = username;
+  populateApiKeySelect('um-apikey', u.apiKeyId||'');
   clearMsg('user-modal-msg');
   openModal('user-modal');
 }
@@ -1425,7 +1413,7 @@ function populateApiKeySelect(selectId, selectedId) {
   const sel = document.getElementById(selectId);
   sel.innerHTML = '<option value="">-- Dùng Master Key --</option>' +
     db.api_keys.map(k =>
-      `<option value="${k.id}" ${k.id === selectedId ? 'selected' : ''}>
+      `<option value="${k.id}" ${k.id===selectedId?'selected':''}>
         ${k.label} (${maskKey(k.key)}) — ${k.status}
       </option>`
     ).join('');
@@ -1436,7 +1424,7 @@ function populateUserSelect(selectId, selectedUsername) {
   const sel = document.getElementById(selectId);
   sel.innerHTML = '<option value="">-- Chưa gán --</option>' +
     db.users.map(u =>
-      `<option value="${u.username}" ${u.username === selectedUsername ? 'selected' : ''}>
+      `<option value="${u.username}" ${u.username===selectedUsername?'selected':''}>
         ${u.username} (${u.name})
       </option>`
     ).join('');
@@ -1448,29 +1436,29 @@ function saveUser() {
   const name       = document.getElementById('um-name').value.trim();
   const email      = document.getElementById('um-email').value.trim();
   const pass       = document.getElementById('um-pass').value;
-  const balance    = parseFloat(document.getElementById('um-balance').value) || 0;
+  const balance    = parseFloat(document.getElementById('um-balance').value)||0;
   const role       = document.getElementById('um-role').value;
-  const apiKeyId   = document.getElementById('um-apikey').value || null;
+  const apiKeyId   = document.getElementById('um-apikey').value||null;
 
-  if (!username || !name)
-    return showMsg('user-modal-msg', '⚠️ Vui lòng điền đầy đủ thông tin bắt buộc', 'error');
+  if (!username||!name)
+    return showMsg('user-modal-msg','⚠️ Vui lòng điền đầy đủ thông tin bắt buộc','error');
 
   const db = getDB();
   if (editTarget) {
-    const u = db.users.find(x => x.username === editTarget);
+    const u = db.users.find(x => x.username===editTarget);
     if (!u) return;
-    u.name = name; u.email = email; u.balance = balance; u.role = role; u.apiKeyId = apiKeyId;
+    u.name=name; u.email=email; u.balance=balance; u.role=role; u.apiKeyId=apiKeyId;
     if (pass) u.password = btoa(pass);
-    showMsg('user-modal-msg', '✅ Cập nhật thành công!', 'success');
+    showMsg('user-modal-msg','✅ Cập nhật thành công!','success');
   } else {
-    if (!pass) return showMsg('user-modal-msg', '⚠️ Vui lòng nhập mật khẩu', 'error');
-    if (db.users.find(x => x.username === username))
-      return showMsg('user-modal-msg', '⚠️ Username đã tồn tại', 'error');
+    if (!pass) return showMsg('user-modal-msg','⚠️ Vui lòng nhập mật khẩu','error');
+    if (db.users.find(x=>x.username===username))
+      return showMsg('user-modal-msg','⚠️ Username đã tồn tại','error');
     db.users.push({
-      username, password: btoa(pass), name, email,
-      role, balance, apiKeyId, orders: [], topup_history: []
+      username, password:btoa(pass), name, email,
+      role, balance, apiKeyId, orders:[], topup_history:[]
     });
-    showMsg('user-modal-msg', '✅ Thêm người dùng thành công!', 'success');
+    showMsg('user-modal-msg','✅ Thêm người dùng thành công!','success');
   }
   saveDB(db);
   setTimeout(() => { closeModal('user-modal'); renderUsersTable(); }, 800);
@@ -1479,9 +1467,8 @@ function saveUser() {
 function deleteUser(username) {
   if (!confirm(`Xác nhận xóa người dùng "${username}"?\nThao tác này không thể hoàn tác.`)) return;
   const db = getDB();
-  db.users = db.users.filter(x => x.username !== username);
-  saveDB(db);
-  renderUsersTable();
+  db.users = db.users.filter(x => x.username!==username);
+  saveDB(db); renderUsersTable();
 }
 
 // ============================================================
@@ -1489,22 +1476,21 @@ function deleteUser(username) {
 // ============================================================
 function openTopup(username) {
   const db = getDB();
-  const u  = db.users.find(x => x.username === username);
+  const u  = db.users.find(x => x.username===username);
   if (!u) return;
   topupTarget = username;
-  document.getElementById('topup-uname').textContent   = username + ' (' + u.name + ')';
-  document.getElementById('topup-current').textContent = '$' + (u.balance || 0).toFixed(2);
+  document.getElementById('topup-uname').textContent   = username+' ('+u.name+')';
+  document.getElementById('topup-current').textContent = '$'+(u.balance||0).toFixed(2);
   document.getElementById('topup-amount').value        = '10';
   document.getElementById('topup-note').value          = '';
   clearMsg('topup-msg');
-
-  const hist = u.topup_history || [];
+  const hist = u.topup_history||[];
   const wrap = document.getElementById('topup-hist-wrap');
   if (hist.length) {
     wrap.innerHTML = `
       <div style="font-size:0.82rem;font-weight:700;color:#888;margin-bottom:6px">📋 Lịch sử nạp tiền:</div>
       <div style="max-height:150px;overflow-y:auto;border:1px solid #f0f0f0;border-radius:6px;padding:6px">
-        ${hist.slice(0, 15).map(h => `
+        ${hist.slice(0,15).map(h => `
           <div class="topup-hist-row">
             <span style="color:#888">${h.date}</span>
             <span style="color:#2e7d32;font-weight:700">+$${h.amount.toFixed(2)}</span>
@@ -1521,11 +1507,11 @@ function openTopup(username) {
 function doTopup() {
   const amount = parseFloat(document.getElementById('topup-amount').value);
   const note   = document.getElementById('topup-note').value.trim();
-  if (!amount || amount <= 0) return showMsg('topup-msg', '⚠️ Số tiền không hợp lệ', 'error');
+  if (!amount||amount<=0) return showMsg('topup-msg','⚠️ Số tiền không hợp lệ','error');
   const db = getDB();
-  const u  = db.users.find(x => x.username === topupTarget);
+  const u  = db.users.find(x => x.username===topupTarget);
   if (!u) return;
-  u.balance = (u.balance || 0) + amount;
+  u.balance = (u.balance||0) + amount;
   if (!u.topup_history) u.topup_history = [];
   u.topup_history.unshift({
     date:   new Date().toLocaleString('vi-VN'),
@@ -1535,9 +1521,9 @@ function doTopup() {
     by:     currentUser.username
   });
   saveDB(db);
-  showMsg('topup-msg', `✅ Nạp $${amount.toFixed(2)} thành công! Số dư mới: $${u.balance.toFixed(2)}`, 'success');
-  document.getElementById('topup-current').textContent = '$' + u.balance.toFixed(2);
-  if (currentUser.username === topupTarget) { currentUser.balance = u.balance; updateBalance(); }
+  showMsg('topup-msg',`✅ Nạp $${amount.toFixed(2)} thành công! Số dư mới: $${u.balance.toFixed(2)}`,'success');
+  document.getElementById('topup-current').textContent = '$'+u.balance.toFixed(2);
+  if (currentUser.username===topupTarget) { currentUser.balance=u.balance; updateBalance(); }
   setTimeout(() => { closeModal('topup-modal'); renderUsersTable(); }, 1200);
 }
 
@@ -1555,28 +1541,26 @@ function renderApiKeysTable() {
       <td><span style="color:#888;font-size:0.82rem">Tất cả user không gán key riêng</span></td>
       <td><span class="badge badge-success">active</span></td>
       <td><span style="color:#aaa;font-size:0.8rem">—</span></td>
-      <td>
-        <button class="btn-sm btn-outline" onclick="copyToClipboard(getMasterKey())">📋 Copy</button>
-      </td>
+      <td><button class="btn-sm btn-outline" onclick="copyToClipboard(getMasterKey())">📋 Copy</button></td>
     </tr>`;
 
-  if (!db.api_keys || !db.api_keys.length) {
+  if (!db.api_keys||!db.api_keys.length) {
     tbody.innerHTML = masterRow +
       '<tr><td colspan="6" style="text-align:center;color:#aaa;padding:20px">Chưa có API key phụ nào</td></tr>';
     return;
   }
 
-  tbody.innerHTML = masterRow + db.api_keys.map((k, i) => `
+  tbody.innerHTML = masterRow + db.api_keys.map((k,i) => `
     <tr>
-      <td><strong>${k.label || 'Key #' + (i + 1)}</strong></td>
+      <td><strong>${k.label||'Key #'+(i+1)}</strong></td>
       <td><code class="key-badge">${maskKey(k.key)}</code></td>
-      <td><span style="font-size:0.82rem;color:#555">${getUsersUsingKey(k.id, db)}</span></td>
+      <td><span style="font-size:0.82rem;color:#555">${getUsersUsingKey(k.id,db)}</span></td>
       <td>
-        <span class="badge ${k.status === 'active' ? 'badge-success' : 'badge-error'}">
-          ${k.status || 'active'}
+        <span class="badge ${k.status==='active'?'badge-success':'badge-error'}">
+          ${k.status||'active'}
         </span>
       </td>
-      <td><span style="color:#888;font-size:0.8rem">${k.created_at || '—'}</span></td>
+      <td><span style="color:#888;font-size:0.8rem">${k.created_at||'—'}</span></td>
       <td>
         <div style="display:flex;gap:4px;flex-wrap:wrap">
           <button class="btn-sm btn-outline" onclick="copyToClipboard('${k.key}')">📋 Copy</button>
@@ -1588,33 +1572,32 @@ function renderApiKeysTable() {
 }
 
 function getUsersUsingKey(keyId, db) {
-  const users = (db.users || []).filter(u => u.apiKeyId === keyId);
+  const users = (db.users||[]).filter(u => u.apiKeyId===keyId);
   if (!users.length) return '<span style="color:#aaa">Chưa gán cho ai</span>';
   return users.map(u => `<span class="key-badge" style="margin:1px 2px">${u.username}</span>`).join('');
 }
 
 function openAddApiKeyModal() {
-  document.getElementById('apikey-modal-title').textContent  = '➕ Thêm API Key';
-  document.getElementById('ak-label').value                  = '';
-  document.getElementById('ak-key').value                    = '';
-  document.getElementById('ak-status').value                 = 'active';
-  document.getElementById('ak-label').dataset.editId         = '';
-  populateUserSelect('ak-user', '');
+  document.getElementById('apikey-modal-title').textContent = '➕ Thêm API Key';
+  document.getElementById('ak-label').value                 = '';
+  document.getElementById('ak-key').value                   = '';
+  document.getElementById('ak-status').value                = 'active';
+  document.getElementById('ak-label').dataset.editId        = '';
+  populateUserSelect('ak-user','');
   clearMsg('apikey-modal-msg');
   openModal('apikey-modal');
 }
 
 function editApiKey(keyId) {
   const db = getDB();
-  const k  = (db.api_keys || []).find(x => x.id === keyId);
+  const k  = (db.api_keys||[]).find(x => x.id===keyId);
   if (!k) return;
-  // Tìm user đang được gán key này
-  const assignedUser = (db.users || []).find(u => u.apiKeyId === keyId);
-  document.getElementById('apikey-modal-title').textContent  = '✏️ Sửa API Key';
-  document.getElementById('ak-label').value                  = k.label  || '';
-  document.getElementById('ak-key').value                    = k.key    || '';
-  document.getElementById('ak-status').value                 = k.status || 'active';
-  document.getElementById('ak-label').dataset.editId         = keyId;
+  const assignedUser = (db.users||[]).find(u => u.apiKeyId===keyId);
+  document.getElementById('apikey-modal-title').textContent = '✏️ Sửa API Key';
+  document.getElementById('ak-label').value                 = k.label||'';
+  document.getElementById('ak-key').value                   = k.key||'';
+  document.getElementById('ak-status').value                = k.status||'active';
+  document.getElementById('ak-label').dataset.editId        = keyId;
   populateUserSelect('ak-user', assignedUser ? assignedUser.username : '');
   clearMsg('apikey-modal-msg');
   openModal('apikey-modal');
@@ -1625,41 +1608,34 @@ function saveApiKey() {
   const label    = document.getElementById('ak-label').value.trim();
   const key      = document.getElementById('ak-key').value.trim();
   const status   = document.getElementById('ak-status').value;
-  const assignTo = document.getElementById('ak-user').value || null;
+  const assignTo = document.getElementById('ak-user').value||null;
 
-  if (!label || !key)
-    return showMsg('apikey-modal-msg', '⚠️ Vui lòng điền đầy đủ Label và Key', 'error');
+  if (!label||!key)
+    return showMsg('apikey-modal-msg','⚠️ Vui lòng điền đầy đủ Label và Key','error');
 
   const db = getDB();
   if (!db.api_keys) db.api_keys = [];
-
   let keyId = editId;
 
   if (editId) {
-    const k = db.api_keys.find(x => x.id === editId);
+    const k = db.api_keys.find(x => x.id===editId);
     if (!k) return;
-    k.label  = label;
-    k.key    = key;
-    k.status = status;
-    showMsg('apikey-modal-msg', '✅ Cập nhật API Key thành công!', 'success');
+    k.label=label; k.key=key; k.status=status;
+    showMsg('apikey-modal-msg','✅ Cập nhật API Key thành công!','success');
   } else {
-    if (db.api_keys.find(x => x.key === key))
-      return showMsg('apikey-modal-msg', '⚠️ Key này đã tồn tại trong hệ thống', 'error');
-    keyId = 'key_' + Date.now();
+    if (db.api_keys.find(x => x.key===key))
+      return showMsg('apikey-modal-msg','⚠️ Key này đã tồn tại trong hệ thống','error');
+    keyId = 'key_'+Date.now();
     db.api_keys.push({
-      id:         keyId,
-      label:      label,
-      key:        key,
-      status:     status,
+      id:keyId, label, key, status,
       created_at: new Date().toLocaleString('vi-VN')
     });
-    showMsg('apikey-modal-msg', '✅ Thêm API Key thành công!', 'success');
+    showMsg('apikey-modal-msg','✅ Thêm API Key thành công!','success');
   }
 
-  // Xử lý gán user: gỡ key khỏi tất cả user trước, rồi gán lại
-  db.users.forEach(u => { if (u.apiKeyId === keyId) u.apiKeyId = null; });
+  db.users.forEach(u => { if (u.apiKeyId===keyId) u.apiKeyId=null; });
   if (assignTo) {
-    const targetUser = db.users.find(u => u.username === assignTo);
+    const targetUser = db.users.find(u => u.username===assignTo);
     if (targetUser) targetUser.apiKeyId = keyId;
   }
 
@@ -1669,54 +1645,49 @@ function saveApiKey() {
 
 function deleteApiKey(keyId) {
   const db    = getDB();
-  const k     = (db.api_keys || []).find(x => x.id === keyId);
+  const k     = (db.api_keys||[]).find(x => x.id===keyId);
   const label = k ? k.label : keyId;
-  if (!confirm(`Xác nhận xóa API Key "${label}"?\nCác user đang dùng key này sẽ tự động chuyển về Master Key.`))
-    return;
-  db.users.forEach(u => { if (u.apiKeyId === keyId) u.apiKeyId = null; });
-  db.api_keys = (db.api_keys || []).filter(x => x.id !== keyId);
-  saveDB(db);
-  renderApiKeysTable();
-  renderUsersTable();
+  if (!confirm(`Xác nhận xóa API Key "${label}"?\nCác user đang dùng key này sẽ tự động chuyển về Master Key.`)) return;
+  db.users.forEach(u => { if (u.apiKeyId===keyId) u.apiKeyId=null; });
+  db.api_keys = (db.api_keys||[]).filter(x => x.id!==keyId);
+  saveDB(db); renderApiKeysTable(); renderUsersTable();
 }
 
 // ============================================================
 // ADMIN — PRICING EDITOR
 // ============================================================
 function renderPricingEditor() {
-  const pricing = getPricingDB();
-
-  // USPS tbody
+  const pricing   = getPricingDB();
   const uspsTbody = document.getElementById('pricing-usps-tbody');
   const upsTbody  = document.getElementById('pricing-ups-tbody');
 
-  uspsTbody.innerHTML = WEIGHT_RANGES.map((r, i) => `
+  uspsTbody.innerHTML = WEIGHT_RANGES.map((r,i) => `
     <tr>
       <td><span class="weight-label">${r.label}</span></td>
       <td style="text-align:center">
         <input type="number" class="price-input" min="0" step="0.01"
-          id="price-usps_ground-${i}" value="${pricing.usps_ground.prices[i] || 0}"/>
+          id="price-usps_ground-${i}" value="${pricing.usps_ground.prices[i]||0}"/>
       </td>
       <td style="text-align:center">
         <input type="number" class="price-input" min="0" step="0.01"
-          id="price-usps_priority-${i}" value="${pricing.usps_priority.prices[i] || 0}"/>
+          id="price-usps_priority-${i}" value="${pricing.usps_priority.prices[i]||0}"/>
       </td>
       <td style="text-align:center">
         <input type="number" class="price-input" min="0" step="0.01"
-          id="price-usps_express-${i}" value="${pricing.usps_express.prices[i] || 0}"/>
+          id="price-usps_express-${i}" value="${pricing.usps_express.prices[i]||0}"/>
       </td>
     </tr>`).join('');
 
-  upsTbody.innerHTML = WEIGHT_RANGES.map((r, i) => `
+  upsTbody.innerHTML = WEIGHT_RANGES.map((r,i) => `
     <tr>
       <td><span class="weight-label">${r.label}</span></td>
       <td style="text-align:center">
         <input type="number" class="price-input" min="0" step="0.01"
-          id="price-ups_nextday-${i}" value="${pricing.ups_nextday.prices[i] || 0}"/>
+          id="price-ups_nextday-${i}" value="${pricing.ups_nextday.prices[i]||0}"/>
       </td>
       <td style="text-align:center">
         <input type="number" class="price-input" min="0" step="0.01"
-          id="price-ups_nextday_early-${i}" value="${pricing.ups_nextday_early.prices[i] || 0}"/>
+          id="price-ups_nextday_early-${i}" value="${pricing.ups_nextday_early.prices[i]||0}"/>
       </td>
     </tr>`).join('');
 
@@ -1726,53 +1697,48 @@ function renderPricingEditor() {
 function savePricing() {
   const db      = getDB();
   const pricing = db.pricing || JSON.parse(JSON.stringify(DEFAULT_PRICING));
-
   Object.keys(SERVICE_API_MAP).forEach(sk => {
     if (!pricing[sk]) pricing[sk] = JSON.parse(JSON.stringify(DEFAULT_PRICING[sk]));
-    pricing[sk].prices = WEIGHT_RANGES.map((_, i) => {
+    pricing[sk].prices = WEIGHT_RANGES.map((_,i) => {
       const el = document.getElementById(`price-${sk}-${i}`);
-      return el ? (parseFloat(el.value) || 0) : 0;
+      return el ? (parseFloat(el.value)||0) : 0;
     });
   });
-
-  db.pricing = pricing;
-  saveDB(db);
-  showMsg('pricing-msg', '✅ Đã lưu bảng giá thành công!', 'success');
+  db.pricing = pricing; saveDB(db);
+  showMsg('pricing-msg','✅ Đã lưu bảng giá thành công!','success');
   setTimeout(() => clearMsg('pricing-msg'), 3000);
-  renderPricingPreview();
-  renderServiceList();
+  renderPricingPreview(); renderServiceList();
 }
 
 function resetPricingDefault() {
   if (!confirm('Khôi phục bảng giá về mặc định? Mọi thay đổi sẽ bị mất.')) return;
   const db = getDB();
   db.pricing = JSON.parse(JSON.stringify(DEFAULT_PRICING));
-  saveDB(db);
-  renderPricingEditor();
-  showMsg('pricing-msg', '✅ Đã khôi phục bảng giá mặc định!', 'success');
+  saveDB(db); renderPricingEditor();
+  showMsg('pricing-msg','✅ Đã khôi phục bảng giá mặc định!','success');
   setTimeout(() => clearMsg('pricing-msg'), 3000);
 }
 
 function renderPricingPreview() {
-  const pricing  = getPricingDB();
-  const preview  = document.getElementById('pricing-preview');
-  const svcKeys  = Object.keys(SERVICE_API_MAP);
+  const pricing = getPricingDB();
+  const preview = document.getElementById('pricing-preview');
+  const svcKeys = Object.keys(SERVICE_API_MAP);
   preview.innerHTML = `
     <table>
       <thead>
         <tr>
           <th>Cân nặng</th>
-          ${svcKeys.map(sk => `<th style="text-align:center">${pricing[sk] ? pricing[sk].name : sk}</th>`).join('')}
+          ${svcKeys.map(sk => `<th style="text-align:center">${pricing[sk]?pricing[sk].name:sk}</th>`).join('')}
         </tr>
       </thead>
       <tbody>
-        ${WEIGHT_RANGES.map((r, i) => `
+        ${WEIGHT_RANGES.map((r,i) => `
           <tr>
             <td><span class="weight-label">${r.label}</span></td>
             ${svcKeys.map(sk =>
               `<td style="text-align:center">
                 <strong style="color:#1a73e8">
-                  $${pricing[sk] ? (pricing[sk].prices[i] || 0).toFixed(2) : '0.00'}
+                  $${pricing[sk] ? (pricing[sk].prices[i]||0).toFixed(2) : '0.00'}
                 </strong>
               </td>`
             ).join('')}
@@ -1786,29 +1752,26 @@ function renderPricingPreview() {
 // ============================================================
 function loadSettings() {
   const db = getDB();
-  const s  = db.settings || {};
-  document.getElementById('setting-master-key').value  = s.master_api    || DEFAULT_MASTER_API;
-  document.getElementById('setting-invite').value      = s.invite_code   || 'SHIP';
-  document.getElementById('setting-open-reg').value    = s.open_register ? '1' : '0';
+  const s  = db.settings||{};
+  document.getElementById('setting-master-key').value = s.master_api    || DEFAULT_MASTER_API;
+  document.getElementById('setting-invite').value     = s.invite_code   || 'SHIP';
+  document.getElementById('setting-open-reg').value   = s.open_register ? '1' : '0';
 }
 
 function saveSettings() {
   const masterKey  = document.getElementById('setting-master-key').value.trim();
   const inviteCode = document.getElementById('setting-invite').value.trim();
   const openReg    = document.getElementById('setting-open-reg').value === '1';
-
-  if (!masterKey) return showMsg('settings-msg', '⚠️ Master API Key không được để trống', 'error');
-
+  if (!masterKey) return showMsg('settings-msg','⚠️ Master API Key không được để trống','error');
   const db = getDB();
   if (!db.settings) db.settings = {};
   db.settings.master_api    = masterKey;
   db.settings.invite_code   = inviteCode;
   db.settings.open_register = openReg;
   saveDB(db);
-
-  showMsg('settings-msg', '✅ Đã lưu cài đặt thành công!', 'success');
+  showMsg('settings-msg','✅ Đã lưu cài đặt thành công!','success');
   setTimeout(() => clearMsg('settings-msg'), 3000);
-  updateBalance(); // cập nhật lại key info trên balance card
+  updateBalance();
 }
 
 // ============================================================
@@ -1816,16 +1779,11 @@ function saveSettings() {
 // ============================================================
 document.addEventListener('DOMContentLoaded', () => {
   initDB();
-
-  // Gắn sự kiện tìm kiếm đơn hàng
   const searchInput = document.getElementById('search-order');
   if (searchInput) searchInput.addEventListener('input', loadOrders);
-
-  // Auth screen mặc định hiển thị
   document.getElementById('auth-screen').style.display = 'flex';
   document.getElementById('app-screen').style.display  = 'none';
 });
 </script>
 </body>
 </html>
-

@@ -70,15 +70,12 @@
       padding: 6px 14px; border-radius: 6px; cursor: pointer; font-size: 0.85rem; font-weight: 600;
     }
     .topbar .logout-btn:hover { background: rgba(255,255,255,0.3); }
-
     .admin-bar {
       background: #fff3e0; border-bottom: 2px solid #ff9800;
       padding: 10px 24px; display: flex; align-items: center; gap: 12px; flex-wrap: wrap;
     }
     .admin-bar .admin-label { font-weight: 700; color: #e65100; font-size: 0.9rem; }
-
     .main-content { padding: 24px; max-width: 1060px; margin: 0 auto; }
-
     .tabs {
       display: flex; gap: 4px; margin-bottom: 20px; background: #fff;
       border-radius: 10px; padding: 6px; box-shadow: 0 1px 4px rgba(0,0,0,0.08); flex-wrap: wrap;
@@ -90,10 +87,8 @@
     }
     .tab-btn.active { background: #1a73e8; color: #fff; }
     .tab-btn:hover:not(.active) { background: #e8f0fe; color: #1a73e8; }
-
     .tab-content { display: none; }
     .tab-content.active { display: block; }
-
     .card {
       background: #fff; border-radius: 10px; padding: 22px 24px;
       box-shadow: 0 1px 6px rgba(0,0,0,0.08); margin-bottom: 18px;
@@ -102,11 +97,9 @@
       font-size: 1.05rem; color: #1a73e8; margin-bottom: 18px;
       border-bottom: 1.5px solid #e8f0fe; padding-bottom: 10px;
     }
-
     .form-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
     .form-grid .full { grid-column: 1 / -1; }
     .form-grid .form-group { margin-bottom: 0; }
-
     .table-wrap { overflow-x: auto; }
     table { width: 100%; border-collapse: collapse; font-size: 0.88rem; }
     th {
@@ -115,7 +108,6 @@
     }
     td { padding: 10px 12px; border-bottom: 1px solid #f0f0f0; vertical-align: middle; }
     tr:hover td { background: #fafbff; }
-
     .badge {
       display: inline-block; padding: 3px 10px; border-radius: 12px; font-size: 0.78rem; font-weight: 700;
     }
@@ -123,7 +115,6 @@
     .badge-pending { background: #fff8e1; color: #f57f17; }
     .badge-error   { background: #fdecea; color: #c62828; }
     .badge-info    { background: #e3f2fd; color: #1565c0; }
-
     .balance-card {
       background: linear-gradient(135deg, #1a73e8, #0d47a1);
       color: #fff; border-radius: 10px; padding: 20px 24px; margin-bottom: 18px;
@@ -131,7 +122,6 @@
     }
     .balance-card .amount { font-size: 2rem; font-weight: 700; }
     .balance-card .label  { font-size: 0.85rem; opacity: .8; margin-top: 2px; }
-
     .modal-overlay {
       display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.45);
       z-index: 1000; align-items: center; justify-content: center;
@@ -139,76 +129,80 @@
     .modal-overlay.open { display: flex; }
     .modal {
       background: #fff; border-radius: 12px; padding: 28px 28px 22px;
-      width: 480px; max-width: 95vw; box-shadow: 0 8px 32px rgba(0,0,0,0.18);
+      width: 500px; max-width: 95vw; box-shadow: 0 8px 32px rgba(0,0,0,0.18);
       max-height: 90vh; overflow-y: auto;
     }
     .modal h3 { font-size: 1.1rem; color: #1a73e8; margin-bottom: 18px; }
     .modal-actions { display: flex; gap: 10px; justify-content: flex-end; margin-top: 18px; }
-
     .detail-row {
-      display: flex; justify-content: space-between; padding: 7px 0;
+      display: flex; justify-content: space-between; padding: 8px 0;
       border-bottom: 1px solid #f0f0f0; font-size: 0.9rem;
     }
     .detail-row:last-child { border-bottom: none; }
-    .detail-row .key { color: #888; flex-shrink: 0; }
+    .detail-row .key { color: #888; flex-shrink: 0; min-width: 120px; }
     .detail-row .val { font-weight: 600; color: #333; text-align: right; word-break: break-all; max-width: 65%; }
-
     .spinner {
       display: inline-block; width: 18px; height: 18px; border: 2.5px solid #ccc;
       border-top-color: #1a73e8; border-radius: 50%; animation: spin .7s linear infinite; vertical-align: middle;
     }
     @keyframes spin { to { transform: rotate(360deg); } }
-
     .service-item {
       border: 1.5px solid #e0e0e0; border-radius: 8px; padding: 10px 14px;
-      margin-bottom: 8px; cursor: pointer; transition: all .2s; position: relative;
+      margin-bottom: 8px; cursor: pointer; transition: all .2s;
     }
     .service-item:hover, .service-item.selected { border-color: #1a73e8; background: #e8f0fe; }
     .service-item .sname  { font-weight: 600; font-size: 0.92rem; }
     .service-item .sprice { color: #2e7d32; font-weight: 700; font-size: 0.9rem; float: right; }
     .service-item .sweight { color: #888; font-size: 0.8rem; }
     .service-item .stime  { color: #1a73e8; font-size: 0.78rem; margin-top: 2px; }
-
     .key-badge {
       font-family: monospace; background: #f3e5f5; color: #6a1b9a;
       padding: 3px 8px; border-radius: 5px; font-size: 0.78rem; font-weight: 700;
     }
-
     .price-input {
       width: 80px; padding: 6px 8px; border: 1.5px solid #ddd;
       border-radius: 6px; font-size: 0.88rem; text-align: center; outline: none; transition: border .2s;
     }
     .price-input:focus { border-color: #1a73e8; background: #e8f0fe; }
-
     .weight-label {
       font-weight: 600; font-size: 0.85rem; color: #555;
       background: #f5f7fa; padding: 5px 10px; border-radius: 6px; white-space: nowrap;
     }
-
     .price-estimate-box {
       display: none; margin-top: 14px; padding: 12px 16px;
       background: #e8f5e9; border-radius: 8px; border-left: 4px solid #43a047; font-size: 0.92rem;
     }
-
     .topup-hist-row {
       display: flex; justify-content: space-between; align-items: center;
       padding: 5px 0; border-bottom: 1px solid #f5f5f5; font-size: 0.82rem; gap: 8px;
     }
-
     .user-actions { display: flex; gap: 5px; flex-wrap: wrap; }
-
-    .carrier-header {
-      display: flex; align-items: center; gap: 12px; margin-bottom: 14px; margin-top: 8px;
-    }
+    .carrier-header { display: flex; align-items: center; gap: 12px; margin-bottom: 14px; margin-top: 8px; }
     .carrier-header span { font-weight: 700; font-size: 1rem; color: #333; }
-
     .debug-box {
       background: #1e1e1e; border-radius: 8px; padding: 12px 14px;
       font-family: monospace; font-size: 0.78rem; color: #a8ff78;
-      max-height: 300px; overflow-y: auto; white-space: pre-wrap; word-break: break-all;
-      margin-top: 10px;
+      max-height: 300px; overflow-y: auto; white-space: pre-wrap; word-break: break-all; margin-top: 10px;
     }
-
+    /* SUCCESS BANNER */
+    .success-banner {
+      background: linear-gradient(135deg, #2e7d32, #43a047);
+      color: #fff; border-radius: 10px; padding: 18px 22px; margin-bottom: 16px;
+      display: flex; align-items: center; gap: 14px;
+    }
+    .success-banner .icon { font-size: 2.2rem; }
+    .success-banner .title { font-size: 1.1rem; font-weight: 700; margin-bottom: 3px; }
+    .success-banner .sub   { font-size: 0.85rem; opacity: .9; }
+    /* PDF BUTTON */
+    .pdf-btn {
+      display: inline-flex; align-items: center; gap: 8px;
+      background: #1a73e8; color: #fff; padding: 12px 22px; border-radius: 8px;
+      font-weight: 700; font-size: 0.95rem; text-decoration: none; cursor: pointer;
+      border: none; transition: background .2s; margin-top: 4px;
+    }
+    .pdf-btn:hover { background: #1558b0; }
+    .pdf-btn.green { background: #2e7d32; }
+    .pdf-btn.green:hover { background: #1b5e20; }
     @media (max-width: 600px) {
       .form-grid { grid-template-columns: 1fr; }
       .main-content { padding: 12px; }
@@ -219,7 +213,7 @@
 </head>
 <body>
 
-<!-- ==================== AUTH ==================== -->
+<!-- AUTH -->
 <div id="auth-screen">
   <div class="auth-box">
     <h1>🚚 ShipLabel</h1>
@@ -248,7 +242,7 @@
   </div>
 </div>
 
-<!-- ==================== APP ==================== -->
+<!-- APP -->
 <div id="app-screen">
   <div class="topbar">
     <div class="logo">🚚 ShipLabel</div>
@@ -257,7 +251,6 @@
       <button class="logout-btn" onclick="doLogout()">Đăng xuất</button>
     </div>
   </div>
-
   <div id="admin-bar-wrap" style="display:none">
     <div class="admin-bar">
       <span class="admin-label">⚙️ ADMIN</span>
@@ -290,7 +283,6 @@
         </div>
         <div style="font-size:2.5rem">💰</div>
       </div>
-
       <div class="card">
         <h2>1. Chọn dịch vụ vận chuyển</h2>
         <div id="service-loading" style="text-align:center;padding:20px;color:#888">
@@ -298,7 +290,6 @@
         </div>
         <div id="service-list" style="display:none"></div>
       </div>
-
       <div class="card">
         <h2>2. Thông tin gửi hàng</h2>
         <div style="display:grid;grid-template-columns:1fr 1fr;gap:18px">
@@ -326,7 +317,6 @@
           </div>
         </div>
       </div>
-
       <div class="card">
         <h2>3. Thông tin kiện hàng</h2>
         <div class="form-grid">
@@ -343,7 +333,6 @@
         </div>
         <div class="price-estimate-box" id="price-estimate"></div>
       </div>
-
       <button class="btn" id="create-btn" onclick="createOrder()" style="font-size:1.05rem;padding:13px">
         🚀 Tạo nhãn vận chuyển
       </button>
@@ -354,7 +343,7 @@
       <div class="card">
         <h2>📦 Lịch sử đơn hàng</h2>
         <div style="margin-bottom:14px;display:flex;gap:10px;align-items:center;flex-wrap:wrap">
-          <input type="text" id="search-order" placeholder="Tìm tracking ID..."
+          <input type="text" id="search-order" placeholder="Tìm tracking ID hoặc tên..."
             style="padding:8px 12px;border:1.5px solid #ddd;border-radius:8px;font-size:0.9rem;flex:1;min-width:180px;outline:none"/>
           <button class="btn-sm btn-outline" onclick="loadOrders()">🔄 Làm mới</button>
         </div>
@@ -432,9 +421,7 @@
     <div class="tab-content" id="pricing-tab">
       <div class="card">
         <h2>💲 Quản lý bảng giá</h2>
-        <p style="color:#888;font-size:0.85rem;margin-bottom:4px">
-          Giá tính tự động theo cân nặng khi user tạo đơn. Đơn vị: <strong>USD ($)</strong>.
-        </p>
+        <p style="color:#888;font-size:0.85rem;margin-bottom:4px">Đơn vị: <strong>USD ($)</strong></p>
         <div class="carrier-header" style="margin-top:18px">
           <span style="font-size:1.5rem">🇺🇸</span><span>USPS Services</span>
         </div>
@@ -505,23 +492,23 @@
 </div>
 
 <!-- MODALS -->
+<div class="modal-overlay" id="label-modal">
+  <div class="modal">
+    <h3>✅ Nhãn vận chuyển đã được tạo!</h3>
+    <div id="label-detail"></div>
+    <div class="modal-actions">
+      <button class="btn-sm btn-outline" onclick="closeModal('label-modal');openTab('orders-tab')">📦 Xem đơn hàng</button>
+      <button class="btn-sm btn-success" id="modal-pdf-btn" onclick="downloadPDF()">⬇️ Tải PDF ngay</button>
+    </div>
+  </div>
+</div>
+
 <div class="modal-overlay" id="order-modal">
   <div class="modal">
     <h3>📋 Chi tiết đơn hàng</h3>
     <div id="order-detail-content"></div>
     <div class="modal-actions">
       <button class="btn-sm btn-outline" onclick="closeModal('order-modal')">Đóng</button>
-    </div>
-  </div>
-</div>
-
-<div class="modal-overlay" id="label-modal">
-  <div class="modal">
-    <h3>✅ Tạo nhãn thành công!</h3>
-    <div id="label-detail"></div>
-    <div class="modal-actions">
-      <button class="btn-sm btn-outline" onclick="closeModal('label-modal')">Đóng</button>
-      <button class="btn-sm btn-success" onclick="downloadPDF()">⬇️ Tải PDF</button>
     </div>
   </div>
 </div>
@@ -590,7 +577,7 @@
 </div>
 
 <div class="modal-overlay" id="debug-modal">
-  <div class="modal" style="width:600px">
+  <div class="modal" style="width:620px">
     <h3>🔍 Raw API Response</h3>
     <div class="debug-box" id="debug-content"></div>
     <div class="modal-actions">
@@ -605,11 +592,8 @@
 // ============================================================
 const DEFAULT_MASTER_API = '1779|80Ak8rf6cbMTQ2tKgwlLcuayMVQjtXAiLuV0dngN8628a916';
 const API_BASE = 'https://shiplabel.net/api/v2';
-const DB_KEY   = 'sldb_v3';
+const DB_KEY   = 'sldb_v4';
 
-// ============================================================
-// PRICING CONFIG
-// ============================================================
 const WEIGHT_RANGES = [
   { id:'w1', label:'1 - 5 lbs',   min:0.1, max:5  },
   { id:'w2', label:'6 - 10 lbs',  min:6,   max:10 },
@@ -665,8 +649,7 @@ function initDB() {
     api_keys: [],
     pricing: JSON.parse(JSON.stringify(DEFAULT_PRICING))
   };
-  saveDB(db);
-  return db;
+  saveDB(db); return db;
 }
 
 // ============================================================
@@ -684,8 +667,6 @@ function getApiKeyForUser(username) {
     const k = db.api_keys.find(k => k.id === user.apiKeyId && k.status === 'active');
     if (k) return k.key;
   }
-  const assigned = db.api_keys.find(k => k.assignedUser === username && k.status === 'active');
-  if (assigned) return assigned.key;
   return getMasterKey();
 }
 function getApiKeyLabelForUser(username) {
@@ -696,8 +677,6 @@ function getApiKeyLabelForUser(username) {
     const k = db.api_keys.find(k => k.id === user.apiKeyId && k.status === 'active');
     if (k) return k.label;
   }
-  const assigned = db.api_keys.find(k => k.assignedUser === username && k.status === 'active');
-  if (assigned) return assigned.label;
   return 'Master Key';
 }
 function maskKey(key) {
@@ -716,26 +695,23 @@ function clearMsg(id) {
   if (!el) return;
   el.innerHTML = ''; el.className = 'msg';
 }
-function showToast(msg, duration = 2800) {
-  let toast = document.getElementById('toast-global');
-  if (!toast) {
-    toast = document.createElement('div');
-    toast.id = 'toast-global';
-    toast.style.cssText = 'position:fixed;bottom:28px;right:28px;z-index:99999;background:#323232;color:#fff;padding:12px 22px;border-radius:8px;font-size:0.92rem;box-shadow:0 4px 18px rgba(0,0,0,0.22);opacity:0;transition:opacity 0.3s;pointer-events:none';
-    document.body.appendChild(toast);
+function showToast(msg, duration=2800) {
+  let t = document.getElementById('toast-g');
+  if (!t) {
+    t = document.createElement('div'); t.id='toast-g';
+    t.style.cssText='position:fixed;bottom:28px;right:28px;z-index:99999;background:#323232;color:#fff;padding:12px 22px;border-radius:8px;font-size:0.92rem;box-shadow:0 4px 18px rgba(0,0,0,0.22);opacity:0;transition:opacity 0.3s;pointer-events:none';
+    document.body.appendChild(t);
   }
-  toast.textContent = msg;
-  toast.style.opacity = '1';
-  clearTimeout(toast._t);
-  toast._t = setTimeout(() => { toast.style.opacity = '0'; }, duration);
+  t.textContent=msg; t.style.opacity='1';
+  clearTimeout(t._t); t._t=setTimeout(()=>{t.style.opacity='0';},duration);
 }
 function copyToClipboard(text) {
   if (!text) return;
   navigator.clipboard.writeText(text)
-    .then(() => showToast('📋 Đã sao chép vào clipboard!'))
-    .catch(() => {
-      const el = document.createElement('textarea');
-      el.value = text; el.style.cssText = 'position:fixed;opacity:0';
+    .then(()=>showToast('📋 Đã sao chép!'))
+    .catch(()=>{
+      const el=document.createElement('textarea');
+      el.value=text; el.style.cssText='position:fixed;opacity:0';
       document.body.appendChild(el); el.select();
       document.execCommand('copy'); document.body.removeChild(el);
       showToast('📋 Đã sao chép!');
@@ -743,7 +719,7 @@ function copyToClipboard(text) {
 }
 
 // ============================================================
-// PRICING LOGIC
+// PRICING
 // ============================================================
 function getPricingDB() {
   const db = getDB();
@@ -753,14 +729,14 @@ function calcPrice(serviceKey, weight) {
   const pricing = getPricingDB();
   const svc = pricing[serviceKey];
   if (!svc) return null;
-  for (let i = 0; i < WEIGHT_RANGES.length; i++) {
+  for (let i=0; i<WEIGHT_RANGES.length; i++) {
     const r = WEIGHT_RANGES[i];
     if (weight >= r.min && weight <= r.max) return svc.prices[i] || 0;
   }
-  return svc.prices[WEIGHT_RANGES.length - 1] || 0;
+  return svc.prices[WEIGHT_RANGES.length-1] || 0;
 }
 function getServiceKeyByApiId(apiId) {
-  for (const [key, id] of Object.entries(SERVICE_API_MAP)) {
+  for (const [key,id] of Object.entries(SERVICE_API_MAP)) {
     if (id === String(apiId)) return key;
   }
   return null;
@@ -772,252 +748,235 @@ function getPriceForOrder(apiLabelId, weight) {
 }
 
 // ============================================================
-// ✅ CHECK SUCCESS — nhận diện mọi kiểu response
+// ✅ CORE FIX: tìm PDF/tracking ở MỌI lớp của response
 // ============================================================
+function findPdfInObject(obj, depth=0) {
+  if (!obj || typeof obj !== 'object' || depth > 5) return '';
+  // Các field tên pdf trực tiếp
+  const pdfFields = ['pdf','pdf_url','label_url','labelUrl','label_pdf','file','download_url'];
+  for (const f of pdfFields) {
+    if (obj[f] && typeof obj[f]==='string' && obj[f].length > 10) return obj[f];
+  }
+  // Đệ quy vào nested objects
+  for (const val of Object.values(obj)) {
+    if (val && typeof val==='object') {
+      const found = findPdfInObject(val, depth+1);
+      if (found) return found;
+    }
+  }
+  return '';
+}
+
+function findTrackingInObject(obj, depth=0) {
+  if (!obj || typeof obj !== 'object' || depth > 5) return '';
+  const trackFields = ['tracking_id','trackingId','tracking','TrackingId','trackingNumber',
+                       'tracking_number','TrackingNumber','barcode','label_id'];
+  for (const f of trackFields) {
+    if (obj[f] && typeof obj[f]==='string' && obj[f].length > 3) return obj[f];
+  }
+  for (const val of Object.values(obj)) {
+    if (val && typeof val==='object') {
+      const found = findTrackingInObject(val, depth+1);
+      if (found) return found;
+    }
+  }
+  return '';
+}
+
 function isResponseSuccess(json) {
   if (!json) return false;
-  if (json.success === true)      return true;
-  if (json.success === 'true')    return true;
-  if (json.status  === true)      return true;
-  if (json.status  === 'true')    return true;
-  if (json.status  === 'success') return true;
-  if (json.status  === 'ok')      return true;
-  if (json.status  === 200)       return true;
-  if (json.code    === 200)       return true;
-  if (json.code    === 0)         return true;
-  if (json.error   === false)     return true;
-  if (json.error   === 0)         return true;
-  if (json.error   === null)      return true;
-
-  // ✅ Loop qua tất cả lớp có thể chứa data (kể cả root)
-  const candidates = [json, json.data, json.result, json.order, json.label].filter(Boolean);
-  for (const d of candidates) {
-    const hasTracking = !!(
-      d.tracking_id    || d.trackingId     || d.tracking        ||
-      d.TrackingId     || d.trackingNumber || d.tracking_number ||
-      d.TrackingNumber || d.barcode
-    );
-    const hasPdf = !!(
-      d.pdf          || d.pdf_url    || d.label_url ||
-      d.labelUrl     || d.label      || d.file      ||
-      d.download_url || d.url
-    );
-    if (hasTracking || hasPdf) return true;
-  }
+  // Check explicit success flags
+  if (json.success===true || json.success==='true') return true;
+  if (json.status===true  || json.status==='true')  return true;
+  if (json.status==='success' || json.status==='ok') return true;
+  if (json.status===200 || json.code===200 || json.code===0) return true;
+  if (json.error===false || json.error===0 || json.error===null) return true;
+  // ✅ Check có PDF ở bất kỳ đâu trong response
+  const pdf = findPdfInObject(json);
+  if (pdf) return true;
+  // Check có tracking ở bất kỳ đâu
+  const tracking = findTrackingInObject(json);
+  if (tracking) return true;
   return false;
 }
 
-// ============================================================
-// ✅ EXTRACT ORDER DATA — tìm pdf/tracking ở mọi lớp
-// ============================================================
 function extractOrderData(json) {
-  const candidates = [json, json.data, json.result, json.order, json.label].filter(Boolean);
-
-  let tracking_id = '';
-  let pdf         = '';
-
-  for (const d of candidates) {
-    if (!tracking_id)
-      tracking_id =
-        d.tracking_id    || d.trackingId     || d.tracking        ||
-        d.TrackingId     || d.trackingNumber || d.tracking_number ||
-        d.TrackingNumber || d.barcode        || '';
-    if (!pdf)
-      pdf =
-        d.pdf          || d.pdf_url    || d.label_url ||
-        d.labelUrl     || d.label      || d.file      ||
-        d.download_url || d.url        || '';
-    if (tracking_id && pdf) break;
-  }
-
-  // Lấy các field phụ — ưu tiên root vì API này trả flat
-  const d = json.data || json.result || json.order || json.label || json || {};
-  const fromName = d.fromName  || d.from_name  || d.sender_name   || (lastPayload ? lastPayload.fromName : '');
-  const toName   = d.toName    || d.to_name    || d.receiver_name || (lastPayload ? lastPayload.toName   : '');
-  const weight   = d.weight    || d.Weight     || (lastPayload ? lastPayload.weight : 0);
-  const price    = d.price     || d.amount     || d.cost          || 0;
-
-  return { ...d, tracking_id, pdf, fromName, toName, weight, price };
+  const pdf        = findPdfInObject(json);
+  const tracking   = findTrackingInObject(json);
+  // Flatten: lấy data từ root hoặc json.data
+  const flat = Object.assign({}, json, json.data||{}, json.result||{}, json.order||{}, json.label||{});
+  const fromName = flat.fromName  || flat.from_name  || (lastPayload ? lastPayload.fromName : '');
+  const toName   = flat.toName    || flat.to_name    || (lastPayload ? lastPayload.toName   : '');
+  const weight   = flat.weight    || (lastPayload ? lastPayload.weight : 0);
+  const price    = flat.price     || flat.amount     || flat.cost || 0;
+  return { ...flat, tracking_id: tracking, pdf, fromName, toName, weight, price };
 }
 
 // ============================================================
 // AUTH
 // ============================================================
 function switchAuthTab(tab) {
-  document.querySelectorAll('.auth-tab').forEach((t,i) => {
-    t.classList.toggle('active', (tab==='login'&&i===0)||(tab==='register'&&i===1));
+  document.querySelectorAll('.auth-tab').forEach((t,i)=>{
+    t.classList.toggle('active',(tab==='login'&&i===0)||(tab==='register'&&i===1));
   });
   document.getElementById('login-form').style.display    = tab==='login'    ? 'block':'none';
   document.getElementById('register-form').style.display = tab==='register' ? 'block':'none';
   clearMsg('auth-msg');
 }
 function doLogin() {
-  const u = document.getElementById('login-user').value.trim();
-  const p = document.getElementById('login-pass').value;
+  const u=document.getElementById('login-user').value.trim();
+  const p=document.getElementById('login-pass').value;
   if (!u||!p) return showMsg('auth-msg','Vui lòng nhập đầy đủ thông tin','error');
-  const db = getDB();
-  const user = db.users.find(x => x.username===u && x.password===btoa(p));
+  const db=getDB();
+  const user=db.users.find(x=>x.username===u&&x.password===btoa(p));
   if (!user) return showMsg('auth-msg','Sai tên đăng nhập hoặc mật khẩu','error');
-  currentUser = JSON.parse(JSON.stringify(user));
-  enterApp();
+  currentUser=JSON.parse(JSON.stringify(user)); enterApp();
 }
 function doRegister() {
-  const u   = document.getElementById('reg-user').value.trim();
-  const n   = document.getElementById('reg-name').value.trim();
-  const e   = document.getElementById('reg-email').value.trim();
-  const p   = document.getElementById('reg-pass').value;
-  const inv = document.getElementById('reg-invite').value.trim();
+  const u=document.getElementById('reg-user').value.trim();
+  const n=document.getElementById('reg-name').value.trim();
+  const e=document.getElementById('reg-email').value.trim();
+  const p=document.getElementById('reg-pass').value;
+  const inv=document.getElementById('reg-invite').value.trim();
   if (!u||!n||!p) return showMsg('auth-msg','Vui lòng nhập đầy đủ thông tin bắt buộc','error');
-  const db = getDB();
+  const db=getDB();
   if (!db.settings.open_register) {
     if (!inv) return showMsg('auth-msg','Cần mã mời để đăng ký','error');
-    if (inv !== db.settings.invite_code) return showMsg('auth-msg','Mã mời không hợp lệ','error');
+    if (inv!==db.settings.invite_code) return showMsg('auth-msg','Mã mời không hợp lệ','error');
   }
   if (db.users.find(x=>x.username===u)) return showMsg('auth-msg','Tên đăng nhập đã tồn tại','error');
-  const newUser = {
-    username:u, password:btoa(p), name:n, email:e,
-    role:'user', balance:0, apiKeyId:null, orders:[], topup_history:[]
-  };
+  const newUser={username:u,password:btoa(p),name:n,email:e,role:'user',balance:0,apiKeyId:null,orders:[],topup_history:[]};
   db.users.push(newUser); saveDB(db);
   showMsg('auth-msg','✅ Tạo tài khoản thành công! Đang đăng nhập...','success');
-  setTimeout(() => { currentUser = JSON.parse(JSON.stringify(newUser)); enterApp(); }, 1000);
+  setTimeout(()=>{currentUser=JSON.parse(JSON.stringify(newUser));enterApp();},1000);
 }
 function doLogout() {
-  currentUser=null; services=[]; selectedService=null; lastPayload=null;
-  document.getElementById('app-screen').style.display  = 'none';
-  document.getElementById('auth-screen').style.display = 'flex';
-  document.getElementById('login-user').value = '';
-  document.getElementById('login-pass').value = '';
+  currentUser=null;services=[];selectedService=null;lastPayload=null;
+  document.getElementById('app-screen').style.display='none';
+  document.getElementById('auth-screen').style.display='flex';
+  document.getElementById('login-user').value='';
+  document.getElementById('login-pass').value='';
   clearMsg('auth-msg');
 }
 function enterApp() {
-  document.getElementById('auth-screen').style.display = 'none';
-  document.getElementById('app-screen').style.display  = 'block';
-  document.getElementById('topbar-username').textContent = '👤 ' + currentUser.name;
-  const isAdmin = currentUser.role === 'admin';
-  document.getElementById('admin-bar-wrap').style.display = isAdmin ? 'block' : 'none';
-  ['tab-admin','tab-apikeys','tab-pricing','tab-settings'].forEach(id => {
-    document.getElementById(id).style.display = isAdmin ? 'block' : 'none';
+  document.getElementById('auth-screen').style.display='none';
+  document.getElementById('app-screen').style.display='block';
+  document.getElementById('topbar-username').textContent='👤 '+currentUser.name;
+  const isAdmin=currentUser.role==='admin';
+  document.getElementById('admin-bar-wrap').style.display=isAdmin?'block':'none';
+  ['tab-admin','tab-apikeys','tab-pricing','tab-settings'].forEach(id=>{
+    document.getElementById(id).style.display=isAdmin?'block':'none';
   });
-  openTab('create-tab');
-  updateBalance();
-  loadServices();
-  loadOrders();
+  openTab('create-tab'); updateBalance(); loadServices(); loadOrders();
 }
 
 // ============================================================
 // TABS
 // ============================================================
 function openTab(id) {
-  document.querySelectorAll('.tab-content').forEach(t => t.classList.remove('active'));
-  document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
-  const el = document.getElementById(id);
-  if (el) el.classList.add('active');
-  const map = {
-    'create-tab':'tab-create','orders-tab':'tab-orders','services-tab':'tab-services',
-    'admin-tab':'tab-admin','apikeys-tab':'tab-apikeys','pricing-tab':'tab-pricing','settings-tab':'tab-settings'
-  };
-  if (map[id]) { const btn=document.getElementById(map[id]); if(btn) btn.classList.add('active'); }
-  if (id==='services-tab') renderServicesTable();
-  if (id==='admin-tab')    renderUsersTable();
-  if (id==='apikeys-tab')  renderApiKeysTable();
-  if (id==='pricing-tab')  renderPricingEditor();
-  if (id==='settings-tab') loadSettings();
+  document.querySelectorAll('.tab-content').forEach(t=>t.classList.remove('active'));
+  document.querySelectorAll('.tab-btn').forEach(b=>b.classList.remove('active'));
+  const el=document.getElementById(id); if(el) el.classList.add('active');
+  const map={'create-tab':'tab-create','orders-tab':'tab-orders','services-tab':'tab-services',
+             'admin-tab':'tab-admin','apikeys-tab':'tab-apikeys','pricing-tab':'tab-pricing','settings-tab':'tab-settings'};
+  if(map[id]){const btn=document.getElementById(map[id]);if(btn)btn.classList.add('active');}
+  if(id==='services-tab') renderServicesTable();
+  if(id==='admin-tab')    renderUsersTable();
+  if(id==='apikeys-tab')  renderApiKeysTable();
+  if(id==='pricing-tab')  renderPricingEditor();
+  if(id==='settings-tab') loadSettings();
 }
 
 // ============================================================
 // BALANCE
 // ============================================================
 function updateBalance() {
-  const db = getDB();
-  const u  = db.users.find(x => x.username===currentUser.username);
-  if (u) currentUser.balance = u.balance;
-  document.getElementById('user-balance').textContent = '$'+(currentUser.balance||0).toFixed(2);
-  document.getElementById('active-key-info').textContent = '🔑 Key: '+getApiKeyLabelForUser(currentUser.username);
+  const db=getDB();
+  const u=db.users.find(x=>x.username===currentUser.username);
+  if(u) currentUser.balance=u.balance;
+  document.getElementById('user-balance').textContent='$'+(currentUser.balance||0).toFixed(2);
+  document.getElementById('active-key-info').textContent='🔑 Key: '+getApiKeyLabelForUser(currentUser.username);
 }
 
 // ============================================================
 // SERVICES
 // ============================================================
 async function loadServices() {
-  document.getElementById('service-loading').style.display = 'block';
-  document.getElementById('service-list').style.display    = 'none';
-  const apiKey = getApiKeyForUser(currentUser.username);
+  document.getElementById('service-loading').style.display='block';
+  document.getElementById('service-list').style.display='none';
+  const apiKey=getApiKeyForUser(currentUser.username);
   try {
-    const res  = await fetch(API_BASE+'/services', {
+    const res=await fetch(API_BASE+'/services',{
       method:'POST',
       headers:{'Authorization':'Bearer '+apiKey,'Content-Type':'application/json'},
       body:JSON.stringify({})
     });
-    const json = await res.json();
-    if (json.success && json.data) { services = json.data; }
-    else throw new Error('API error');
+    const json=await res.json();
+    if(json.success&&json.data){services=json.data;}
+    else throw new Error('fallback');
   } catch(e) {
-    services = Object.entries(SERVICE_API_MAP).map(([sk, apiId]) => {
-      const svc = DEFAULT_PRICING[sk];
-      return { id:apiId, name:svc?svc.name:sk, max_weight:'70.00 lbs', serviceKey:sk };
+    services=Object.entries(SERVICE_API_MAP).map(([sk,apiId])=>{
+      const svc=DEFAULT_PRICING[sk];
+      return {id:apiId,name:svc?svc.name:sk,max_weight:'70.00 lbs',serviceKey:sk};
     });
   }
-  document.getElementById('service-loading').style.display = 'none';
-  document.getElementById('service-list').style.display    = 'block';
+  document.getElementById('service-loading').style.display='none';
+  document.getElementById('service-list').style.display='block';
   renderServiceList();
 }
 
 function renderServiceList() {
-  const el      = document.getElementById('service-list');
-  const pricing = getPricingDB();
-  el.innerHTML  = services.map(s => {
-    const sk   = getServiceKeyByApiId(s.id);
-    const svcP = sk ? pricing[sk] : null;
-    const price = svcP
-      ? '$'+svcP.prices[0].toFixed(2)+' – $'+svcP.prices[svcP.prices.length-1].toFixed(2)
-      : 'N/A';
-    const time = svcP ? svcP.time : '';
+  const el=document.getElementById('service-list');
+  const pricing=getPricingDB();
+  el.innerHTML=services.map(s=>{
+    const sk=getServiceKeyByApiId(s.id);
+    const svcP=sk?pricing[sk]:null;
+    const price=svcP?'$'+svcP.prices[0].toFixed(2)+' – $'+svcP.prices[svcP.prices.length-1].toFixed(2):'N/A';
+    const time=svcP?svcP.time:'';
     return `<div class="service-item" id="svc-${s.id}" onclick="selectService('${s.id}')">
       <span class="sname">${s.name}</span>
       <span class="sprice">${price}</span><br>
-      <span class="sweight">Max: ${s.max_weight || '70 lbs'}</span>
-      ${time ? `<div class="stime">⏱ ${time}</div>` : ''}
+      <span class="sweight">Max: ${s.max_weight||'70 lbs'}</span>
+      ${time?`<div class="stime">⏱ ${time}</div>`:''}
     </div>`;
   }).join('');
 }
 
 function selectService(id) {
-  document.querySelectorAll('.service-item').forEach(el => el.classList.remove('selected'));
-  const el = document.getElementById('svc-'+id);
-  if (el) el.classList.add('selected');
-  selectedService = services.find(s => s.id===id);
+  document.querySelectorAll('.service-item').forEach(el=>el.classList.remove('selected'));
+  const el=document.getElementById('svc-'+id);
+  if(el) el.classList.add('selected');
+  selectedService=services.find(s=>s.id===id);
   updatePriceEstimate();
 }
 
 function renderServicesTable() {
-  const wrap    = document.getElementById('services-table-wrap');
-  const pricing = getPricingDB();
-  if (!services.length) {
-    wrap.innerHTML = '<div style="text-align:center;padding:30px;color:#aaa">Chưa có dữ liệu dịch vụ</div>';
+  const wrap=document.getElementById('services-table-wrap');
+  const pricing=getPricingDB();
+  if(!services.length){
+    wrap.innerHTML='<div style="text-align:center;padding:30px;color:#aaa">Chưa có dữ liệu dịch vụ</div>';
     return;
   }
-  wrap.innerHTML = `
+  wrap.innerHTML=`
     <table>
       <thead>
         <tr>
           <th>ID</th><th>Tên dịch vụ</th><th>Thời gian</th>
-          ${WEIGHT_RANGES.map(r => `<th style="text-align:center">${r.label}</th>`).join('')}
+          ${WEIGHT_RANGES.map(r=>`<th style="text-align:center">${r.label}</th>`).join('')}
         </tr>
       </thead>
       <tbody>
-        ${services.map(s => {
-          const sk   = getServiceKeyByApiId(s.id);
-          const svcP = sk ? pricing[sk] : null;
+        ${services.map(s=>{
+          const sk=getServiceKeyByApiId(s.id);
+          const svcP=sk?pricing[sk]:null;
           return `<tr>
             <td><span class="badge badge-pending">${s.id}</span></td>
             <td><strong>${s.name}</strong></td>
-            <td><small style="color:#888">${svcP ? svcP.time : '-'}</small></td>
-            ${WEIGHT_RANGES.map((_,i) =>
-              `<td style="text-align:center">
-                <strong style="color:#1a73e8">${svcP ? '$'+svcP.prices[i].toFixed(2) : '-'}</strong>
-              </td>`
-            ).join('')}
+            <td><small style="color:#888">${svcP?svcP.time:'-'}</small></td>
+            ${WEIGHT_RANGES.map((_,i)=>`
+              <td style="text-align:center">
+                <strong style="color:#1a73e8">${svcP?'$'+svcP.prices[i].toFixed(2):'-'}</strong>
+              </td>`).join('')}
           </tr>`;
         }).join('')}
       </tbody>
@@ -1028,47 +987,47 @@ function renderServicesTable() {
 // PRICE ESTIMATE
 // ============================================================
 function updatePriceEstimate() {
-  const box = document.getElementById('price-estimate');
-  if (!box) return;
-  if (!selectedService) { box.style.display='none'; return; }
-  const weight = parseFloat(document.getElementById('weight').value) || 0;
-  if (weight <= 0) { box.style.display='none'; return; }
-  const price = getPriceForOrder(selectedService.id, weight);
-  if (price === null) { box.style.display='none'; return; }
-  box.style.display = 'block';
-  box.innerHTML = `💡 Giá dự kiến: <strong style="color:#2e7d32;font-size:1.1rem">$${price.toFixed(2)}</strong>
+  const box=document.getElementById('price-estimate');
+  if(!box) return;
+  if(!selectedService){box.style.display='none';return;}
+  const weight=parseFloat(document.getElementById('weight').value)||0;
+  if(weight<=0){box.style.display='none';return;}
+  const price=getPriceForOrder(selectedService.id,weight);
+  if(price===null){box.style.display='none';return;}
+  box.style.display='block';
+  box.innerHTML=`💡 Giá dự kiến: <strong style="color:#2e7d32;font-size:1.1rem">$${price.toFixed(2)}</strong>
     <span style="color:#888;font-size:0.82rem"> — ${selectedService.name} / ${weight} lbs</span>`;
 }
 
 // ============================================================
-// CREATE ORDER
+// ✅ CREATE ORDER — xử lý mọi kiểu response
 // ============================================================
 async function createOrder() {
   clearMsg('create-msg');
 
-  if (!selectedService)
+  if(!selectedService)
     return showMsg('create-msg','⚠️ Vui lòng chọn dịch vụ vận chuyển','error');
 
-  const required = ['fromName','fromAddress','fromCity','fromState','fromZip',
-                    'toName','toAddress','toCity','toState','toZip','weight'];
-  for (const f of required) {
-    if (!document.getElementById(f).value.trim())
+  const required=['fromName','fromAddress','fromCity','fromState','fromZip',
+                  'toName','toAddress','toCity','toState','toZip','weight'];
+  for(const f of required){
+    if(!document.getElementById(f).value.trim())
       return showMsg('create-msg',`⚠️ Vui lòng điền: ${f}`,'error');
   }
 
-  const db = getDB();
-  const u  = db.users.find(x => x.username===currentUser.username);
-  if (!u || (u.balance||0) <= 0)
+  const db=getDB();
+  const u=db.users.find(x=>x.username===currentUser.username);
+  if(!u||(u.balance||0)<=0)
     return showMsg('create-msg','⚠️ Số dư không đủ. Liên hệ admin để nạp tiền.','error');
 
-  const btn = document.getElementById('create-btn');
-  btn.disabled = true;
-  btn.innerHTML = '<span class="spinner"></span> Đang tạo nhãn...';
+  const btn=document.getElementById('create-btn');
+  btn.disabled=true;
+  btn.innerHTML='<span class="spinner"></span> Đang tạo nhãn...';
 
-  const apiKey = getApiKeyForUser(currentUser.username);
-  const weight = parseFloat(document.getElementById('weight').value) || 0;
+  const apiKey=getApiKeyForUser(currentUser.username);
+  const weight=parseFloat(document.getElementById('weight').value)||0;
 
-  lastPayload = {
+  lastPayload={
     label_id:     selectedService.id,
     fromName:     document.getElementById('fromName').value.trim(),
     fromCompany:  document.getElementById('fromCompany').value.trim(),
@@ -1077,7 +1036,7 @@ async function createOrder() {
     fromZip:      document.getElementById('fromZip').value.trim(),
     fromState:    document.getElementById('fromState').value.trim().toUpperCase(),
     fromCity:     document.getElementById('fromCity').value.trim(),
-    fromCountry:  document.getElementById('fromCountry').value.trim() || 'US',
+    fromCountry:  document.getElementById('fromCountry').value.trim()||'US',
     toName:       document.getElementById('toName').value.trim(),
     toCompany:    document.getElementById('toCompany').value.trim(),
     toAddress:    document.getElementById('toAddress').value.trim(),
@@ -1085,79 +1044,79 @@ async function createOrder() {
     toZip:        document.getElementById('toZip').value.trim(),
     toState:      document.getElementById('toState').value.trim().toUpperCase(),
     toCity:       document.getElementById('toCity').value.trim(),
-    toCountry:    document.getElementById('toCountry').value.trim() || 'US',
-    weight:       weight,
-    length:       parseFloat(document.getElementById('length').value) || 0,
-    height:       parseFloat(document.getElementById('height').value) || 0,
-    width:        parseFloat(document.getElementById('width').value)  || 0,
-    reference_1:  document.getElementById('ref1').value.trim(),
-    reference_2:  document.getElementById('ref2').value.trim(),
-    discription:  document.getElementById('desc').value.trim()
+    toCountry:    document.getElementById('toCountry').value.trim()||'US',
+    weight,
+    length:  parseFloat(document.getElementById('length').value)||0,
+    height:  parseFloat(document.getElementById('height').value)||0,
+    width:   parseFloat(document.getElementById('width').value)||0,
+    reference_1: document.getElementById('ref1').value.trim(),
+    reference_2: document.getElementById('ref2').value.trim(),
+    discription: document.getElementById('desc').value.trim()
   };
 
   try {
-    const res = await fetch(API_BASE+'/create-order', {
+    const res=await fetch(API_BASE+'/create-order',{
       method:'POST',
       headers:{'Authorization':'Bearer '+apiKey,'Content-Type':'application/json'},
       body:JSON.stringify(lastPayload)
     });
 
-    const rawText = await res.text();
-    console.log('=== RAW API RESPONSE ===\n', rawText);
+    const rawText=await res.text();
+    console.log('=== RAW RESPONSE ===\n',rawText);
 
     let json;
-    try {
-      json = JSON.parse(rawText);
-    } catch(parseErr) {
+    try { json=JSON.parse(rawText); }
+    catch(e) {
       showMsg('create-msg',
-        `❌ Server trả về dữ liệu không hợp lệ (HTTP ${res.status}). `+
+        `❌ Response không hợp lệ (HTTP ${res.status}) `+
         `<button onclick="showDebug('${encodeURIComponent(rawText.substring(0,2000))}')" `+
-        `style="margin-left:8px;padding:3px 10px;background:#1a73e8;color:#fff;border:none;`+
-        `border-radius:5px;cursor:pointer;font-size:0.82rem">🔍 Xem chi tiết</button>`,
+        `style="margin-left:8px;padding:3px 10px;background:#1a73e8;color:#fff;border:none;border-radius:5px;cursor:pointer;font-size:0.82rem">🔍 Xem chi tiết</button>`,
         'error');
-      btn.disabled = false;
-      btn.innerHTML = '🚀 Tạo nhãn vận chuyển';
-      return;
+      btn.disabled=false; btn.innerHTML='🚀 Tạo nhãn vận chuyển'; return;
     }
 
-    console.log('=== PARSED JSON ===\n', JSON.stringify(json,null,2));
+    console.log('=== PARSED ===\n',JSON.stringify(json,null,2));
 
-    if (isResponseSuccess(json)) {
-      const d          = extractOrderData(json);
-      const localPrice = getPriceForOrder(selectedService.id, weight);
-      const finalPrice = (localPrice !== null) ? localPrice : (parseFloat(d.price)||0);
+    // ✅ Dùng hàm đệ quy tìm PDF ở mọi lớp
+    if(isResponseSuccess(json)) {
+      const d=extractOrderData(json);
+      const localPrice=getPriceForOrder(selectedService.id,weight);
+      const finalPrice=(localPrice!==null)?localPrice:(parseFloat(d.price)||0);
 
-      const db2 = getDB();
-      const u2  = db2.users.find(x => x.username===currentUser.username);
-      if (u2) {
-        u2.balance = Math.max(0, (u2.balance||0) - finalPrice);
-        if (!u2.orders) u2.orders = [];
-        u2.orders.unshift({
-          tracking_id:   d.tracking_id || '',
-          pdf:           d.pdf         || '',
-          price:         finalPrice,
-          service:       selectedService.name,
-          serviceKey:    getServiceKeyByApiId(selectedService.id),
-          weight:        weight,
-          length:        lastPayload.length,
-          width:         lastPayload.width,
-          height:        lastPayload.height,
-          fromName:      lastPayload.fromName,
-          fromAddress:   lastPayload.fromAddress,
-          fromCity:      lastPayload.fromCity,
-          fromState:     lastPayload.fromState,
-          fromZip:       lastPayload.fromZip,
-          toName:        lastPayload.toName,
-          toAddress:     lastPayload.toAddress,
-          toCity:        lastPayload.toCity,
-          toState:       lastPayload.toState,
-          toZip:         lastPayload.toZip,
-          created_at:    new Date().toLocaleString('vi-VN'),
+      // Lưu đơn hàng
+      const db2=getDB();
+      const u2=db2.users.find(x=>x.username===currentUser.username);
+      if(u2){
+        u2.balance=Math.max(0,(u2.balance||0)-finalPrice);
+        if(!u2.orders) u2.orders=[];
+        const orderRecord={
+          id:         'ORD'+Date.now(),
+          tracking_id: d.tracking_id||'',
+          pdf:         d.pdf||'',
+          price:       finalPrice,
+          service:     selectedService.name,
+          serviceKey:  getServiceKeyByApiId(selectedService.id),
+          weight,
+          length:      lastPayload.length,
+          width:       lastPayload.width,
+          height:      lastPayload.height,
+          fromName:    lastPayload.fromName,
+          fromAddress: lastPayload.fromAddress,
+          fromCity:    lastPayload.fromCity,
+          fromState:   lastPayload.fromState,
+          fromZip:     lastPayload.fromZip,
+          toName:      lastPayload.toName,
+          toAddress:   lastPayload.toAddress,
+          toCity:      lastPayload.toCity,
+          toState:     lastPayload.toState,
+          toZip:       lastPayload.toZip,
+          created_at:  new Date().toLocaleString('vi-VN'),
           api_key_label: getApiKeyLabelForUser(currentUser.username),
-          raw_response:  json
-        });
+          raw_response: json
+        };
+        u2.orders.unshift(orderRecord);
         saveDB(db2);
-        currentUser = JSON.parse(JSON.stringify(u2));
+        currentUser=JSON.parse(JSON.stringify(u2));
       }
 
       updateBalance();
@@ -1165,175 +1124,248 @@ async function createOrder() {
       showLabelModal(d, finalPrice);
 
     } else {
-      const errMsg =
-        json.message ||
-        json.msg ||
-        (typeof json.error==='string' ? json.error : null) ||
-        (json.errors
-          ? (typeof json.errors==='string' ? json.errors : JSON.stringify(json.errors))
-          : null) ||
-        (json.data && json.data.message) ||
-        (json.data && json.data.error)   ||
+      // Thất bại thực sự
+      const errMsg=
+        json.message||json.msg||
+        (typeof json.error==='string'?json.error:null)||
+        (json.errors?(typeof json.errors==='string'?json.errors:JSON.stringify(json.errors)):null)||
+        (json.data&&json.data.message)||(json.data&&json.data.error)||
         `HTTP ${res.status} — Không thể tạo nhãn`;
 
       showMsg('create-msg',
         `❌ ${errMsg} `+
         `<button onclick="showDebug('${encodeURIComponent(JSON.stringify(json,null,2).substring(0,3000))}')" `+
-        `style="margin-left:8px;padding:3px 10px;background:#c62828;color:#fff;border:none;`+
-        `border-radius:5px;cursor:pointer;font-size:0.82rem">🔍 Xem response</button>`,
+        `style="margin-left:8px;padding:3px 10px;background:#c62828;color:#fff;border:none;border-radius:5px;cursor:pointer;font-size:0.82rem">🔍 Xem response</button>`,
         'error');
-      console.error('❌ API Error Response:', json);
     }
 
   } catch(e) {
     showMsg('create-msg','❌ Lỗi kết nối: '+e.message,'error');
-    console.error('Fetch error:', e);
+    console.error('Fetch error:',e);
   }
 
-  btn.disabled = false;
-  btn.innerHTML = '🚀 Tạo nhãn vận chuyển';
+  btn.disabled=false; btn.innerHTML='🚀 Tạo nhãn vận chuyển';
 }
 
 function showDebug(encodedText) {
-  document.getElementById('debug-content').textContent = decodeURIComponent(encodedText);
+  document.getElementById('debug-content').textContent=decodeURIComponent(encodedText);
   openModal('debug-modal');
 }
 
 // ============================================================
-// LABEL MODAL
+// ✅ LABEL MODAL — hiển thị thành công + nút tải PDF
 // ============================================================
 function showLabelModal(d, finalPrice) {
-  lastPDF = d.pdf || '';
-  const fromName = d.fromName || (lastPayload ? lastPayload.fromName : '-');
-  const toName   = d.toName   || (lastPayload ? lastPayload.toName   : '-');
-  const weight   = d.weight   || (lastPayload ? lastPayload.weight   : 0);
+  lastPDF=d.pdf||'';
+  const fromName=d.fromName||(lastPayload?lastPayload.fromName:'-');
+  const toName  =d.toName  ||(lastPayload?lastPayload.toName  :'-');
+  const weight  =d.weight  ||(lastPayload?lastPayload.weight  :0);
+  const fromAddr=lastPayload?`${lastPayload.fromCity}, ${lastPayload.fromState} ${lastPayload.fromZip}`:'';
+  const toAddr  =lastPayload?`${lastPayload.toCity}, ${lastPayload.toState} ${lastPayload.toZip}`:'';
 
-  document.getElementById('label-detail').innerHTML = `
+  document.getElementById('label-detail').innerHTML=`
+    <div class="success-banner">
+      <div class="icon">✅</div>
+      <div>
+        <div class="title">Nhãn vận chuyển đã được tạo thành công!</div>
+        <div class="sub">Đơn hàng đã được lưu vào lịch sử. Tải PDF để in nhãn.</div>
+      </div>
+    </div>
+
     <div class="detail-row">
-      <span class="key">Tracking ID</span>
-      <span class="val" style="color:#1a73e8">${d.tracking_id || '⚠️ Xem trong PDF'}</span>
+      <span class="key">📦 Dịch vụ</span>
+      <span class="val">${selectedService?selectedService.name:'-'}</span>
     </div>
     <div class="detail-row">
-      <span class="key">Dịch vụ</span>
-      <span class="val">${selectedService ? selectedService.name : '-'}</span>
+      <span class="key">🔖 Tracking ID</span>
+      <span class="val" style="color:#1a73e8;font-family:monospace">
+        ${d.tracking_id||'<span style="color:#888;font-style:italic">Xem trong PDF</span>'}
+        ${d.tracking_id?`<button onclick="copyToClipboard('${d.tracking_id}')"
+          style="margin-left:6px;padding:2px 8px;background:#e8f0fe;color:#1a73e8;border:none;
+          border-radius:4px;cursor:pointer;font-size:0.75rem">📋</button>`:''}
+      </span>
     </div>
     <div class="detail-row">
-      <span class="key">Người gửi</span>
-      <span class="val">${fromName}</span>
+      <span class="key">📤 Người gửi</span>
+      <span class="val">${fromName}<br><small style="color:#aaa">${fromAddr}</small></span>
     </div>
     <div class="detail-row">
-      <span class="key">Người nhận</span>
-      <span class="val">${toName}</span>
+      <span class="key">📥 Người nhận</span>
+      <span class="val">${toName}<br><small style="color:#aaa">${toAddr}</small></span>
     </div>
     <div class="detail-row">
-      <span class="key">Cân nặng</span>
+      <span class="key">⚖️ Cân nặng</span>
       <span class="val">${weight} lbs</span>
     </div>
     <div class="detail-row">
-      <span class="key">Giá thanh toán</span>
+      <span class="key">💰 Đã thanh toán</span>
       <span class="val" style="color:#2e7d32;font-size:1.15rem;font-weight:700">
         $${parseFloat(finalPrice).toFixed(2)}
       </span>
     </div>
-    ${d.pdf
-      ? `<div style="margin-top:14px;padding:14px;background:#e8f5e9;border-radius:8px;text-align:center">
-           <a href="${d.pdf}" target="_blank"
-             style="color:#2e7d32;font-weight:700;text-decoration:none;font-size:1rem">
-             📄 Xem / Tải PDF nhãn
-           </a>
-         </div>`
-      : `<div style="margin-top:14px;padding:12px;background:#fff3e0;border-radius:8px;
-                     text-align:center;color:#e65100;font-size:0.88rem">
-           ⚠️ Không tìm thấy link PDF trong response.
-         </div>`
-    }`;
+
+    ${d.pdf?`
+    <div style="margin-top:18px;padding:16px;background:#f1f8e9;border-radius:10px;
+                border:1.5px solid #a5d6a7;text-align:center">
+      <div style="font-size:0.85rem;color:#555;margin-bottom:10px">
+        📄 Nhãn PDF đã sẵn sàng để tải về và in
+      </div>
+      <div style="display:flex;gap:10px;justify-content:center;flex-wrap:wrap">
+        <a href="${d.pdf}" target="_blank" class="pdf-btn green">
+          🖨️ Mở PDF / In nhãn
+        </a>
+        <button class="pdf-btn" onclick="downloadPDF()">
+          ⬇️ Tải về máy
+        </button>
+      </div>
+    </div>`:`
+    <div style="margin-top:14px;padding:12px;background:#fff3e0;border-radius:8px;
+                text-align:center;color:#e65100;font-size:0.88rem">
+      ⚠️ Không tìm thấy link PDF trong response. Vui lòng kiểm tra lại trong đơn hàng.
+    </div>`}`;
+
+  // Cập nhật nút tải PDF trong modal-actions
+  const pdfBtn=document.getElementById('modal-pdf-btn');
+  if(pdfBtn) pdfBtn.style.display=d.pdf?'inline-flex':'none';
+
   openModal('label-modal');
 }
 
-function downloadPDF() { if (lastPDF) window.open(lastPDF,'_blank'); }
+function downloadPDF() {
+  if(!lastPDF) return showToast('⚠️ Không có link PDF');
+  // Tạo link tải về
+  const a=document.createElement('a');
+  a.href=lastPDF; a.target='_blank'; a.download='label.pdf';
+  document.body.appendChild(a); a.click(); document.body.removeChild(a);
+}
 
 // ============================================================
 // ORDERS
 // ============================================================
 function loadOrders() {
-  const db = getDB();
-  const u  = db.users.find(x => x.username===currentUser.username);
-  renderOrdersTable((u && u.orders) ? u.orders : []);
+  const db=getDB();
+  const u=db.users.find(x=>x.username===currentUser.username);
+  renderOrdersTable((u&&u.orders)?u.orders:[]);
 }
 
 function renderOrdersTable(orders) {
-  const search   = (document.getElementById('search-order')||{}).value || '';
-  const filtered = orders.filter(o =>
-    !search || (o.tracking_id && o.tracking_id.toLowerCase().includes(search.toLowerCase()))
+  const search=(document.getElementById('search-order')||{}).value||'';
+  const filtered=orders.filter(o=>
+    !search||(o.tracking_id&&o.tracking_id.toLowerCase().includes(search.toLowerCase()))||
+    (o.toName&&o.toName.toLowerCase().includes(search.toLowerCase()))||
+    (o.fromName&&o.fromName.toLowerCase().includes(search.toLowerCase()))
   );
-  const tbody = document.getElementById('orders-tbody');
-  if (!filtered.length) {
-    tbody.innerHTML = '<tr><td colspan="9" style="text-align:center;color:#aaa;padding:30px">Chưa có đơn hàng nào</td></tr>';
+  const tbody=document.getElementById('orders-tbody');
+  if(!filtered.length){
+    tbody.innerHTML='<tr><td colspan="9" style="text-align:center;color:#aaa;padding:30px">Chưa có đơn hàng nào</td></tr>';
     return;
   }
-  tbody.innerHTML = filtered.map((o,i) => `
+  tbody.innerHTML=filtered.map((o,i)=>`
     <tr>
-      <td>${i+1}</td>
-      <td><code style="font-size:0.8rem;color:#1a73e8;word-break:break-all">${o.tracking_id||'—'}</code></td>
-      <td>${o.fromName||'-'}<br>
+      <td style="color:#aaa;font-size:0.8rem">${i+1}</td>
+      <td>
+        <code style="font-size:0.78rem;color:#1a73e8;word-break:break-all">
+          ${o.tracking_id||'<span style="color:#ccc">—</span>'}
+        </code>
+        ${o.tracking_id?`<button onclick="copyToClipboard('${o.tracking_id}')"
+          style="margin-left:4px;padding:1px 6px;background:#e8f0fe;color:#1a73e8;
+          border:none;border-radius:4px;cursor:pointer;font-size:0.72rem">📋</button>`:''}
+      </td>
+      <td>
+        <strong style="font-size:0.88rem">${o.fromName||'-'}</strong><br>
         <small style="color:#aaa">${o.fromCity||''}, ${o.fromState||''} ${o.fromZip||''}</small>
       </td>
-      <td>${o.toName||'-'}<br>
+      <td>
+        <strong style="font-size:0.88rem">${o.toName||'-'}</strong><br>
         <small style="color:#aaa">${o.toCity||''}, ${o.toState||''} ${o.toZip||''}</small>
       </td>
-      <td><small>${o.service||'-'}</small></td>
+      <td><small style="color:#555">${o.service||'-'}</small></td>
       <td><small>${o.weight||0} lbs</small></td>
       <td><strong style="color:#2e7d32">$${parseFloat(o.price||0).toFixed(2)}</strong></td>
       <td><small style="color:#888">${o.created_at||'-'}</small></td>
       <td>
         <div style="display:flex;gap:4px;flex-wrap:wrap">
-          ${o.pdf ? `<button class="btn-sm btn-success" onclick="window.open('${o.pdf}','_blank')">📄 PDF</button>` : ''}
-          <button class="btn-sm btn-outline" onclick="viewOrderDetail(${i})">Chi tiết</button>
+          ${o.pdf?`
+            <a href="${o.pdf}" target="_blank"
+              style="display:inline-flex;align-items:center;gap:4px;padding:5px 10px;
+              background:#2e7d32;color:#fff;border-radius:6px;font-size:0.78rem;
+              font-weight:700;text-decoration:none;white-space:nowrap">
+              📄 PDF
+            </a>
+            <button onclick="forceDownload('${o.pdf}')"
+              style="padding:5px 10px;background:#1a73e8;color:#fff;border:none;
+              border-radius:6px;font-size:0.78rem;font-weight:700;cursor:pointer;white-space:nowrap">
+              ⬇️ Tải
+            </button>`
+          :'<span style="color:#ccc;font-size:0.8rem">Không có PDF</span>'}
+          <button class="btn-sm btn-outline" onclick="viewOrderDetail(${i})"
+            style="font-size:0.78rem;padding:5px 8px">🔍</button>
         </div>
       </td>
     </tr>`).join('');
 }
 
+function forceDownload(url) {
+  if(!url) return;
+  const a=document.createElement('a');
+  a.href=url; a.target='_blank'; a.download='label.pdf';
+  document.body.appendChild(a); a.click(); document.body.removeChild(a);
+}
+
 function viewOrderDetail(idx) {
-  const db     = getDB();
-  const u      = db.users.find(x => x.username===currentUser.username);
-  const orders = u && u.orders ? u.orders : [];
-  const o      = orders[idx];
-  if (!o) return;
-  document.getElementById('order-detail-content').innerHTML = `
-    <div class="detail-row"><span class="key">Tracking ID</span>
-      <span class="val" style="color:#1a73e8">${o.tracking_id||'—'}</span></div>
-    <div class="detail-row"><span class="key">Dịch vụ</span>
-      <span class="val">${o.service||'-'}</span></div>
-    <div class="detail-row"><span class="key">Ngày tạo</span>
-      <span class="val">${o.created_at||'-'}</span></div>
-    <div class="detail-row"><span class="key">API Key</span>
-      <span class="val">${o.api_key_label||'Master Key'}</span></div>
+  const db=getDB();
+  const u=db.users.find(x=>x.username===currentUser.username);
+  const orders=u&&u.orders?u.orders:[];
+  const o=orders[idx]; if(!o) return;
+  document.getElementById('order-detail-content').innerHTML=`
+    <div class="detail-row">
+      <span class="key">Tracking ID</span>
+      <span class="val" style="color:#1a73e8;font-family:monospace">
+        ${o.tracking_id||'—'}
+        ${o.tracking_id?`<button onclick="copyToClipboard('${o.tracking_id}')"
+          style="margin-left:6px;padding:2px 8px;background:#e8f0fe;color:#1a73e8;
+          border:none;border-radius:4px;cursor:pointer;font-size:0.75rem">📋 Copy</button>`:''}
+      </span>
+    </div>
+    <div class="detail-row"><span class="key">Dịch vụ</span><span class="val">${o.service||'-'}</span></div>
+    <div class="detail-row"><span class="key">Ngày tạo</span><span class="val">${o.created_at||'-'}</span></div>
+    <div class="detail-row"><span class="key">API Key</span><span class="val">${o.api_key_label||'Master Key'}</span></div>
     <hr style="margin:10px 0;border:none;border-top:1px solid #eee">
-    <div class="detail-row"><span class="key">Người gửi</span>
-      <span class="val">${o.fromName||'-'}</span></div>
-    <div class="detail-row"><span class="key">Địa chỉ gửi</span>
-      <span class="val">${o.fromAddress||''}, ${o.fromCity||''}, ${o.fromState||''} ${o.fromZip||''}</span></div>
+    <div class="detail-row">
+      <span class="key">Người gửi</span>
+      <span class="val">${o.fromName||'-'}<br>
+        <small style="color:#aaa">${o.fromAddress||''}, ${o.fromCity||''}, ${o.fromState||''} ${o.fromZip||''}</small>
+      </span>
+    </div>
+    <div class="detail-row">
+      <span class="key">Người nhận</span>
+      <span class="val">${o.toName||'-'}<br>
+        <small style="color:#aaa">${o.toAddress||''}, ${o.toCity||''}, ${o.toState||''} ${o.toZip||''}</small>
+      </span>
+    </div>
     <hr style="margin:10px 0;border:none;border-top:1px solid #eee">
-    <div class="detail-row"><span class="key">Người nhận</span>
-      <span class="val">${o.toName||'-'}</span></div>
-    <div class="detail-row"><span class="key">Địa chỉ nhận</span>
-      <span class="val">${o.toAddress||''}, ${o.toCity||''}, ${o.toState||''} ${o.toZip||''}</span></div>
-    <hr style="margin:10px 0;border:none;border-top:1px solid #eee">
-    <div class="detail-row"><span class="key">Cân nặng</span>
-      <span class="val">${o.weight||0} lbs</span></div>
-    <div class="detail-row"><span class="key">Kích thước</span>
-      <span class="val">${o.length||0}" × ${o.width||0}" × ${o.height||0}"</span></div>
-    <div class="detail-row"><span class="key">Giá thanh toán</span>
-      <span class="val" style="color:#2e7d32;font-size:1.1rem">
-        $${parseFloat(o.price||0).toFixed(2)}
-      </span></div>
-    ${o.pdf
-      ? `<div style="margin-top:12px;text-align:center">
-           <a href="${o.pdf}" target="_blank"
-             style="color:#1a73e8;font-weight:700;text-decoration:none">📄 Tải nhãn PDF</a>
-         </div>`
-      : ''}`;
+    <div class="detail-row"><span class="key">Cân nặng</span><span class="val">${o.weight||0} lbs</span></div>
+    <div class="detail-row">
+      <span class="key">Kích thước</span>
+      <span class="val">${o.length||0}" × ${o.width||0}" × ${o.height||0}"</span>
+    </div>
+    <div class="detail-row">
+      <span class="key">Giá thanh toán</span>
+      <span class="val" style="color:#2e7d32;font-size:1.1rem">$${parseFloat(o.price||0).toFixed(2)}</span>
+    </div>
+    ${o.pdf?`
+    <div style="margin-top:14px;padding:14px;background:#f1f8e9;border-radius:8px;
+                border:1.5px solid #a5d6a7;text-align:center">
+      <div style="font-size:0.82rem;color:#555;margin-bottom:10px">📄 Nhãn vận chuyển</div>
+      <div style="display:flex;gap:8px;justify-content:center;flex-wrap:wrap">
+        <a href="${o.pdf}" target="_blank" class="pdf-btn green" style="font-size:0.88rem;padding:9px 16px">
+          🖨️ Mở & In nhãn
+        </a>
+        <button onclick="forceDownload('${o.pdf}')" class="pdf-btn" style="font-size:0.88rem;padding:9px 16px">
+          ⬇️ Tải PDF về
+        </button>
+      </div>
+    </div>`:''}`;
   openModal('order-modal');
 }
 
@@ -1341,34 +1373,27 @@ function viewOrderDetail(idx) {
 // ADMIN — USERS
 // ============================================================
 function renderUsersTable() {
-  const db    = getDB();
-  const tbody = document.getElementById('users-tbody');
-  if (!db.users.length) {
-    tbody.innerHTML = '<tr><td colspan="8" style="text-align:center;color:#aaa;padding:20px">Chưa có người dùng</td></tr>';
+  const db=getDB(); const tbody=document.getElementById('users-tbody');
+  if(!db.users.length){
+    tbody.innerHTML='<tr><td colspan="8" style="text-align:center;color:#aaa;padding:20px">Chưa có người dùng</td></tr>';
     return;
   }
-  tbody.innerHTML = db.users.map(u => {
-    const keyLabel = getApiKeyLabelForUser(u.username);
-    const isMaster = keyLabel === 'Master Key';
+  tbody.innerHTML=db.users.map(u=>{
+    const keyLabel=getApiKeyLabelForUser(u.username);
+    const isMaster=keyLabel==='Master Key';
     return `<tr>
       <td><strong>${u.username}</strong></td>
       <td>${u.name}</td>
       <td>${u.email||'-'}</td>
       <td><strong style="color:#2e7d32">$${(u.balance||0).toFixed(2)}</strong></td>
       <td><span class="badge ${u.role==='admin'?'badge-error':'badge-success'}">${u.role}</span></td>
-      <td>
-        <span class="key-badge" style="${isMaster?'background:#e3f2fd;color:#1565c0':''}">
-          ${keyLabel}
-        </span>
-      </td>
+      <td><span class="key-badge" style="${isMaster?'background:#e3f2fd;color:#1565c0':''}">${keyLabel}</span></td>
       <td>${(u.orders||[]).length}</td>
       <td>
         <div class="user-actions">
           <button class="btn-sm btn-success" onclick="openTopup('${u.username}')">💰 Nạp</button>
           <button class="btn-sm btn-outline" onclick="editUser('${u.username}')">✏️ Sửa</button>
-          ${u.username!=='admin'
-            ? `<button class="btn-sm btn-danger" onclick="deleteUser('${u.username}')">🗑️</button>`
-            : ''}
+          ${u.username!=='admin'?`<button class="btn-sm btn-danger" onclick="deleteUser('${u.username}')">🗑️</button>`:''}
         </div>
       </td>
     </tr>`;
@@ -1376,98 +1401,64 @@ function renderUsersTable() {
 }
 
 function openAddUserModal() {
-  document.getElementById('user-modal-title').textContent = '➕ Thêm người dùng';
-  document.getElementById('um-username').value            = '';
-  document.getElementById('um-username').disabled         = false;
-  document.getElementById('um-name').value                = '';
-  document.getElementById('um-email').value               = '';
-  document.getElementById('um-pass').value                = '';
-  document.getElementById('um-balance').value             = '0';
-  document.getElementById('um-role').value                = 'user';
-  document.getElementById('um-username').dataset.edit     = '';
-  populateApiKeySelect('um-apikey','');
-  clearMsg('user-modal-msg');
-  openModal('user-modal');
+  document.getElementById('user-modal-title').textContent='➕ Thêm người dùng';
+  document.getElementById('um-username').value=''; document.getElementById('um-username').disabled=false;
+  document.getElementById('um-name').value=''; document.getElementById('um-email').value='';
+  document.getElementById('um-pass').value=''; document.getElementById('um-balance').value='0';
+  document.getElementById('um-role').value='user'; document.getElementById('um-username').dataset.edit='';
+  populateApiKeySelect('um-apikey',''); clearMsg('user-modal-msg'); openModal('user-modal');
 }
 
 function editUser(username) {
-  const db = getDB();
-  const u  = db.users.find(x => x.username===username);
-  if (!u) return;
-  document.getElementById('user-modal-title').textContent = '✏️ Sửa: '+username;
-  document.getElementById('um-username').value            = u.username;
-  document.getElementById('um-username').disabled         = true;
-  document.getElementById('um-name').value                = u.name;
-  document.getElementById('um-email').value               = u.email||'';
-  document.getElementById('um-pass').value                = '';
-  document.getElementById('um-balance').value             = (u.balance||0).toFixed(2);
-  document.getElementById('um-role').value                = u.role;
-  document.getElementById('um-username').dataset.edit     = username;
-  populateApiKeySelect('um-apikey', u.apiKeyId||'');
-  clearMsg('user-modal-msg');
-  openModal('user-modal');
+  const db=getDB(); const u=db.users.find(x=>x.username===username); if(!u) return;
+  document.getElementById('user-modal-title').textContent='✏️ Sửa: '+username;
+  document.getElementById('um-username').value=u.username; document.getElementById('um-username').disabled=true;
+  document.getElementById('um-name').value=u.name; document.getElementById('um-email').value=u.email||'';
+  document.getElementById('um-pass').value=''; document.getElementById('um-balance').value=(u.balance||0).toFixed(2);
+  document.getElementById('um-role').value=u.role; document.getElementById('um-username').dataset.edit=username;
+  populateApiKeySelect('um-apikey',u.apiKeyId||''); clearMsg('user-modal-msg'); openModal('user-modal');
 }
 
-function populateApiKeySelect(selectId, selectedId) {
-  const db  = getDB();
-  const sel = document.getElementById(selectId);
-  sel.innerHTML = '<option value="">-- Dùng Master Key --</option>' +
-    db.api_keys.map(k =>
-      `<option value="${k.id}" ${k.id===selectedId?'selected':''}>
-        ${k.label} (${maskKey(k.key)}) — ${k.status}
-      </option>`
-    ).join('');
+function populateApiKeySelect(selectId,selectedId) {
+  const db=getDB(); const sel=document.getElementById(selectId);
+  sel.innerHTML='<option value="">-- Dùng Master Key --</option>'+
+    db.api_keys.map(k=>`<option value="${k.id}" ${k.id===selectedId?'selected':''}>${k.label} (${maskKey(k.key)}) — ${k.status}</option>`).join('');
 }
 
-function populateUserSelect(selectId, selectedUsername) {
-  const db  = getDB();
-  const sel = document.getElementById(selectId);
-  sel.innerHTML = '<option value="">-- Chưa gán --</option>' +
-    db.users.map(u =>
-      `<option value="${u.username}" ${u.username===selectedUsername?'selected':''}>
-        ${u.username} (${u.name})
-      </option>`
-    ).join('');
+function populateUserSelect(selectId,selectedUsername) {
+  const db=getDB(); const sel=document.getElementById(selectId);
+  sel.innerHTML='<option value="">-- Chưa gán --</option>'+
+    db.users.map(u=>`<option value="${u.username}" ${u.username===selectedUsername?'selected':''}>${u.username} (${u.name})</option>`).join('');
 }
 
 function saveUser() {
-  const editTarget = document.getElementById('um-username').dataset.edit;
-  const username   = document.getElementById('um-username').value.trim();
-  const name       = document.getElementById('um-name').value.trim();
-  const email      = document.getElementById('um-email').value.trim();
-  const pass       = document.getElementById('um-pass').value;
-  const balance    = parseFloat(document.getElementById('um-balance').value)||0;
-  const role       = document.getElementById('um-role').value;
-  const apiKeyId   = document.getElementById('um-apikey').value||null;
-
-  if (!username||!name)
-    return showMsg('user-modal-msg','⚠️ Vui lòng điền đầy đủ thông tin bắt buộc','error');
-
-  const db = getDB();
-  if (editTarget) {
-    const u = db.users.find(x => x.username===editTarget);
-    if (!u) return;
+  const editTarget=document.getElementById('um-username').dataset.edit;
+  const username=document.getElementById('um-username').value.trim();
+  const name=document.getElementById('um-name').value.trim();
+  const email=document.getElementById('um-email').value.trim();
+  const pass=document.getElementById('um-pass').value;
+  const balance=parseFloat(document.getElementById('um-balance').value)||0;
+  const role=document.getElementById('um-role').value;
+  const apiKeyId=document.getElementById('um-apikey').value||null;
+  if(!username||!name) return showMsg('user-modal-msg','⚠️ Vui lòng điền đầy đủ thông tin','error');
+  const db=getDB();
+  if(editTarget){
+    const u=db.users.find(x=>x.username===editTarget); if(!u) return;
     u.name=name; u.email=email; u.balance=balance; u.role=role; u.apiKeyId=apiKeyId;
-    if (pass) u.password = btoa(pass);
+    if(pass) u.password=btoa(pass);
     showMsg('user-modal-msg','✅ Cập nhật thành công!','success');
   } else {
-    if (!pass) return showMsg('user-modal-msg','⚠️ Vui lòng nhập mật khẩu','error');
-    if (db.users.find(x=>x.username===username))
-      return showMsg('user-modal-msg','⚠️ Username đã tồn tại','error');
-    db.users.push({
-      username, password:btoa(pass), name, email,
-      role, balance, apiKeyId, orders:[], topup_history:[]
-    });
+    if(!pass) return showMsg('user-modal-msg','⚠️ Vui lòng nhập mật khẩu','error');
+    if(db.users.find(x=>x.username===username)) return showMsg('user-modal-msg','⚠️ Username đã tồn tại','error');
+    db.users.push({username,password:btoa(pass),name,email,role,balance,apiKeyId,orders:[],topup_history:[]});
     showMsg('user-modal-msg','✅ Thêm người dùng thành công!','success');
   }
-  saveDB(db);
-  setTimeout(() => { closeModal('user-modal'); renderUsersTable(); }, 800);
+  saveDB(db); setTimeout(()=>{closeModal('user-modal');renderUsersTable();},800);
 }
 
 function deleteUser(username) {
-  if (!confirm(`Xác nhận xóa người dùng "${username}"?\nThao tác này không thể hoàn tác.`)) return;
-  const db = getDB();
-  db.users = db.users.filter(x => x.username!==username);
+  if(!confirm(`Xác nhận xóa người dùng "${username}"?`)) return;
+  const db=getDB(); db.users=db.users.filter(x=>x.username!==username);
   saveDB(db); renderUsersTable();
 }
 
@@ -1475,66 +1466,51 @@ function deleteUser(username) {
 // ADMIN — TOPUP
 // ============================================================
 function openTopup(username) {
-  const db = getDB();
-  const u  = db.users.find(x => x.username===username);
-  if (!u) return;
-  topupTarget = username;
-  document.getElementById('topup-uname').textContent   = username+' ('+u.name+')';
-  document.getElementById('topup-current').textContent = '$'+(u.balance||0).toFixed(2);
-  document.getElementById('topup-amount').value        = '10';
-  document.getElementById('topup-note').value          = '';
+  const db=getDB(); const u=db.users.find(x=>x.username===username); if(!u) return;
+  topupTarget=username;
+  document.getElementById('topup-uname').textContent=username+' ('+u.name+')';
+  document.getElementById('topup-current').textContent='$'+(u.balance||0).toFixed(2);
+  document.getElementById('topup-amount').value='10';
+  document.getElementById('topup-note').value='';
   clearMsg('topup-msg');
-  const hist = u.topup_history||[];
-  const wrap = document.getElementById('topup-hist-wrap');
-  if (hist.length) {
-    wrap.innerHTML = `
-      <div style="font-size:0.82rem;font-weight:700;color:#888;margin-bottom:6px">📋 Lịch sử nạp tiền:</div>
-      <div style="max-height:150px;overflow-y:auto;border:1px solid #f0f0f0;border-radius:6px;padding:6px">
-        ${hist.slice(0,15).map(h => `
-          <div class="topup-hist-row">
-            <span style="color:#888">${h.date}</span>
-            <span style="color:#2e7d32;font-weight:700">+$${h.amount.toFixed(2)}</span>
-            <span style="color:#555">→ $${h.after.toFixed(2)}</span>
-            ${h.note ? `<span style="color:#aaa;font-style:italic">${h.note}</span>` : ''}
-          </div>`).join('')}
-      </div>`;
-  } else {
-    wrap.innerHTML = '<div style="color:#aaa;font-size:0.82rem;text-align:center;padding:8px">Chưa có lịch sử nạp tiền</div>';
-  }
+  const hist=u.topup_history||[];
+  const wrap=document.getElementById('topup-hist-wrap');
+  wrap.innerHTML=hist.length?`
+    <div style="font-size:0.82rem;font-weight:700;color:#888;margin-bottom:6px">📋 Lịch sử nạp tiền:</div>
+    <div style="max-height:150px;overflow-y:auto;border:1px solid #f0f0f0;border-radius:6px;padding:6px">
+      ${hist.slice(0,15).map(h=>`
+        <div class="topup-hist-row">
+          <span style="color:#888">${h.date}</span>
+          <span style="color:#2e7d32;font-weight:700">+$${h.amount.toFixed(2)}</span>
+          <span style="color:#555">→ $${h.after.toFixed(2)}</span>
+          ${h.note?`<span style="color:#aaa;font-style:italic">${h.note}</span>`:''}
+        </div>`).join('')}
+    </div>`
+  :'<div style="color:#aaa;font-size:0.82rem;text-align:center;padding:8px">Chưa có lịch sử nạp tiền</div>';
   openModal('topup-modal');
 }
 
 function doTopup() {
-  const amount = parseFloat(document.getElementById('topup-amount').value);
-  const note   = document.getElementById('topup-note').value.trim();
-  if (!amount||amount<=0) return showMsg('topup-msg','⚠️ Số tiền không hợp lệ','error');
-  const db = getDB();
-  const u  = db.users.find(x => x.username===topupTarget);
-  if (!u) return;
-  u.balance = (u.balance||0) + amount;
-  if (!u.topup_history) u.topup_history = [];
-  u.topup_history.unshift({
-    date:   new Date().toLocaleString('vi-VN'),
-    amount: amount,
-    after:  u.balance,
-    note:   note,
-    by:     currentUser.username
-  });
+  const amount=parseFloat(document.getElementById('topup-amount').value);
+  const note=document.getElementById('topup-note').value.trim();
+  if(!amount||amount<=0) return showMsg('topup-msg','⚠️ Số tiền không hợp lệ','error');
+  const db=getDB(); const u=db.users.find(x=>x.username===topupTarget); if(!u) return;
+  u.balance=(u.balance||0)+amount;
+  if(!u.topup_history) u.topup_history=[];
+  u.topup_history.unshift({date:new Date().toLocaleString('vi-VN'),amount,after:u.balance,note,by:currentUser.username});
   saveDB(db);
   showMsg('topup-msg',`✅ Nạp $${amount.toFixed(2)} thành công! Số dư mới: $${u.balance.toFixed(2)}`,'success');
-  document.getElementById('topup-current').textContent = '$'+u.balance.toFixed(2);
-  if (currentUser.username===topupTarget) { currentUser.balance=u.balance; updateBalance(); }
-  setTimeout(() => { closeModal('topup-modal'); renderUsersTable(); }, 1200);
+  document.getElementById('topup-current').textContent='$'+u.balance.toFixed(2);
+  if(currentUser.username===topupTarget){currentUser.balance=u.balance;updateBalance();}
+  setTimeout(()=>{closeModal('topup-modal');renderUsersTable();},1200);
 }
 
 // ============================================================
 // ADMIN — API KEYS
 // ============================================================
 function renderApiKeysTable() {
-  const db    = getDB();
-  const tbody = document.getElementById('apikeys-tbody');
-
-  const masterRow = `
+  const db=getDB(); const tbody=document.getElementById('apikeys-tbody');
+  const masterRow=`
     <tr style="background:#f8f9ff">
       <td><strong>Master Key</strong> <span class="badge badge-info">System</span></td>
       <td><code class="key-badge">${maskKey(getMasterKey())}</code></td>
@@ -1543,205 +1519,145 @@ function renderApiKeysTable() {
       <td><span style="color:#aaa;font-size:0.8rem">—</span></td>
       <td><button class="btn-sm btn-outline" onclick="copyToClipboard(getMasterKey())">📋 Copy</button></td>
     </tr>`;
-
-  if (!db.api_keys||!db.api_keys.length) {
-    tbody.innerHTML = masterRow +
-      '<tr><td colspan="6" style="text-align:center;color:#aaa;padding:20px">Chưa có API key phụ nào</td></tr>';
+  if(!db.api_keys||!db.api_keys.length){
+    tbody.innerHTML=masterRow+'<tr><td colspan="6" style="text-align:center;color:#aaa;padding:20px">Chưa có API key phụ nào</td></tr>';
     return;
   }
-
-  tbody.innerHTML = masterRow + db.api_keys.map((k,i) => `
+  tbody.innerHTML=masterRow+db.api_keys.map((k,i)=>`
     <tr>
       <td><strong>${k.label||'Key #'+(i+1)}</strong></td>
       <td><code class="key-badge">${maskKey(k.key)}</code></td>
       <td><span style="font-size:0.82rem;color:#555">${getUsersUsingKey(k.id,db)}</span></td>
-      <td>
-        <span class="badge ${k.status==='active'?'badge-success':'badge-error'}">
-          ${k.status||'active'}
-        </span>
-      </td>
+      <td><span class="badge ${k.status==='active'?'badge-success':'badge-error'}">${k.status||'active'}</span></td>
       <td><span style="color:#888;font-size:0.8rem">${k.created_at||'—'}</span></td>
       <td>
         <div style="display:flex;gap:4px;flex-wrap:wrap">
-          <button class="btn-sm btn-outline" onclick="copyToClipboard('${k.key}')">📋 Copy</button>
-          <button class="btn-sm btn-outline" onclick="editApiKey('${k.id}')">✏️ Sửa</button>
+          <button class="btn-sm btn-outline" onclick="copyToClipboard('${k.key}')">📋</button>
+          <button class="btn-sm btn-outline" onclick="editApiKey('${k.id}')">✏️</button>
           <button class="btn-sm btn-danger"  onclick="deleteApiKey('${k.id}')">🗑️</button>
         </div>
       </td>
     </tr>`).join('');
 }
 
-function getUsersUsingKey(keyId, db) {
-  const users = (db.users||[]).filter(u => u.apiKeyId===keyId);
-  if (!users.length) return '<span style="color:#aaa">Chưa gán cho ai</span>';
-  return users.map(u => `<span class="key-badge" style="margin:1px 2px">${u.username}</span>`).join('');
+function getUsersUsingKey(keyId,db) {
+  const users=(db.users||[]).filter(u=>u.apiKeyId===keyId);
+  if(!users.length) return '<span style="color:#aaa">Chưa gán cho ai</span>';
+  return users.map(u=>`<span class="key-badge" style="margin:1px 2px">${u.username}</span>`).join('');
 }
 
 function openAddApiKeyModal() {
-  document.getElementById('apikey-modal-title').textContent = '➕ Thêm API Key';
-  document.getElementById('ak-label').value                 = '';
-  document.getElementById('ak-key').value                   = '';
-  document.getElementById('ak-status').value                = 'active';
-  document.getElementById('ak-label').dataset.editId        = '';
-  populateUserSelect('ak-user','');
-  clearMsg('apikey-modal-msg');
-  openModal('apikey-modal');
+  document.getElementById('apikey-modal-title').textContent='➕ Thêm API Key';
+  document.getElementById('ak-label').value=''; document.getElementById('ak-key').value='';
+  document.getElementById('ak-status').value='active'; document.getElementById('ak-label').dataset.editId='';
+  populateUserSelect('ak-user',''); clearMsg('apikey-modal-msg'); openModal('apikey-modal');
 }
 
 function editApiKey(keyId) {
-  const db = getDB();
-  const k  = (db.api_keys||[]).find(x => x.id===keyId);
-  if (!k) return;
-  const assignedUser = (db.users||[]).find(u => u.apiKeyId===keyId);
-  document.getElementById('apikey-modal-title').textContent = '✏️ Sửa API Key';
-  document.getElementById('ak-label').value                 = k.label||'';
-  document.getElementById('ak-key').value                   = k.key||'';
-  document.getElementById('ak-status').value                = k.status||'active';
-  document.getElementById('ak-label').dataset.editId        = keyId;
-  populateUserSelect('ak-user', assignedUser ? assignedUser.username : '');
-  clearMsg('apikey-modal-msg');
-  openModal('apikey-modal');
+  const db=getDB(); const k=(db.api_keys||[]).find(x=>x.id===keyId); if(!k) return;
+  const assignedUser=(db.users||[]).find(u=>u.apiKeyId===keyId);
+  document.getElementById('apikey-modal-title').textContent='✏️ Sửa API Key';
+  document.getElementById('ak-label').value=k.label||''; document.getElementById('ak-key').value=k.key||'';
+  document.getElementById('ak-status').value=k.status||'active'; document.getElementById('ak-label').dataset.editId=keyId;
+  populateUserSelect('ak-user',assignedUser?assignedUser.username:'');
+  clearMsg('apikey-modal-msg'); openModal('apikey-modal');
 }
 
 function saveApiKey() {
-  const editId   = document.getElementById('ak-label').dataset.editId;
-  const label    = document.getElementById('ak-label').value.trim();
-  const key      = document.getElementById('ak-key').value.trim();
-  const status   = document.getElementById('ak-status').value;
-  const assignTo = document.getElementById('ak-user').value||null;
-
-  if (!label||!key)
-    return showMsg('apikey-modal-msg','⚠️ Vui lòng điền đầy đủ Label và Key','error');
-
-  const db = getDB();
-  if (!db.api_keys) db.api_keys = [];
-  let keyId = editId;
-
-  if (editId) {
-    const k = db.api_keys.find(x => x.id===editId);
-    if (!k) return;
+  const editId=document.getElementById('ak-label').dataset.editId;
+  const label=document.getElementById('ak-label').value.trim();
+  const key=document.getElementById('ak-key').value.trim();
+  const status=document.getElementById('ak-status').value;
+  const assignTo=document.getElementById('ak-user').value||null;
+  if(!label||!key) return showMsg('apikey-modal-msg','⚠️ Vui lòng điền đầy đủ Label và Key','error');
+  const db=getDB(); if(!db.api_keys) db.api_keys=[];
+  let keyId=editId;
+  if(editId){
+    const k=db.api_keys.find(x=>x.id===editId); if(!k) return;
     k.label=label; k.key=key; k.status=status;
     showMsg('apikey-modal-msg','✅ Cập nhật API Key thành công!','success');
   } else {
-    if (db.api_keys.find(x => x.key===key))
-      return showMsg('apikey-modal-msg','⚠️ Key này đã tồn tại trong hệ thống','error');
-    keyId = 'key_'+Date.now();
-    db.api_keys.push({
-      id:keyId, label, key, status,
-      created_at: new Date().toLocaleString('vi-VN')
-    });
+    if(db.api_keys.find(x=>x.key===key)) return showMsg('apikey-modal-msg','⚠️ Key này đã tồn tại','error');
+    keyId='key_'+Date.now();
+    db.api_keys.push({id:keyId,label,key,status,created_at:new Date().toLocaleString('vi-VN')});
     showMsg('apikey-modal-msg','✅ Thêm API Key thành công!','success');
   }
-
-  db.users.forEach(u => { if (u.apiKeyId===keyId) u.apiKeyId=null; });
-  if (assignTo) {
-    const targetUser = db.users.find(u => u.username===assignTo);
-    if (targetUser) targetUser.apiKeyId = keyId;
-  }
-
-  saveDB(db);
-  setTimeout(() => { closeModal('apikey-modal'); renderApiKeysTable(); renderUsersTable(); }, 800);
+  db.users.forEach(u=>{if(u.apiKeyId===keyId) u.apiKeyId=null;});
+  if(assignTo){const tu=db.users.find(u=>u.username===assignTo);if(tu) tu.apiKeyId=keyId;}
+  saveDB(db); setTimeout(()=>{closeModal('apikey-modal');renderApiKeysTable();renderUsersTable();},800);
 }
 
 function deleteApiKey(keyId) {
-  const db    = getDB();
-  const k     = (db.api_keys||[]).find(x => x.id===keyId);
-  const label = k ? k.label : keyId;
-  if (!confirm(`Xác nhận xóa API Key "${label}"?\nCác user đang dùng key này sẽ tự động chuyển về Master Key.`)) return;
-  db.users.forEach(u => { if (u.apiKeyId===keyId) u.apiKeyId=null; });
-  db.api_keys = (db.api_keys||[]).filter(x => x.id!==keyId);
+  const db=getDB(); const k=(db.api_keys||[]).find(x=>x.id===keyId);
+  if(!confirm(`Xác nhận xóa API Key "${k?k.label:keyId}"?`)) return;
+  db.users.forEach(u=>{if(u.apiKeyId===keyId) u.apiKeyId=null;});
+  db.api_keys=(db.api_keys||[]).filter(x=>x.id!==keyId);
   saveDB(db); renderApiKeysTable(); renderUsersTable();
 }
 
 // ============================================================
-// ADMIN — PRICING EDITOR
+// ADMIN — PRICING
 // ============================================================
 function renderPricingEditor() {
-  const pricing   = getPricingDB();
-  const uspsTbody = document.getElementById('pricing-usps-tbody');
-  const upsTbody  = document.getElementById('pricing-ups-tbody');
-
-  uspsTbody.innerHTML = WEIGHT_RANGES.map((r,i) => `
+  const pricing=getPricingDB();
+  document.getElementById('pricing-usps-tbody').innerHTML=WEIGHT_RANGES.map((r,i)=>`
     <tr>
       <td><span class="weight-label">${r.label}</span></td>
-      <td style="text-align:center">
-        <input type="number" class="price-input" min="0" step="0.01"
-          id="price-usps_ground-${i}" value="${pricing.usps_ground.prices[i]||0}"/>
-      </td>
-      <td style="text-align:center">
-        <input type="number" class="price-input" min="0" step="0.01"
-          id="price-usps_priority-${i}" value="${pricing.usps_priority.prices[i]||0}"/>
-      </td>
-      <td style="text-align:center">
-        <input type="number" class="price-input" min="0" step="0.01"
-          id="price-usps_express-${i}" value="${pricing.usps_express.prices[i]||0}"/>
-      </td>
+      <td style="text-align:center"><input type="number" class="price-input" min="0" step="0.01" id="price-usps_ground-${i}" value="${pricing.usps_ground.prices[i]||0}"/></td>
+      <td style="text-align:center"><input type="number" class="price-input" min="0" step="0.01" id="price-usps_priority-${i}" value="${pricing.usps_priority.prices[i]||0}"/></td>
+      <td style="text-align:center"><input type="number" class="price-input" min="0" step="0.01" id="price-usps_express-${i}" value="${pricing.usps_express.prices[i]||0}"/></td>
     </tr>`).join('');
-
-  upsTbody.innerHTML = WEIGHT_RANGES.map((r,i) => `
+  document.getElementById('pricing-ups-tbody').innerHTML=WEIGHT_RANGES.map((r,i)=>`
     <tr>
       <td><span class="weight-label">${r.label}</span></td>
-      <td style="text-align:center">
-        <input type="number" class="price-input" min="0" step="0.01"
-          id="price-ups_nextday-${i}" value="${pricing.ups_nextday.prices[i]||0}"/>
-      </td>
-      <td style="text-align:center">
-        <input type="number" class="price-input" min="0" step="0.01"
-          id="price-ups_nextday_early-${i}" value="${pricing.ups_nextday_early.prices[i]||0}"/>
-      </td>
+      <td style="text-align:center"><input type="number" class="price-input" min="0" step="0.01" id="price-ups_nextday-${i}" value="${pricing.ups_nextday.prices[i]||0}"/></td>
+      <td style="text-align:center"><input type="number" class="price-input" min="0" step="0.01" id="price-ups_nextday_early-${i}" value="${pricing.ups_nextday_early.prices[i]||0}"/></td>
     </tr>`).join('');
-
   renderPricingPreview();
 }
 
 function savePricing() {
-  const db      = getDB();
-  const pricing = db.pricing || JSON.parse(JSON.stringify(DEFAULT_PRICING));
-  Object.keys(SERVICE_API_MAP).forEach(sk => {
-    if (!pricing[sk]) pricing[sk] = JSON.parse(JSON.stringify(DEFAULT_PRICING[sk]));
-    pricing[sk].prices = WEIGHT_RANGES.map((_,i) => {
-      const el = document.getElementById(`price-${sk}-${i}`);
-      return el ? (parseFloat(el.value)||0) : 0;
+  const db=getDB(); const pricing=db.pricing||JSON.parse(JSON.stringify(DEFAULT_PRICING));
+  Object.keys(SERVICE_API_MAP).forEach(sk=>{
+    if(!pricing[sk]) pricing[sk]=JSON.parse(JSON.stringify(DEFAULT_PRICING[sk]));
+    pricing[sk].prices=WEIGHT_RANGES.map((_,i)=>{
+      const el=document.getElementById(`price-${sk}-${i}`);
+      return el?(parseFloat(el.value)||0):0;
     });
   });
-  db.pricing = pricing; saveDB(db);
+  db.pricing=pricing; saveDB(db);
   showMsg('pricing-msg','✅ Đã lưu bảng giá thành công!','success');
-  setTimeout(() => clearMsg('pricing-msg'), 3000);
+  setTimeout(()=>clearMsg('pricing-msg'),3000);
   renderPricingPreview(); renderServiceList();
 }
 
 function resetPricingDefault() {
-  if (!confirm('Khôi phục bảng giá về mặc định? Mọi thay đổi sẽ bị mất.')) return;
-  const db = getDB();
-  db.pricing = JSON.parse(JSON.stringify(DEFAULT_PRICING));
+  if(!confirm('Khôi phục bảng giá về mặc định?')) return;
+  const db=getDB(); db.pricing=JSON.parse(JSON.stringify(DEFAULT_PRICING));
   saveDB(db); renderPricingEditor();
   showMsg('pricing-msg','✅ Đã khôi phục bảng giá mặc định!','success');
-  setTimeout(() => clearMsg('pricing-msg'), 3000);
+  setTimeout(()=>clearMsg('pricing-msg'),3000);
 }
 
 function renderPricingPreview() {
-  const pricing = getPricingDB();
-  const preview = document.getElementById('pricing-preview');
-  const svcKeys = Object.keys(SERVICE_API_MAP);
-  preview.innerHTML = `
+  const pricing=getPricingDB();
+  const svcKeys=Object.keys(SERVICE_API_MAP);
+  document.getElementById('pricing-preview').innerHTML=`
     <table>
       <thead>
         <tr>
           <th>Cân nặng</th>
-          ${svcKeys.map(sk => `<th style="text-align:center">${pricing[sk]?pricing[sk].name:sk}</th>`).join('')}
+          ${svcKeys.map(sk=>`<th style="text-align:center">${pricing[sk]?pricing[sk].name:sk}</th>`).join('')}
         </tr>
       </thead>
       <tbody>
-        ${WEIGHT_RANGES.map((r,i) => `
+        ${WEIGHT_RANGES.map((r,i)=>`
           <tr>
             <td><span class="weight-label">${r.label}</span></td>
-            ${svcKeys.map(sk =>
-              `<td style="text-align:center">
-                <strong style="color:#1a73e8">
-                  $${pricing[sk] ? (pricing[sk].prices[i]||0).toFixed(2) : '0.00'}
-                </strong>
-              </td>`
-            ).join('')}
+            ${svcKeys.map(sk=>`
+              <td style="text-align:center">
+                <strong style="color:#1a73e8">$${pricing[sk]?(pricing[sk].prices[i]||0).toFixed(2):'0.00'}</strong>
+              </td>`).join('')}
           </tr>`).join('')}
       </tbody>
     </table>`;
@@ -1751,39 +1667,34 @@ function renderPricingPreview() {
 // ADMIN — SETTINGS
 // ============================================================
 function loadSettings() {
-  const db = getDB();
-  const s  = db.settings||{};
-  document.getElementById('setting-master-key').value = s.master_api    || DEFAULT_MASTER_API;
-  document.getElementById('setting-invite').value     = s.invite_code   || 'SHIP';
-  document.getElementById('setting-open-reg').value   = s.open_register ? '1' : '0';
+  const db=getDB(); const s=db.settings||{};
+  document.getElementById('setting-master-key').value=s.master_api||DEFAULT_MASTER_API;
+  document.getElementById('setting-invite').value=s.invite_code||'SHIP';
+  document.getElementById('setting-open-reg').value=s.open_register?'1':'0';
 }
 
 function saveSettings() {
-  const masterKey  = document.getElementById('setting-master-key').value.trim();
-  const inviteCode = document.getElementById('setting-invite').value.trim();
-  const openReg    = document.getElementById('setting-open-reg').value === '1';
-  if (!masterKey) return showMsg('settings-msg','⚠️ Master API Key không được để trống','error');
-  const db = getDB();
-  if (!db.settings) db.settings = {};
-  db.settings.master_api    = masterKey;
-  db.settings.invite_code   = inviteCode;
-  db.settings.open_register = openReg;
-  saveDB(db);
-  showMsg('settings-msg','✅ Đã lưu cài đặt thành công!','success');
-  setTimeout(() => clearMsg('settings-msg'), 3000);
-  updateBalance();
+  const masterKey=document.getElementById('setting-master-key').value.trim();
+  const inviteCode=document.getElementById('setting-invite').value.trim();
+  const openReg=document.getElementById('setting-open-reg').value==='1';
+  if(!masterKey) return showMsg('settings-msg','⚠️ Master API Key không được để trống','error');
+  const db=getDB(); if(!db.settings) db.settings={};
+  db.settings.master_api=masterKey; db.settings.invite_code=inviteCode; db.settings.open_register=openReg;
+  saveDB(db); showMsg('settings-msg','✅ Đã lưu cài đặt thành công!','success');
+  setTimeout(()=>clearMsg('settings-msg'),3000); updateBalance();
 }
 
 // ============================================================
 // INIT
 // ============================================================
-document.addEventListener('DOMContentLoaded', () => {
+document.addEventListener('DOMContentLoaded',()=>{
   initDB();
-  const searchInput = document.getElementById('search-order');
-  if (searchInput) searchInput.addEventListener('input', loadOrders);
-  document.getElementById('auth-screen').style.display = 'flex';
-  document.getElementById('app-screen').style.display  = 'none';
+  const si=document.getElementById('search-order');
+  if(si) si.addEventListener('input',loadOrders);
+  document.getElementById('auth-screen').style.display='flex';
+  document.getElementById('app-screen').style.display='none';
 });
 </script>
 </body>
 </html>
+

@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="vi">
 <head>
@@ -205,6 +204,14 @@
     .carrier-header span { font-weight: 700; font-size: 1rem; color: #333; }
 
     .preview-price { font-weight: 700; color: #1a73e8; text-align: center; }
+
+    /* Raw response debug box */
+    .debug-box {
+      background: #f8f9fa; border: 1px solid #dee2e6; border-radius: 6px;
+      padding: 10px 12px; font-family: monospace; font-size: 0.78rem;
+      color: #495057; max-height: 120px; overflow-y: auto; margin-top: 10px;
+      white-space: pre-wrap; word-break: break-all;
+    }
 
     @media (max-width: 600px) {
       .form-grid { grid-template-columns: 1fr; }
@@ -605,6 +612,17 @@
   </div>
 </div>
 
+<!-- ===== RAW RESPONSE DEBUG MODAL ===== -->
+<div class="modal-overlay" id="debug-modal">
+  <div class="modal">
+    <h3>🔍 Raw API Response</h3>
+    <div class="debug-box" id="debug-content"></div>
+    <div class="modal-actions">
+      <button class="btn-sm btn-outline" onclick="closeModal('debug-modal')">Đóng</button>
+    </div>
+  </div>
+</div>
+
 <script>
 // ============================================================
 // CONFIG
@@ -648,6 +666,7 @@ let currentUser      = null;
 let services         = [];
 let selectedService  = null;
 let lastPDF          = '';
+let lastPayload      = null;   // ✅ FIX: lưu payload để dùng trong modal
 let topupTarget      = null;
 let editingApiKeyId  = null;
 
@@ -798,7 +817,7 @@ function doRegister() {
   setTimeout(() => { currentUser = JSON.parse(JSON.stringify(newUser)); enterApp(); }, 1000);
 }
 function doLogout() {
-  currentUser=null; services=[]; selectedService=null;
+  currentUser=null; services=[]; selectedService=null; lastPayload=null;
   document.getElementById('app-screen').style.display  = 'none';
   document.getElementById('auth-screen').style.display = 'flex';
   document.getElementById('login-user').value = '';
@@ -970,20 +989,70 @@ function updatePriceEstimate() {
 }
 
 // ============================================================
-// CREATE ORDER
+// ✅ FIX: EXTRACT TRACKING ID & PDF từ nhiều cấu trúc response
+// ============================================================
+function extractOrderData(json) {
+  // Thử các cấu trúc response phổ biến
+  const d = json.data || json.result || json.order || json || {};
+
+  // Tracking ID — thử nhiều tên field
+  const tracking
+<!-- tiếp theo từ extractOrderData -->
+<script>
+// ============================================================
+// ✅ FIX: EXTRACT TRACKING ID & PDF từ nhiều cấu trúc response
+// ============================================================
+function extractOrderData(json) {
+  // Thử các cấu trúc response phổ biến
+  const d = json.data || json.result || json.order || json || {};
+
+  // Tracking ID — thử nhiều tên field
+  const tracking_id =
+    d.tracking_id   ||
+    d.trackingId    ||
+    d.tracking      ||
+    d.TrackingId    ||
+    d.trackingNumber||
+    d.tracking_number||
+    '';
+
+  // PDF — thử nhiều tên field
+  const pdf =
+    d.pdf           ||
+    d.pdf_url       ||
+    d.label_url     ||
+    d.labelUrl      ||
+    d.label         ||
+    d.file          ||
+    d.download_url  ||
+    '';
+
+  // fromName / toName — fallback về lastPayload nếu API không trả về
+  const fromName = d.fromName || d.from_name || d.sender_name   || (lastPayload ? lastPayload.fromName : '');
+  const toName   = d.toName   || d.to_name   || d.receiver_name || (lastPayload ? lastPayload.toName   : '');
+  const weight   = d.weight   || d.Weight    || (lastPayload ? lastPayload.weight : 0);
+  const price    = d.price    || d.amount    || d.cost          || 0;
+
+  return { ...d, tracking_id, pdf, fromName, toName, weight, price };
+}
+
+// ============================================================
+// CREATE ORDER  ✅ ĐÃ SỬA TOÀN BỘ
 // ============================================================
 async function createOrder() {
   clearMsg('create-msg');
   if (!selectedService) return showMsg('create-msg','⚠️ Vui lòng chọn dịch vụ vận chuyển','error');
+
   const required = ['fromName','fromAddress','fromCity','fromState','fromZip',
                     'toName','toAddress','toCity','toState','toZip','weight'];
   for (const f of required) {
     if (!document.getElementById(f).value.trim())
       return showMsg('create-msg',`⚠️ Vui lòng điền: ${f}`,'error');
   }
+
   const db = getDB();
   const u  = db.users.find(x => x.username===currentUser.username);
-  if (!u || (u.balance||0)<=0)
+  if (!u || (u.balance||0) <= 0)
     return showMsg('create-msg','⚠️ Số dư không đủ. Liên hệ admin để nạp tiền.','error');
 
   const btn = document.getElementById('create-btn');
@@ -991,9 +1060,10 @@ async function createOrder() {
   btn.innerHTML = '<span class="spinner"></span> Đang tạo nhãn...';
 
   const apiKey = getApiKeyForUser(currentUser.username);
-  const weight = parseFloat(document.getElementById('weight').value)||0;
+  const weight = parseFloat(document.getElementById('weight').value) || 0;
 
-  const payload = {
+  // ✅ FIX: lưu payload vào biến global để dùng lại trong modal
+  lastPayload = {
     label_id:     selectedService.id,
     fromName:     document.getElementById('fromName').value.trim(),
     fromCompany:  document.getElementById('fromCompany').value.trim(),
@@ -1002,7 +1072,7 @@ async function createOrder() {
     fromZip:      document.getElementById('fromZip').value.trim(),
     fromState:    document.getElementById('fromState').value.trim().toUpperCase(),
     fromCity:     document.getElementById('fromCity').value.trim(),
-    fromCountry:  document.getElementById('fromCountry').value.trim()||'US',
+    fromCountry:  document.getElementById('fromCountry').value.trim() || 'US',
     toName:       document.getElementById('toName').value.trim(),
     toCompany:    document.getElementById('toCompany').value.trim(),
     toAddress:    document.getElementById('toAddress').value.trim(),
@@ -1010,113 +1080,180 @@ async function createOrder() {
     toZip:        document.getElementById('toZip').value.trim(),
     toState:      document.getElementById('toState').value.trim().toUpperCase(),
     toCity:       document.getElementById('toCity').value.trim(),
-    toCountry:    document.getElementById('toCountry').value.trim()||'US',
+    toCountry:    document.getElementById('toCountry').value.trim() || 'US',
     weight:       weight,
-    length:       parseFloat(document.getElementById('length').value)||0,
-    height:       parseFloat(document.getElementById('height').value)||0,
-    width:        parseFloat(document.getElementById('width').value)||0,
+    length:       parseFloat(document.getElementById('length').value) || 0,
+    height:       parseFloat(document.getElementById('height').value) || 0,
+    width:        parseFloat(document.getElementById('width').value)  || 0,
     reference_1:  document.getElementById('ref1').value.trim(),
     reference_2:  document.getElementById('ref2').value.trim(),
     discription:  document.getElementById('desc').value.trim()
   };
 
   try {
-    const res  = await fetch(API_BASE+'/create-order', {
-      method:'POST',
-      headers:{'Authorization':'Bearer '+apiKey,'Content-Type':'application/json'},
-      body:JSON.stringify(payload)
+    const res  = await fetch(API_BASE + '/create-order', {
+      method:  'POST',
+      headers: { 'Authorization': 'Bearer ' + apiKey, 'Content-Type': 'application/json' },
+      body:    JSON.stringify(lastPayload)
     });
-    const json = await res.json();
-    if (json.success && json.data) {
-      const d = json.data;
+
+    // ✅ FIX: đọc text trước, parse sau để tránh crash nếu response không phải JSON
+    const rawText = await res.text();
+    let json;
+    try {
+      json = JSON.parse(rawText);
+    } catch(parseErr) {
+      console.error('Response không phải JSON:', rawText);
+      showMsg('create-msg', '❌ Server trả về dữ liệu không hợp lệ. Xem console để biết thêm.', 'error');
+      btn.disabled = false;
+      btn.innerHTML = '🚀 Tạo nhãn vận chuyển';
+      return;
+    }
+
+    // ✅ FIX: kiểm tra success linh hoạt hơn
+    const isSuccess =
+      json.success === true  ||
+      json.status  === true  ||
+      json.status  === 'success' ||
+      json.status  === 200   ||
+      (json.data && (json.data.tracking_id || json.data.trackingId || json.data.pdf || json.data.label_url));
+
+    if (isSuccess) {
+      // ✅ FIX: dùng hàm extract để lấy đúng field dù API đổi tên
+      const d = extractOrderData(json);
+
       // Tính giá local (ưu tiên bảng giá admin)
       const localPrice = getPriceForOrder(selectedService.id, weight);
-      const finalPrice = localPrice !== null ? localPrice : (parseFloat(d.price)||0);
+      const finalPrice = (localPrice !== null) ? localPrice : (parseFloat(d.price) || 0);
 
+      // Lưu vào DB
       const db2 = getDB();
-      const u2  = db2.users.find(x => x.username===currentUser.username);
+      const u2  = db2.users.find(x => x.username === currentUser.username);
       if (u2) {
-        u2.balance = Math.max(0, (u2.balance||0) - finalPrice);
+        u2.balance = Math.max(0, (u2.balance || 0) - finalPrice);
         if (!u2.orders) u2.orders = [];
         u2.orders.unshift({
-          ...d,
+          tracking_id:   d.tracking_id,
+          pdf:           d.pdf,
           price:         finalPrice,
           service:       selectedService.name,
           serviceKey:    getServiceKeyByApiId(selectedService.id),
           weight:        weight,
-          length:        payload.length,
-          width:         payload.width,
-          height:        payload.height,
-          fromName:      payload.fromName,
-          fromAddress:   payload.fromAddress,
-          fromCity:      payload.fromCity,
-          fromState:     payload.fromState,
-          fromZip:       payload.fromZip,
-          toName:        payload.toName,
-          toAddress:     payload.toAddress,
-          toCity:        payload.toCity,
-          toState:       payload.toState,
-          toZip:         payload.toZip,
+          length:        lastPayload.length,
+          width:         lastPayload.width,
+          height:        lastPayload.height,
+          fromName:      lastPayload.fromName,
+          fromAddress:   lastPayload.fromAddress,
+          fromCity:      lastPayload.fromCity,
+          fromState:     lastPayload.fromState,
+          fromZip:       lastPayload.fromZip,
+          toName:        lastPayload.toName,
+          toAddress:     lastPayload.toAddress,
+          toCity:        lastPayload.toCity,
+          toState:       lastPayload.toState,
+          toZip:         lastPayload.toZip,
           created_at:    new Date().toLocaleString('vi-VN'),
-          api_key_label: getApiKeyLabelForUser(currentUser.username)
+          api_key_label: getApiKeyLabelForUser(currentUser.username),
+          raw_response:  json   // ✅ lưu raw để debug nếu cần
         });
         saveDB(db2);
         currentUser = JSON.parse(JSON.stringify(u2));
       }
+
       updateBalance();
       loadOrders();
       showLabelModal(d, finalPrice);
+
     } else {
-      showMsg('create-msg','❌ '+(json.message||'Không thể tạo nhãn'),'error');
+      // ✅ FIX: hiển thị message lỗi rõ ràng từ nhiều field có thể có
+      const errMsg =
+        json.message ||
+        json.msg     ||
+        json.error   ||
+        json.errors  ||
+        (json.data && json.data.message) ||
+        'Không thể tạo nhãn';
+
+      showMsg('create-msg', '❌ ' + errMsg, 'error');
+
+      // Hiển thị raw response để debug
+      console.error('API Error Response:', json);
     }
+
   } catch(e) {
-    showMsg('create-msg','❌ Lỗi kết nối: '+e.message,'error');
+    showMsg('create-msg', '❌ Lỗi kết nối: ' + e.message, 'error');
+    console.error('Fetch error:', e);
   }
+
   btn.disabled = false;
   btn.innerHTML = '🚀 Tạo nhãn vận chuyển';
 }
 
+// ============================================================
+// ✅ FIX: showLabelModal — không còn dùng biến payload undefined
+// ============================================================
 function showLabelModal(d, finalPrice) {
   lastPDF = d.pdf || '';
+
+  // Lấy thông tin từ d hoặc fallback về lastPayload
+  const fromName = d.fromName || (lastPayload ? lastPayload.fromName : '-');
+  const toName   = d.toName   || (lastPayload ? lastPayload.toName   : '-');
+  const weight   = d.weight   || (lastPayload ? lastPayload.weight   : 0);
+
   document.getElementById('label-detail').innerHTML = `
-    <div class="detail-row"><span class="key">Tracking ID</span>
-      <span class="val" style="color:#1a73e8">${d.tracking_id||'-'}</span></div>
-    <div class="detail-row"><span class="key">Dịch vụ</span>
-      <span class="val">${selectedService ? selectedService.name : '-'}</span></div>
-    <div class="detail-row"><span class="key">Người gửi</span>
-      <span class="val">${d.fromName||payload||'-'}</span></div>
-    <div class="detail-row"><span class="key">Người nhận</span>
-      <span class="val">${d.toName||'-'}</span></div>
-    <div class="detail-row"><span class="key">Cân nặng</span>
-      <span class="val">${d.weight||0} lbs</span></div>
-    <div class="detail-row"><span class="key">Giá thanh toán</span>
+    <div class="detail-row">
+      <span class="key">Tracking ID</span>
+      <span class="val" style="color:#1a73e8">${d.tracking_id || '⚠️ Chưa có (xem PDF)'}</span>
+    </div>
+    <div class="detail-row">
+      <span class="key">Dịch vụ</span>
+      <span class="val">${selectedService ? selectedService.name : '-'}</span>
+    </div>
+    <div class="detail-row">
+      <span class="key">Người gửi</span>
+      <span class="val">${fromName}</span>
+    </div>
+    <div class="detail-row">
+      <span class="key">Người nhận</span>
+      <span class="val">${toName}</span>
+    </div>
+    <div class="detail-row">
+      <span class="key">Cân nặng</span>
+      <span class="val">${weight} lbs</span>
+    </div>
+    <div class="detail-row">
+      <span class="key">Giá thanh toán</span>
       <span class="val" style="color:#2e7d32;font-size:1.15rem;font-weight:700">
         $${parseFloat(finalPrice).toFixed(2)}
-      </span></div>
+      </span>
+    </div>
     ${d.pdf ? `
     <div style="margin-top:14px;padding:12px;background:#e8f5e9;border-radius:8px;text-align:center">
       <a href="${d.pdf}" target="_blank"
         style="color:#2e7d32;font-weight:700;text-decoration:none;font-size:1rem">
         📄 Xem / Tải PDF nhãn
       </a>
-    </div>` : ''}
+    </div>` : `
+    <div style="margin-top:14px;padding:12px;background:#fff3e0;border-radius:8px;text-align:center;color:#e65100">
+      ⚠️ Không có link PDF trong response. Vui lòng kiểm tra tài khoản shiplabel.net
+    </div>`}
   `;
   openModal('label-modal');
 }
 
-function downloadPDF() { if (lastPDF) window.open(lastPDF,'_blank'); }
+function downloadPDF() { if (lastPDF) window.open(lastPDF, '_blank'); }
 
 // ============================================================
 // ORDERS
 // ============================================================
 function loadOrders() {
   const db = getDB();
-  const u  = db.users.find(x => x.username===currentUser.username);
+  const u  = db.users.find(x => x.username === currentUser.username);
   renderOrdersTable((u && u.orders) ? u.orders : []);
 }
 
 function renderOrdersTable(orders) {
-  const search   = (document.getElementById('search-order')||{}).value||'';
+  const search   = (document.getElementById('search-order') || {}).value || '';
   const filtered = orders.filter(o =>
     !search || (o.tracking_id && o.tracking_id.toLowerCase().includes(search.toLowerCase()))
   );
@@ -1125,16 +1262,16 @@ function renderOrdersTable(orders) {
     tbody.innerHTML = '<tr><td colspan="9" style="text-align:center;color:#aaa;padding:30px">Chưa có đơn hàng nào</td></tr>';
     return;
   }
-  tbody.innerHTML = filtered.map((o,i) => `
+  tbody.innerHTML = filtered.map((o, i) => `
     <tr>
-      <td>${i+1}</td>
-      <td><code style="font-size:0.82rem;color:#1a73e8">${o.tracking_id||'-'}</code></td>
-      <td>${o.fromName||'-'}<br><small style="color:#aaa">${o.fromCity||''}, ${o.fromState||''}</small></td>
-      <td>${o.toName||'-'}<br><small style="color:#aaa">${o.toCity||''}, ${o.toState||''}</small></td>
-      <td><small>${o.service||'-'}</small></td>
-      <td><small>${o.weight||0} lbs</small></td>
-      <td><strong style="color:#2e7d32">$${parseFloat(o.price||0).toFixed(2)}</strong></td>
-      <td><small style="color:#888">${o.created_at||'-'}</small></td>
+      <td>${i + 1}</td>
+      <td><code style="font-size:0.82rem;color:#1a73e8">${o.tracking_id || '—'}</code></td>
+      <td>${o.fromName || '-'}<br><small style="color:#aaa">${o.fromCity || ''}, ${o.fromState || ''}</small></td>
+      <td>${o.toName || '-'}<br><small style="color:#aaa">${o.toCity || ''}, ${o.toState || ''}</small></td>
+      <td><small>${o.service || '-'}</small></td>
+      <td><small>${o.weight || 0} lbs</small></td>
+      <td><strong style="color:#2e7d32">$${parseFloat(o.price || 0).toFixed(2)}</strong></td>
+      <td><small style="color:#888">${o.created_at || '-'}</small></td>
       <td>
         <div style="display:flex;gap:4px;flex-wrap:wrap">
           ${o.pdf ? `<button class="btn-sm btn-success" onclick="window.open('${o.pdf}','_blank')">📄 PDF</button>` : ''}
@@ -1147,29 +1284,29 @@ function renderOrdersTable(orders) {
 
 function viewOrderDetail(idx) {
   const db = getDB();
-  const u  = db.users.find(x => x.username===currentUser.username);
+  const u  = db.users.find(x => x.username === currentUser.username);
   const o  = u && u.orders ? u.orders[idx] : null;
   if (!o) return;
   document.getElementById('order-detail-content').innerHTML = `
     <div class="detail-row"><span class="key">Tracking ID</span>
-      <span class="val" style="color:#1a73e8">${o.tracking_id||'-'}</span></div>
-    <div class="detail-row"><span class="key">Dịch vụ</span><span class="val">${o.service||'-'}</span></div>
-    <div class="detail-row"><span class="key">Ngày tạo</span><span class="val">${o.created_at||'-'}</span></div>
-    <div class="detail-row"><span class="key">API Key dùng</span><span class="val">${o.api_key_label||'Master Key'}</span></div>
+      <span class="val" style="color:#1a73e8">${o.tracking_id || '—'}</span></div>
+    <div class="detail-row"><span class="key">Dịch vụ</span><span class="val">${o.service || '-'}</span></div>
+    <div class="detail-row"><span class="key">Ngày tạo</span><span class="val">${o.created_at || '-'}</span></div>
+    <div class="detail-row"><span class="key">API Key dùng</span><span class="val">${o.api_key_label || 'Master Key'}</span></div>
     <hr style="margin:10px 0;border:none;border-top:1px solid #eee">
-    <div class="detail-row"><span class="key">Người gửi</span><span class="val">${o.fromName||'-'}</span></div>
+    <div class="detail-row"><span class="key">Người gửi</span><span class="val">${o.fromName || '-'}</span></div>
     <div class="detail-row"><span class="key">Địa chỉ gửi</span>
-      <span class="val">${o.fromAddress||''}, ${o.fromCity||''}, ${o.fromState||''} ${o.fromZip||''}</span></div>
+      <span class="val">${o.fromAddress || ''}, ${o.fromCity || ''}, ${o.fromState || ''} ${o.fromZip || ''}</span></div>
     <hr style="margin:10px 0;border:none;border-top:1px solid #eee">
-    <div class="detail-row"><span class="key">Người nhận</span><span class="val">${o.toName||'-'}</span></div>
+    <div class="detail-row"><span class="key">Người nhận</span><span class="val">${o.toName || '-'}</span></div>
     <div class="detail-row"><span class="key">Địa chỉ nhận</span>
-      <span class="val">${o.toAddress||''}, ${o.toCity||''}, ${o.toState||''} ${o.toZip||''}</span></div>
+      <span class="val">${o.toAddress || ''}, ${o.toCity || ''}, ${o.toState || ''} ${o.toZip || ''}</span></div>
     <hr style="margin:10px 0;border:none;border-top:1px solid #eee">
-    <div class="detail-row"><span class="key">Cân nặng</span><span class="val">${o.weight||0} lbs</span></div>
+    <div class="detail-row"><span class="key">Cân nặng</span><span class="val">${o.weight || 0} lbs</span></div>
     <div class="detail-row"><span class="key">Kích thước</span>
-      <span class="val">${o.length||0}" × ${o.width||0}" × ${o.height||0}"</span></div>
+      <span class="val">${o.length || 0}" × ${o.width || 0}" × ${o.height || 0}"</span></div>
     <div class="detail-row"><span class="key">Giá thanh toán</span>
-      <span class="val" style="color:#2e7d32;font-size:1.1rem">$${parseFloat(o.price||0).toFixed(2)}</span></div>
+      <span class="val" style="color:#2e7d32;font-size:1.1rem">$${parseFloat(o.price || 0).toFixed(2)}</span></div>
     ${o.pdf ? `<div style="margin-top:12px;text-align:center">
       <a href="${o.pdf}" target="_blank"
         style="color:#1a73e8;font-weight:700;text-decoration:none">📄 Tải nhãn PDF</a>
@@ -1189,25 +1326,25 @@ function renderUsersTable() {
     return;
   }
   tbody.innerHTML = db.users.map(u => {
-    const keyLabel  = getApiKeyLabelForUser(u.username);
-    const isMaster  = keyLabel === 'Master Key';
+    const keyLabel = getApiKeyLabelForUser(u.username);
+    const isMaster = keyLabel === 'Master Key';
     return `<tr>
       <td><strong>${u.username}</strong></td>
       <td>${u.name}</td>
-      <td>${u.email||'-'}</td>
-      <td><strong style="color:#2e7d32">$${(u.balance||0).toFixed(2)}</strong></td>
-      <td><span class="badge ${u.role==='admin'?'badge-error':'badge-success'}">${u.role}</span></td>
+      <td>${u.email || '-'}</td>
+      <td><strong style="color:#2e7d32">$${(u.balance || 0).toFixed(2)}</strong></td>
+      <td><span class="badge ${u.role === 'admin' ? 'badge-error' : 'badge-success'}">${u.role}</span></td>
       <td>
-        <span class="key-badge" style="${isMaster?'background:#e3f2fd;color:#1565c0':''}">
+        <span class="key-badge" style="${isMaster ? 'background:#e3f2fd;color:#1565c0' : ''}">
           ${keyLabel}
         </span>
       </td>
-      <td>${(u.orders||[]).length}</td>
+      <td>${(u.orders || []).length}</td>
       <td>
         <div class="user-actions">
           <button class="btn-sm btn-success" onclick="openTopup('${u.username}')">💰 Nạp</button>
           <button class="btn-sm btn-outline" onclick="editUser('${u.username}')">✏️ Sửa</button>
-          ${u.username!=='admin'
+          ${u.username !== 'admin'
             ? `<button class="btn-sm btn-danger" onclick="deleteUser('${u.username}')">🗑️</button>`
             : ''}
         </div>
@@ -1218,33 +1355,33 @@ function renderUsersTable() {
 
 function openAddUserModal() {
   document.getElementById('user-modal-title').textContent = '➕ Thêm người dùng';
-  document.getElementById('um-username').value  = '';
+  document.getElementById('um-username').value    = '';
   document.getElementById('um-username').disabled = false;
-  document.getElementById('um-name').value      = '';
-  document.getElementById('um-email').value     = '';
-  document.getElementById('um-pass').value      = '';
-  document.getElementById('um-balance').value   = '0';
-  document.getElementById('um-role').value      = 'user';
+  document.getElementById('um-name').value        = '';
+  document.getElementById('um-email').value       = '';
+  document.getElementById('um-pass').value        = '';
+  document.getElementById('um-balance').value     = '0';
+  document.getElementById('um-role').value        = 'user';
   document.getElementById('um-username').dataset.edit = '';
-  populateApiKeySelect('um-apikey','');
+  populateApiKeySelect('um-apikey', '');
   clearMsg('user-modal-msg');
   openModal('user-modal');
 }
 
 function editUser(username) {
   const db = getDB();
-  const u  = db.users.find(x => x.username===username);
+  const u  = db.users.find(x => x.username === username);
   if (!u) return;
-  document.getElementById('user-modal-title').textContent = '✏️ Sửa: '+username;
+  document.getElementById('user-modal-title').textContent = '✏️ Sửa: ' + username;
   document.getElementById('um-username').value    = u.username;
   document.getElementById('um-username').disabled = true;
   document.getElementById('um-name').value        = u.name;
-  document.getElementById('um-email').value       = u.email||'';
+  document.getElementById('um-email').value       = u.email || '';
   document.getElementById('um-pass').value        = '';
-  document.getElementById('um-balance').value     = (u.balance||0).toFixed(2);
+  document.getElementById('um-balance').value     = (u.balance || 0).toFixed(2);
   document.getElementById('um-role').value        = u.role;
   document.getElementById('um-username').dataset.edit = username;
-  populateApiKeySelect('um-apikey', u.apiKeyId||'');
+  populateApiKeySelect('um-apikey', u.apiKeyId || '');
   clearMsg('user-modal-msg');
   openModal('user-modal');
 }
@@ -1254,7 +1391,7 @@ function populateApiKeySelect(selectId, selectedId) {
   const sel = document.getElementById(selectId);
   sel.innerHTML = '<option value="">-- Dùng Master Key --</option>' +
     db.api_keys.map(k =>
-      `<option value="${k.id}" ${k.id===selectedId?'selected':''}>
+      `<option value="${k.id}" ${k.id === selectedId ? 'selected' : ''}>
         ${k.label} (${maskKey(k.key)}) — ${k.status}
       </option>`
     ).join('');
@@ -1266,29 +1403,29 @@ function saveUser() {
   const name       = document.getElementById('um-name').value.trim();
   const email      = document.getElementById('um-email').value.trim();
   const pass       = document.getElementById('um-pass').value;
-  const balance    = parseFloat(document.getElementById('um-balance').value)||0;
+  const balance    = parseFloat(document.getElementById('um-balance').value) || 0;
   const role       = document.getElementById('um-role').value;
-  const apiKeyId   = document.getElementById('um-apikey').value||null;
+  const apiKeyId   = document.getElementById('um-apikey').value || null;
 
-  if (!username||!name)
-    return showMsg('user-modal-msg','⚠️ Vui lòng điền đầy đủ thông tin bắt buộc','error');
+  if (!username || !name)
+    return showMsg('user-modal-msg', '⚠️ Vui lòng điền đầy đủ thông tin bắt buộc', 'error');
 
   const db = getDB();
   if (editTarget) {
-    const u = db.users.find(x => x.username===editTarget);
+    const u = db.users.find(x => x.username === editTarget);
     if (!u) return;
-    u.name=name; u.email=email; u.balance=balance; u.role=role; u.apiKeyId=apiKeyId;
+    u.name = name; u.email = email; u.balance = balance; u.role = role; u.apiKeyId = apiKeyId;
     if (pass) u.password = btoa(pass);
-    showMsg('user-modal-msg','✅ Cập nhật thành công!','success');
+    showMsg('user-modal-msg', '✅ Cập nhật thành công!', 'success');
   } else {
-    if (!pass) return showMsg('user-modal-msg','⚠️ Vui lòng nhập mật khẩu','error');
-    if (db.users.find(x=>x.username===username))
-      return showMsg('user-modal-msg','⚠️ Username đã tồn tại','error');
+    if (!pass) return showMsg('user-modal-msg', '⚠️ Vui lòng nhập mật khẩu', 'error');
+    if (db.users.find(x => x.username === username))
+      return showMsg('user-modal-msg', '⚠️ Username đã tồn tại', 'error');
     db.users.push({
-      username, password:btoa(pass), name, email,
-      role, balance, apiKeyId, orders:[], topup_history:[]
+      username, password: btoa(pass), name, email,
+      role, balance, apiKeyId, orders: [], topup_history: []
     });
-    showMsg('user-modal-msg','✅ Thêm người dùng thành công!','success');
+    showMsg('user-modal-msg', '✅ Thêm người dùng thành công!', 'success');
   }
   saveDB(db);
   setTimeout(() => { closeModal('user-modal'); renderUsersTable(); }, 800);
@@ -1297,7 +1434,7 @@ function saveUser() {
 function deleteUser(username) {
   if (!confirm(`Xác nhận xóa người dùng "${username}"?\nThao tác này không thể hoàn tác.`)) return;
   const db = getDB();
-  db.users = db.users.filter(x => x.username!==username);
+  db.users = db.users.filter(x => x.username !== username);
   saveDB(db);
   renderUsersTable();
 }
@@ -1307,22 +1444,22 @@ function deleteUser(username) {
 // ============================================================
 function openTopup(username) {
   const db = getDB();
-  const u  = db.users.find(x => x.username===username);
+  const u  = db.users.find(x => x.username === username);
   if (!u) return;
   topupTarget = username;
-  document.getElementById('topup-uname').textContent   = username+' ('+u.name+')';
-  document.getElementById('topup-current').textContent = '$'+(u.balance||0).toFixed(2);
+  document.getElementById('topup-uname').textContent   = username + ' (' + u.name + ')';
+  document.getElementById('topup-current').textContent = '$' + (u.balance || 0).toFixed(2);
   document.getElementById('topup-amount').value = '10';
   document.getElementById('topup-note').value   = '';
   clearMsg('topup-msg');
 
-  const hist = u.topup_history||[];
+  const hist = u.topup_history || [];
   const wrap = document.getElementById('topup-hist-wrap');
   if (hist.length) {
     wrap.innerHTML = `
       <div style="font-size:0.82rem;font-weight:700;color:#888;margin-bottom:6px">📋 Lịch sử nạp tiền:</div>
       <div style="max-height:150px;overflow-y:auto;border:1px solid #f0f0f0;border-radius:6px;padding:6px">
-        ${hist.slice(0,15).map(h => `
+        ${hist.slice(0, 15).map(h => `
           <div class="topup-hist-row">
             <span style="color:#888">${h.date}</span>
             <span style="color:#2e7d32;font-weight:700">+$${h.amount.toFixed(2)}</span>
@@ -1339,11 +1476,11 @@ function openTopup(username) {
 function doTopup() {
   const amount = parseFloat(document.getElementById('topup-amount').value);
   const note   = document.getElementById('topup-note').value.trim();
-  if (!amount||amount<=0) return showMsg('topup-msg','⚠️ Số tiền không hợp lệ','error');
+  if (!amount || amount <= 0) return showMsg('topup-msg', '⚠️ Số tiền không hợp lệ', 'error');
   const db = getDB();
-  const u  = db.users.find(x => x.username===topupTarget);
+  const u  = db.users.find(x => x.username === topupTarget);
   if (!u) return;
-  u.balance = (u.balance||0) + amount;
+  u.balance = (u.balance || 0) + amount;
   if (!u.topup_history) u.topup_history = [];
   u.topup_history.unshift({
     date:   new Date().toLocaleString('vi-VN'),
@@ -1353,9 +1490,9 @@ function doTopup() {
     by:     currentUser.username
   });
   saveDB(db);
-  showMsg('topup-msg',`✅ Nạp $${amount.toFixed(2)} thành công! Số dư mới: $${u.balance.toFixed(2)}`,'success');
-  document.getElementById('topup-current').textContent = '$'+u.balance.toFixed(2);
-  if (currentUser.username===topupTarget) { currentUser.balance=u.balance; updateBalance(); }
+  showMsg('topup-msg', `✅ Nạp $${amount.toFixed(2)} thành công! Số dư mới: $${u.balance.toFixed(2)}`, 'success');
+  document.getElementById('topup-current').textContent = '$' + u.balance.toFixed(2);
+  if (currentUser.username === topupTarget) { currentUser.balance = u.balance; updateBalance(); }
   setTimeout(() => { closeModal('topup-modal'); renderUsersTable(); }, 1200);
 }
 
@@ -1374,7 +1511,7 @@ function renderApiKeysTable() {
       <td><span style="color:#aaa;font-size:0.8rem">Chỉnh trong Cài đặt</span></td>
     </tr>`;
 
-  if (!db.api_keys||!db.api_keys.length) {
+  if (!db.api_keys || !db.api_keys.length) {
     tbody.innerHTML = masterRow +
       '<tr><td colspan="5" style="text-align:center;color:#aaa;padding:16px">Chưa có API key tùy chỉnh</td></tr>';
     return;
@@ -1392,7 +1529,7 @@ function renderApiKeysTable() {
           onclick="copyKey('${k.key}')">📋</button>
       </td>
       <td>${assignedUser}</td>
-      <td><span class="badge ${k.status==='active'?'badge-success':'badge-error'}">${k.status}</span></td>
+      <td><span class="badge ${k.status === 'active' ? 'badge-success' : 'badge-error'}">${k.status}</span></td>
       <td>
         <div style="display:flex;gap:5px">
           <button class="btn-sm btn-outline" onclick="editApiKey('${k.id}')">✏️ Sửa</button>
@@ -1407,7 +1544,7 @@ function renderApiKeysTable() {
 function copyKey(key) {
   navigator.clipboard.writeText(key)
     .then(()  => alert('✅ Đã copy API key!'))
-    .catch(()  => prompt('Copy key này:',key));
+    .catch(()  => prompt('Copy key này:', key));
 }
 
 function openAddApiKeyModal() {
@@ -1416,21 +1553,21 @@ function openAddApiKeyModal() {
   document.getElementById('ak-label').value  = '';
   document.getElementById('ak-key').value    = '';
   document.getElementById('ak-status').value = 'active';
-  populateUserSelect('ak-user','');
+  populateUserSelect('ak-user', '');
   clearMsg('apikey-modal-msg');
   openModal('apikey-modal');
 }
 
 function editApiKey(id) {
   const db = getDB();
-  const k  = db.api_keys.find(x => x.id===id);
+  const k  = db.api_keys.find(x => x.id === id);
   if (!k) return;
   editingApiKeyId = id;
   document.getElementById('apikey-modal-title').textContent = '✏️ Sửa API Key';
   document.getElementById('ak-label').value  = k.label;
   document.getElementById('ak-key').value    = k.key;
   document.getElementById('ak-status').value = k.status;
-  populateUserSelect('ak-user', k.assignedUser||'');
+  populateUserSelect('ak-user', k.assignedUser || '');
   clearMsg('apikey-modal-msg');
   openModal('apikey-modal');
 }
@@ -1440,7 +1577,7 @@ function populateUserSelect(selectId, selectedUsername) {
   const sel = document.getElementById(selectId);
   sel.innerHTML = '<option value="">-- Chưa gán --</option>' +
     db.users.map(u =>
-      `<option value="${u.username}" ${u.username===selectedUsername?'selected':''}>
+      `<option value="${u.username}" ${u.username === selectedUsername ? 'selected' : ''}>
         ${u.username} (${u.name})
       </option>`
     ).join('');
@@ -1452,23 +1589,23 @@ function saveApiKey() {
   const status       = document.getElementById('ak-status').value;
   const assignedUser = document.getElementById('ak-user').value;
 
-  if (!label||!key)
-    return showMsg('apikey-modal-msg','⚠️ Vui lòng điền đầy đủ thông tin','error');
+  if (!label || !key)
+    return showMsg('apikey-modal-msg', '⚠️ Vui lòng điền đầy đủ thông tin', 'error');
   if (!key.includes('|'))
-    return showMsg('apikey-modal-msg','⚠️ API key không đúng định dạng (VD: 1234|abcdef...)','error');
+    return showMsg('apikey-modal-msg', '⚠️ API key không đúng định dạng (VD: 1234|abcdef...)', 'error');
 
   const db = getDB();
   if (editingApiKeyId) {
-    const k = db.api_keys.find(x => x.id===editingApiKeyId);
+    const k = db.api_keys.find(x => x.id === editingApiKeyId);
     if (!k) return;
-    k.label=label; k.key=key; k.status=status; k.assignedUser=assignedUser;
-    showMsg('apikey-modal-msg','✅ Cập nhật thành công!','success');
+    k.label = label; k.key = key; k.status = status; k.assignedUser = assignedUser;
+    showMsg('apikey-modal-msg', '✅ Cập nhật thành công!', 'success');
   } else {
     db.api_keys.push({
       id: genId(), label, key, status, assignedUser,
       created_at: new Date().toLocaleString('vi-VN')
     });
-    showMsg('apikey-modal-msg','✅ Thêm API key thành công!','success');
+    showMsg('apikey-modal-msg', '✅ Thêm API key thành công!', 'success');
   }
   saveDB(db);
   setTimeout(() => { closeModal('apikey-modal'); renderApiKeysTable(); }, 800);
@@ -1477,8 +1614,8 @@ function saveApiKey() {
 function deleteApiKey(id) {
   if (!confirm('Xác nhận xóa API key này?')) return;
   const db = getDB();
-  db.api_keys = db.api_keys.filter(x => x.id!==id);
-  db.users.forEach(u => { if (u.apiKeyId===id) u.apiKeyId=null; });
+  db.api_keys = db.api_keys.filter(x => x.id !== id);
+  db.users.forEach(u => { if (u.apiKeyId === id) u.apiKeyId = null; });
   saveDB(db);
   renderApiKeysTable();
 }
@@ -1490,12 +1627,12 @@ function renderPricingEditor() {
   const db      = getDB();
   const pricing = db.pricing || JSON.parse(JSON.stringify(DEFAULT_PRICING));
 
-  const uspsKeys = ['usps_ground','usps_priority','usps_express'];
-  const upsKeys  = ['ups_nextday','ups_nextday_early'];
+  const uspsKeys = ['usps_ground', 'usps_priority', 'usps_express'];
+  const upsKeys  = ['ups_nextday', 'ups_nextday_early'];
 
   function buildRows(keys, tbodyId) {
     const tbody = document.getElementById(tbodyId);
-    tbody.innerHTML = WEIGHT_RANGES.map((r,ri) => `
+    tbody.innerHTML = WEIGHT_RANGES.map((r, ri) => `
       <tr>
         <td><span class="weight-label">⚖️ ${r.label}</span></td>
         ${keys.map(sk => `
@@ -1520,9 +1657,8 @@ function renderPricingEditor() {
 }
 
 function livePreviewPrice(sk, ri, val) {
-  // Update preview cell realtime
   const cell = document.getElementById(`preview_${sk}_${ri}`);
-  if (cell) cell.textContent = '$'+parseFloat(val||0).toFixed(2);
+  if (cell) cell.textContent = '$' + parseFloat(val || 0).toFixed(2);
 }
 
 function savePricing() {
@@ -1533,26 +1669,25 @@ function savePricing() {
 
   allKeys.forEach(sk => {
     const newPrices = [];
-    WEIGHT_RANGES.forEach((_,ri) => {
+    WEIGHT_RANGES.forEach((_, ri) => {
       const input = document.getElementById(`price_${sk}_${ri}`);
       if (!input) return;
       const val = parseFloat(input.value);
-      if (isNaN(val)||val<0) { hasError=true; return; }
+      if (isNaN(val) || val < 0) { hasError = true; return; }
       newPrices.push(val);
     });
-    if (newPrices.length===WEIGHT_RANGES.length) {
+    if (newPrices.length === WEIGHT_RANGES.length) {
       if (!pricing[sk]) pricing[sk] = JSON.parse(JSON.stringify(DEFAULT_PRICING[sk]));
       pricing[sk].prices = newPrices;
     }
   });
 
-  if (hasError) return showMsg('pricing-msg','⚠️ Có giá trị không hợp lệ, vui lòng kiểm tra lại','error');
+  if (hasError) return showMsg('pricing-msg', '⚠️ Có giá trị không hợp lệ, vui lòng kiểm tra lại', 'error');
 
   db.pricing = pricing;
   saveDB(db);
-  showMsg('pricing-msg','✅ Đã lưu bảng giá thành công!','success');
+  showMsg('pricing-msg', '✅ Đã lưu bảng giá thành công!', 'success');
   renderPricingPreview();
-  // Refresh service list prices
   renderServiceList();
 }
 
@@ -1563,30 +1698,30 @@ function resetPricingDefault() {
   saveDB(db);
   renderPricingEditor();
   renderServiceList();
-  showMsg('pricing-msg','✅ Đã khôi phục bảng giá mặc định!','success');
+  showMsg('pricing-msg', '✅ Đã khôi phục bảng giá mặc định!', 'success');
 }
 
 function renderPricingPreview() {
   const db      = getDB();
   const pricing = db.pricing || JSON.parse(JSON.stringify(DEFAULT_PRICING));
 
-  const uspsKeys = ['usps_ground','usps_priority','usps_express'];
-  const upsKeys  = ['ups_nextday','ups_nextday_early'];
+  const uspsKeys = ['usps_ground', 'usps_priority', 'usps_express'];
+  const upsKeys  = ['ups_nextday', 'ups_nextday_early'];
 
   function buildPreviewTable(keys, title, emoji) {
     const headers = keys.map(sk => {
-      const svc = pricing[sk]||DEFAULT_PRICING[sk];
+      const svc = pricing[sk] || DEFAULT_PRICING[sk];
       return `<th style="text-align:center;background:#f5f7fa">${svc.name}<br>
         <small style="font-weight:400;color:#888">${svc.time}</small></th>`;
     }).join('');
-    const rows = WEIGHT_RANGES.map((r,ri) => `
+    const rows = WEIGHT_RANGES.map((r, ri) => `
       <tr>
         <td><span class="weight-label">${r.label}</span></td>
         ${keys.map(sk => {
-          const svc = pricing[sk]||DEFAULT_PRICING[sk];
+          const svc = pricing[sk] || DEFAULT_PRICING[sk];
           return `<td style="text-align:center">
             <strong id="preview_${sk}_${ri}" style="color:#1a73e8">
-              $${(svc.prices[ri]||0).toFixed(2)}
+              $${(svc.prices[ri] || 0).toFixed(2)}
             </strong>
           </td>`;
         }).join('')}
@@ -1605,8 +1740,8 @@ function renderPricingPreview() {
   }
 
   document.getElementById('pricing-preview').innerHTML =
-    buildPreviewTable(uspsKeys,'USPS Services','🇺🇸') +
-    buildPreviewTable(upsKeys, 'UPS Services', '📦');
+    buildPreviewTable(uspsKeys, 'USPS Services', '🇺🇸') +
+    buildPreviewTable(upsKeys,  'UPS Services',  '📦');
 }
 
 // ============================================================
@@ -1614,28 +1749,28 @@ function renderPricingPreview() {
 // ============================================================
 function loadSettings() {
   const db = getDB();
-  const s  = db.settings||{};
-  document.getElementById('setting-master-key').value = s.master_api||DEFAULT_MASTER_API;
-  document.getElementById('setting-invite').value     = s.invite_code||'SHIP2024';
-  document.getElementById('setting-open-reg').value   = s.open_register ? '1':'0';
+  const s  = db.settings || {};
+  document.getElementById('setting-master-key').value = s.master_api    || DEFAULT_MASTER_API;
+  document.getElementById('setting-invite').value     = s.invite_code   || 'SHIP2024';
+  document.getElementById('setting-open-reg').value   = s.open_register ? '1' : '0';
   clearMsg('settings-msg');
 }
 
 function saveSettings() {
   const masterKey = document.getElementById('setting-master-key').value.trim();
   const invite    = document.getElementById('setting-invite').value.trim();
-  const openReg   = document.getElementById('setting-open-reg').value==='1';
+  const openReg   = document.getElementById('setting-open-reg').value === '1';
 
-  if (!masterKey||!masterKey.includes('|'))
-    return showMsg('settings-msg','⚠️ Master API Key không hợp lệ','error');
+  if (!masterKey || !masterKey.includes('|'))
+    return showMsg('settings-msg', '⚠️ Master API Key không hợp lệ', 'error');
 
   const db = getDB();
-  if (!db.settings) db.settings={};
+  if (!db.settings) db.settings = {};
   db.settings.master_api    = masterKey;
   db.settings.invite_code   = invite;
   db.settings.open_register = openReg;
   saveDB(db);
-  showMsg('settings-msg','✅ Đã lưu cài đặt thành công!','success');
+  showMsg('settings-msg', '✅ Đã lưu cài đặt thành công!', 'success');
   updateBalance();
 }
 
@@ -1643,18 +1778,15 @@ function saveSettings() {
 // INIT
 // ============================================================
 document.addEventListener('DOMContentLoaded', () => {
-  // Search orders
   const si = document.getElementById('search-order');
   if (si) si.addEventListener('input', loadOrders);
 
-  // Close modal on overlay click
   document.querySelectorAll('.modal-overlay').forEach(el => {
     el.addEventListener('click', function(e) {
-      if (e.target===this) this.classList.remove('open');
+      if (e.target === this) this.classList.remove('open');
     });
   });
 
-  // Init DB if not exists
   getDB();
 });
 </script>

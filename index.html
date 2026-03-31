@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="vi">
 <head>
@@ -8,7 +9,6 @@
     * { box-sizing: border-box; margin: 0; padding: 0; }
     body { font-family: 'Segoe UI', sans-serif; background: #f0f2f5; color: #333; }
 
-    /* ===== AUTH ===== */
     #auth-screen {
       min-height: 100vh; display: flex; align-items: center; justify-content: center;
       background: linear-gradient(135deg, #1a73e8 0%, #0d47a1 100%);
@@ -22,8 +22,7 @@
     .auth-tabs { display: flex; border-bottom: 2px solid #e0e0e0; margin-bottom: 24px; }
     .auth-tab {
       flex: 1; padding: 10px; text-align: center; cursor: pointer;
-      font-weight: 600; color: #888; border-bottom: 2px solid transparent; margin-bottom: -2px;
-      transition: all .2s;
+      font-weight: 600; color: #888; border-bottom: 2px solid transparent; margin-bottom: -2px; transition: all .2s;
     }
     .auth-tab.active { color: #1a73e8; border-bottom-color: #1a73e8; }
     .form-group { margin-bottom: 16px; }
@@ -41,10 +40,10 @@
     .btn:disabled { background: #aaa; cursor: not-allowed; }
     .btn-sm {
       padding: 7px 14px; font-size: 0.82rem; border-radius: 6px; font-weight: 600;
-      cursor: pointer; border: none; transition: background .2s;
+      cursor: pointer; border: none; transition: background .2s; white-space: nowrap;
     }
-    .btn-danger { background: #e53935; color: #fff; }
-    .btn-danger:hover { background: #b71c1c; }
+    .btn-danger  { background: #e53935; color: #fff; }
+    .btn-danger:hover  { background: #b71c1c; }
     .btn-success { background: #43a047; color: #fff; }
     .btn-success:hover { background: #2e7d32; }
     .btn-outline {
@@ -52,12 +51,13 @@
       padding: 7px 14px; font-size: 0.82rem; border-radius: 6px; font-weight: 600; cursor: pointer;
     }
     .btn-outline:hover { background: #e8f0fe; }
+    .btn-warning { background: #fb8c00; color: #fff; }
+    .btn-warning:hover { background: #e65100; }
     .msg { padding: 10px 14px; border-radius: 8px; font-size: 0.88rem; margin-bottom: 14px; display: none; }
-    .msg.error { background: #fdecea; color: #c62828; display: block; }
+    .msg.error   { background: #fdecea; color: #c62828; display: block; }
     .msg.success { background: #e8f5e9; color: #2e7d32; display: block; }
-    .msg.info { background: #e3f2fd; color: #1565c0; display: block; }
+    .msg.info    { background: #e3f2fd; color: #1565c0; display: block; }
 
-    /* ===== APP ===== */
     #app-screen { display: none; min-height: 100vh; }
     .topbar {
       background: #1a73e8; color: #fff; padding: 0 24px;
@@ -66,28 +66,28 @@
     }
     .topbar .logo { font-size: 1.2rem; font-weight: 700; letter-spacing: 1px; }
     .topbar .user-info { display: flex; align-items: center; gap: 12px; font-size: 0.9rem; }
-    .topbar .user-info span { opacity: .85; }
     .topbar .logout-btn {
       background: rgba(255,255,255,0.18); border: none; color: #fff;
       padding: 6px 14px; border-radius: 6px; cursor: pointer; font-size: 0.85rem; font-weight: 600;
     }
     .topbar .logout-btn:hover { background: rgba(255,255,255,0.3); }
 
-    /* ADMIN PANEL */
-    #admin-panel { display: none; }
     .admin-bar {
       background: #fff3e0; border-bottom: 2px solid #ff9800;
-      padding: 10px 24px; display: flex; align-items: center; gap: 16px; flex-wrap: wrap;
+      padding: 10px 24px; display: flex; align-items: center; gap: 12px; flex-wrap: wrap;
     }
-    .admin-bar span { font-weight: 700; color: #e65100; font-size: 0.9rem; }
+    .admin-bar .admin-label { font-weight: 700; color: #e65100; font-size: 0.9rem; }
 
-    .main-content { padding: 24px; max-width: 960px; margin: 0 auto; }
+    .main-content { padding: 24px; max-width: 1060px; margin: 0 auto; }
 
-    /* TABS */
-    .tabs { display: flex; gap: 4px; margin-bottom: 20px; background: #fff; border-radius: 10px; padding: 6px; box-shadow: 0 1px 4px rgba(0,0,0,0.08); }
+    .tabs {
+      display: flex; gap: 4px; margin-bottom: 20px; background: #fff;
+      border-radius: 10px; padding: 6px; box-shadow: 0 1px 4px rgba(0,0,0,0.08); flex-wrap: wrap;
+    }
     .tab-btn {
-      flex: 1; padding: 9px; text-align: center; border: none; background: transparent;
-      border-radius: 7px; cursor: pointer; font-weight: 600; color: #666; font-size: 0.88rem; transition: all .2s;
+      flex: 1; padding: 9px 6px; text-align: center; border: none; background: transparent;
+      border-radius: 7px; cursor: pointer; font-weight: 600; color: #666;
+      font-size: 0.85rem; transition: all .2s; min-width: 70px;
     }
     .tab-btn.active { background: #1a73e8; color: #fff; }
     .tab-btn:hover:not(.active) { background: #e8f0fe; color: #1a73e8; }
@@ -95,44 +95,44 @@
     .tab-content { display: none; }
     .tab-content.active { display: block; }
 
-    /* CARD */
     .card {
       background: #fff; border-radius: 10px; padding: 22px 24px;
       box-shadow: 0 1px 6px rgba(0,0,0,0.08); margin-bottom: 18px;
     }
-    .card h2 { font-size: 1.05rem; color: #1a73e8; margin-bottom: 18px; border-bottom: 1.5px solid #e8f0fe; padding-bottom: 10px; }
+    .card h2 {
+      font-size: 1.05rem; color: #1a73e8; margin-bottom: 18px;
+      border-bottom: 1.5px solid #e8f0fe; padding-bottom: 10px;
+    }
 
-    /* FORM GRID */
     .form-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
     .form-grid .full { grid-column: 1 / -1; }
     .form-grid .form-group { margin-bottom: 0; }
 
-    /* TABLE */
     .table-wrap { overflow-x: auto; }
     table { width: 100%; border-collapse: collapse; font-size: 0.88rem; }
-    th { background: #f5f7fa; padding: 10px 12px; text-align: left; font-weight: 700; color: #555; border-bottom: 2px solid #e0e0e0; }
+    th {
+      background: #f5f7fa; padding: 10px 12px; text-align: left;
+      font-weight: 700; color: #555; border-bottom: 2px solid #e0e0e0; white-space: nowrap;
+    }
     td { padding: 10px 12px; border-bottom: 1px solid #f0f0f0; vertical-align: middle; }
     tr:hover td { background: #fafbff; }
+
     .badge {
       display: inline-block; padding: 3px 10px; border-radius: 12px; font-size: 0.78rem; font-weight: 700;
     }
     .badge-success { background: #e8f5e9; color: #2e7d32; }
     .badge-pending { background: #fff8e1; color: #f57f17; }
-    .badge-error { background: #fdecea; color: #c62828; }
+    .badge-error   { background: #fdecea; color: #c62828; }
+    .badge-info    { background: #e3f2fd; color: #1565c0; }
 
-    /* BALANCE */
     .balance-card {
       background: linear-gradient(135deg, #1a73e8, #0d47a1);
       color: #fff; border-radius: 10px; padding: 20px 24px; margin-bottom: 18px;
       display: flex; align-items: center; justify-content: space-between;
     }
     .balance-card .amount { font-size: 2rem; font-weight: 700; }
-    .balance-card .label { font-size: 0.85rem; opacity: .8; margin-top: 2px; }
+    .balance-card .label  { font-size: 0.85rem; opacity: .8; margin-top: 2px; }
 
-    /* USERS TABLE */
-    .user-actions { display: flex; gap: 6px; }
-
-    /* MODAL */
     .modal-overlay {
       display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.45);
       z-index: 1000; align-items: center; justify-content: center;
@@ -140,96 +140,112 @@
     .modal-overlay.open { display: flex; }
     .modal {
       background: #fff; border-radius: 12px; padding: 28px 28px 22px;
-      width: 420px; max-width: 95vw; box-shadow: 0 8px 32px rgba(0,0,0,0.18);
+      width: 480px; max-width: 95vw; box-shadow: 0 8px 32px rgba(0,0,0,0.18);
       max-height: 90vh; overflow-y: auto;
     }
     .modal h3 { font-size: 1.1rem; color: #1a73e8; margin-bottom: 18px; }
     .modal-actions { display: flex; gap: 10px; justify-content: flex-end; margin-top: 18px; }
 
-    /* ORDER DETAIL */
-    .detail-row { display: flex; justify-content: space-between; padding: 7px 0; border-bottom: 1px solid #f0f0f0; font-size: 0.9rem; }
+    .detail-row {
+      display: flex; justify-content: space-between; padding: 7px 0;
+      border-bottom: 1px solid #f0f0f0; font-size: 0.9rem;
+    }
     .detail-row:last-child { border-bottom: none; }
-    .detail-row .key { color: #888; }
-    .detail-row .val { font-weight: 600; color: #333; text-align: right; }
+    .detail-row .key { color: #888; flex-shrink: 0; }
+    .detail-row .val { font-weight: 600; color: #333; text-align: right; word-break: break-all; max-width: 65%; }
 
-    /* LOADING */
     .spinner {
       display: inline-block; width: 18px; height: 18px; border: 2.5px solid #ccc;
       border-top-color: #1a73e8; border-radius: 50%; animation: spin .7s linear infinite; vertical-align: middle;
     }
     @keyframes spin { to { transform: rotate(360deg); } }
 
-    /* SERVICE SELECT */
     .service-item {
       border: 1.5px solid #e0e0e0; border-radius: 8px; padding: 10px 14px;
-      margin-bottom: 8px; cursor: pointer; transition: all .2s;
+      margin-bottom: 8px; cursor: pointer; transition: all .2s; position: relative;
     }
     .service-item:hover, .service-item.selected { border-color: #1a73e8; background: #e8f0fe; }
-    .service-item .sname { font-weight: 600; font-size: 0.92rem; }
-    .service-item .sprice { color: #1a73e8; font-weight: 700; font-size: 0.9rem; float: right; }
+    .service-item .sname  { font-weight: 600; font-size: 0.92rem; }
+    .service-item .sprice { color: #2e7d32; font-weight: 700; font-size: 0.9rem; float: right; }
     .service-item .sweight { color: #888; font-size: 0.8rem; }
+    .service-item .stime  { color: #1a73e8; font-size: 0.78rem; margin-top:2px; }
+
+    .key-badge {
+      font-family: monospace; background: #f3e5f5; color: #6a1b9a;
+      padding: 3px 8px; border-radius: 5px; font-size: 0.78rem; font-weight: 700;
+    }
+
+    .price-input {
+      width: 80px; padding: 6px 8px; border: 1.5px solid #ddd;
+      border-radius: 6px; font-size: 0.88rem; text-align: center; outline: none; transition: border .2s;
+    }
+    .price-input:focus { border-color: #1a73e8; background: #e8f0fe; }
+
+    .weight-label {
+      font-weight: 600; font-size: 0.85rem; color: #555;
+      background: #f5f7fa; padding: 5px 10px; border-radius: 6px; white-space: nowrap;
+    }
+
+    .price-estimate-box {
+      display: none; margin-top: 14px; padding: 12px 16px;
+      background: #e8f5e9; border-radius: 8px; border-left: 4px solid #43a047; font-size: 0.92rem;
+    }
+
+    .topup-hist-row {
+      display: flex; justify-content: space-between; align-items: center;
+      padding: 5px 0; border-bottom: 1px solid #f5f5f5; font-size: 0.82rem; gap: 8px;
+    }
+
+    .user-actions { display: flex; gap: 5px; flex-wrap: wrap; }
+
+    .carrier-header {
+      display: flex; align-items: center; gap: 12px; margin-bottom: 14px; margin-top: 8px;
+    }
+    .carrier-header img { height: 38px; object-fit: contain; }
+    .carrier-header span { font-weight: 700; font-size: 1rem; color: #333; }
+
+    .preview-price { font-weight: 700; color: #1a73e8; text-align: center; }
 
     @media (max-width: 600px) {
       .form-grid { grid-template-columns: 1fr; }
       .main-content { padding: 12px; }
       .modal { padding: 18px; }
+      .tab-btn { font-size: 0.75rem; padding: 7px 3px; }
     }
   </style>
 </head>
 <body>
 
-<!-- ===== AUTH SCREEN ===== -->
+<!-- ==================== AUTH ==================== -->
 <div id="auth-screen">
   <div class="auth-box">
     <h1>🚚 ShipLabel</h1>
     <p class="sub">Hệ thống tạo nhãn vận chuyển</p>
     <div class="auth-tabs">
       <div class="auth-tab active" onclick="switchAuthTab('login')">Đăng nhập</div>
-      <div class="auth-tab" id="register-tab-btn" onclick="switchAuthTab('register')">Đăng ký</div>
+      <div class="auth-tab" onclick="switchAuthTab('register')">Đăng ký</div>
     </div>
     <div id="auth-msg"></div>
-
-    <!-- LOGIN FORM -->
     <div id="login-form">
-      <div class="form-group">
-        <label>Tên đăng nhập</label>
-        <input type="text" id="login-user" placeholder="username" />
-      </div>
+      <div class="form-group"><label>Tên đăng nhập</label><input type="text" id="login-user" placeholder="username"/></div>
       <div class="form-group">
         <label>Mật khẩu</label>
-        <input type="password" id="login-pass" placeholder="••••••••" onkeydown="if(event.key==='Enter')doLogin()" />
+        <input type="password" id="login-pass" placeholder="••••••••" onkeydown="if(event.key==='Enter')doLogin()"/>
       </div>
       <button class="btn" onclick="doLogin()">Đăng nhập</button>
     </div>
-
-    <!-- REGISTER FORM -->
     <div id="register-form" style="display:none">
-      <div class="form-group">
-        <label>Tên đăng nhập</label>
-        <input type="text" id="reg-user" placeholder="username" />
-      </div>
-      <div class="form-group">
-        <label>Họ tên</label>
-        <input type="text" id="reg-name" placeholder="Nguyễn Văn A" />
-      </div>
-      <div class="form-group">
-        <label>Email</label>
-        <input type="email" id="reg-email" placeholder="email@example.com" />
-      </div>
-      <div class="form-group">
-        <label>Mật khẩu</label>
-        <input type="password" id="reg-pass" placeholder="••••••••" />
-      </div>
-      <div class="form-group">
-        <label>Mã mời (nếu có)</label>
-        <input type="text" id="reg-invite" placeholder="Mã mời từ admin" />
-      </div>
+      <div class="form-group"><label>Tên đăng nhập *</label><input type="text" id="reg-user" placeholder="username"/></div>
+      <div class="form-group"><label>Họ tên *</label><input type="text" id="reg-name" placeholder="Nguyễn Văn A"/></div>
+      <div class="form-group"><label>Email</label><input type="email" id="reg-email" placeholder="email@example.com"/></div>
+      <div class="form-group"><label>Mật khẩu *</label><input type="password" id="reg-pass" placeholder="••••••••"/></div>
+      <div class="form-group"><label>Mã mời (nếu có)</label><input type="text" id="reg-invite" placeholder="Mã mời từ admin"/></div>
       <button class="btn" onclick="doRegister()">Tạo tài khoản</button>
     </div>
   </div>
 </div>
 
-<!-- ===== APP SCREEN ===== -->
+<!-- ==================== APP ==================== -->
 <div id="app-screen">
   <div class="topbar">
     <div class="logo">🚚 ShipLabel</div>
@@ -239,37 +255,39 @@
     </div>
   </div>
 
-  <!-- ADMIN BAR -->
-  <div id="admin-panel">
+  <div id="admin-bar-wrap" style="display:none">
     <div class="admin-bar">
-      <span>⚙️ ADMIN</span>
-      <button class="btn-sm btn-outline" onclick="openTab('admin-tab')">Quản lý người dùng</button>
+      <span class="admin-label">⚙️ ADMIN</span>
+      <button class="btn-sm btn-outline" onclick="openTab('admin-tab')">👥 Users</button>
+      <button class="btn-sm btn-outline" onclick="openTab('apikeys-tab')">🔑 API Keys</button>
+      <button class="btn-sm btn-outline" onclick="openTab('pricing-tab')">💲 Bảng giá</button>
+      <button class="btn-sm btn-outline" onclick="openTab('settings-tab')">⚙️ Cài đặt</button>
     </div>
   </div>
 
   <div class="main-content">
-    <!-- TABS -->
     <div class="tabs">
-      <button class="tab-btn active" id="tab-create" onclick="openTab('create-tab')">➕ Tạo nhãn</button>
-      <button class="tab-btn" id="tab-orders" onclick="openTab('orders-tab')">📦 Đơn hàng</button>
-      <button class="tab-btn" id="tab-services" onclick="openTab('services-tab')">🚀 Dịch vụ</button>
-      <button class="tab-btn" id="tab-admin" onclick="openTab('admin-tab')" style="display:none">👥 Admin</button>
+      <button class="tab-btn active" id="tab-create"   onclick="openTab('create-tab')">➕ Tạo nhãn</button>
+      <button class="tab-btn"        id="tab-orders"   onclick="openTab('orders-tab')">📦 Đơn hàng</button>
+      <button class="tab-btn"        id="tab-services" onclick="openTab('services-tab')">🚀 Dịch vụ</button>
+      <button class="tab-btn"        id="tab-admin"    onclick="openTab('admin-tab')"    style="display:none">👥 Admin</button>
+      <button class="tab-btn"        id="tab-apikeys"  onclick="openTab('apikeys-tab')"  style="display:none">🔑 Keys</button>
+      <button class="tab-btn"        id="tab-pricing"  onclick="openTab('pricing-tab')"  style="display:none">💲 Giá</button>
+      <button class="tab-btn"        id="tab-settings" onclick="openTab('settings-tab')" style="display:none">⚙️ Cài đặt</button>
     </div>
 
     <!-- ===== CREATE TAB ===== -->
     <div class="tab-content active" id="create-tab">
       <div id="create-msg"></div>
-
-      <!-- BALANCE -->
       <div class="balance-card">
         <div>
           <div class="label">Số dư tài khoản</div>
           <div class="amount" id="user-balance">$0.00</div>
+          <div class="label" id="active-key-info" style="margin-top:4px;font-size:0.78rem"></div>
         </div>
         <div style="font-size:2.5rem">💰</div>
       </div>
 
-      <!-- STEP 1: SERVICE -->
       <div class="card">
         <h2>1. Chọn dịch vụ vận chuyển</h2>
         <div id="service-loading" style="text-align:center;padding:20px;color:#888">
@@ -278,11 +296,9 @@
         <div id="service-list" style="display:none"></div>
       </div>
 
-      <!-- STEP 2: FORM -->
       <div class="card">
         <h2>2. Thông tin gửi hàng</h2>
-        <div style="display:grid;grid-template-columns:1fr 1fr;gap:18px;">
-          <!-- FROM -->
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:18px">
           <div>
             <div style="font-weight:700;color:#555;margin-bottom:12px;font-size:0.9rem">📤 Người gửi</div>
             <div class="form-group"><label>Tên *</label><input type="text" id="fromName" placeholder="John Doe"/></div>
@@ -291,10 +307,9 @@
             <div class="form-group"><label>Địa chỉ 2</label><input type="text" id="fromAddress2" placeholder="Suite 101"/></div>
             <div class="form-group"><label>Thành phố *</label><input type="text" id="fromCity" placeholder="Los Angeles"/></div>
             <div class="form-group"><label>Bang *</label><input type="text" id="fromState" placeholder="CA" maxlength="2"/></div>
-            <div class="form-group"><label>ZIP *</label><input type="text" id="fromZip" placeholder="12345"/></div>
+            <div class="form-group"><label>ZIP *</label><input type="text" id="fromZip" placeholder="90001"/></div>
             <div class="form-group"><label>Quốc gia</label><input type="text" id="fromCountry" value="US" maxlength="2"/></div>
           </div>
-          <!-- TO -->
           <div>
             <div style="font-weight:700;color:#555;margin-bottom:12px;font-size:0.9rem">📥 Người nhận</div>
             <div class="form-group"><label>Tên *</label><input type="text" id="toName" placeholder="Jane Smith"/></div>
@@ -303,24 +318,27 @@
             <div class="form-group"><label>Địa chỉ 2</label><input type="text" id="toAddress2" placeholder=""/></div>
             <div class="form-group"><label>Thành phố *</label><input type="text" id="toCity" placeholder="New York"/></div>
             <div class="form-group"><label>Bang *</label><input type="text" id="toState" placeholder="NY" maxlength="2"/></div>
-            <div class="form-group"><label>ZIP *</label><input type="text" id="toZip" placeholder="54321"/></div>
+            <div class="form-group"><label>ZIP *</label><input type="text" id="toZip" placeholder="10001"/></div>
             <div class="form-group"><label>Quốc gia</label><input type="text" id="toCountry" value="US" maxlength="2"/></div>
           </div>
         </div>
       </div>
 
-      <!-- STEP 3: PACKAGE -->
       <div class="card">
         <h2>3. Thông tin kiện hàng</h2>
         <div class="form-grid">
-          <div class="form-group"><label>Cân nặng (lbs) *</label><input type="number" id="weight" placeholder="5.5" step="0.1" min="0.1"/></div>
-          <div class="form-group"><label>Dài (in)</label><input type="number" id="length" placeholder="10.0" step="0.1"/></div>
-          <div class="form-group"><label>Cao (in)</label><input type="number" id="height" placeholder="5.0" step="0.1"/></div>
-          <div class="form-group"><label>Rộng (in)</label><input type="number" id="width" placeholder="3.0" step="0.1"/></div>
+          <div class="form-group">
+            <label>Cân nặng (lbs) *</label>
+            <input type="number" id="weight" placeholder="5.5" step="0.1" min="0.1" oninput="updatePriceEstimate()"/>
+          </div>
+          <div class="form-group"><label>Dài (in)</label><input type="number" id="length" placeholder="10" step="0.1"/></div>
+          <div class="form-group"><label>Rộng (in)</label><input type="number" id="width" placeholder="8" step="0.1"/></div>
+          <div class="form-group"><label>Cao (in)</label><input type="number" id="height" placeholder="6" step="0.1"/></div>
           <div class="form-group"><label>Reference 1</label><input type="text" id="ref1" placeholder="REF123"/></div>
           <div class="form-group"><label>Reference 2</label><input type="text" id="ref2" placeholder="REF456"/></div>
           <div class="form-group full"><label>Mô tả hàng hóa</label><input type="text" id="desc" placeholder="Electronics shipment"/></div>
         </div>
+        <div class="price-estimate-box" id="price-estimate"></div>
       </div>
 
       <button class="btn" id="create-btn" onclick="createOrder()" style="font-size:1.05rem;padding:13px">
@@ -333,25 +351,20 @@
       <div class="card">
         <h2>📦 Lịch sử đơn hàng</h2>
         <div style="margin-bottom:14px;display:flex;gap:10px;align-items:center;flex-wrap:wrap">
-          <input type="text" id="search-order" placeholder="Tìm tracking ID..." style="padding:8px 12px;border:1.5px solid #ddd;border-radius:8px;font-size:0.9rem;flex:1;min-width:180px;outline:none"/>
+          <input type="text" id="search-order" placeholder="Tìm tracking ID..."
+            style="padding:8px 12px;border:1.5px solid #ddd;border-radius:8px;font-size:0.9rem;flex:1;min-width:180px;outline:none"/>
           <button class="btn-sm btn-outline" onclick="loadOrders()">🔄 Làm mới</button>
         </div>
         <div class="table-wrap">
           <table>
             <thead>
               <tr>
-                <th>#</th>
-                <th>Tracking ID</th>
-                <th>Người gửi</th>
-                <th>Người nhận</th>
-                <th>Dịch vụ</th>
-                <th>Giá</th>
-                <th>Trạng thái</th>
-                <th>Thao tác</th>
+                <th>#</th><th>Tracking ID</th><th>Người gửi</th><th>Người nhận</th>
+                <th>Dịch vụ</th><th>Cân nặng</th><th>Giá</th><th>Ngày tạo</th><th>Thao tác</th>
               </tr>
             </thead>
             <tbody id="orders-tbody">
-              <tr><td colspan="8" style="text-align:center;color:#aaa;padding:30px">Chưa có đơn hàng</td></tr>
+              <tr><td colspan="9" style="text-align:center;color:#aaa;padding:30px">Chưa có đơn hàng</td></tr>
             </tbody>
           </table>
         </div>
@@ -361,7 +374,7 @@
     <!-- ===== SERVICES TAB ===== -->
     <div class="tab-content" id="services-tab">
       <div class="card">
-        <h2>🚀 Danh sách dịch vụ vận chuyển</h2>
+        <h2>🚀 Danh sách dịch vụ & Bảng giá</h2>
         <div id="services-table-wrap">
           <div style="text-align:center;padding:30px;color:#aaa"><span class="spinner"></span> Đang tải...</div>
         </div>
@@ -380,13 +393,8 @@
           <table>
             <thead>
               <tr>
-                <th>Username</th>
-                <th>Họ tên</th>
-                <th>Email</th>
-                <th>Số dư ($)</th>
-                <th>Vai trò</th>
-                <th>Đơn hàng</th>
-                <th>Thao tác</th>
+                <th>Username</th><th>Họ tên</th><th>Email</th>
+                <th>Số dư</th><th>Vai trò</th><th>API Key</th><th>Đơn hàng</th><th>Thao tác</th>
               </tr>
             </thead>
             <tbody id="users-tbody"></tbody>
@@ -394,10 +402,125 @@
         </div>
       </div>
     </div>
-  </div>
-</div>
 
-<!-- ===== MODAL: ORDER DETAIL ===== -->
+    <!-- ===== API KEYS TAB ===== -->
+    <div class="tab-content" id="apikeys-tab">
+      <div class="card">
+        <h2>🔑 Quản lý API Keys</h2>
+        <p style="color:#888;font-size:0.85rem;margin-bottom:16px">
+          Mỗi user có thể gán API key riêng. Nếu không gán, hệ thống dùng Master Key.
+        </p>
+        <div style="margin-bottom:14px;display:flex;gap:10px;flex-wrap:wrap">
+          <button class="btn-sm btn-success" onclick="openAddApiKeyModal()">➕ Thêm API Key</button>
+          <button class="btn-sm btn-outline" onclick="renderApiKeysTable()">🔄 Làm mới</button>
+        </div>
+        <div class="table-wrap">
+          <table>
+            <thead>
+              <tr><th>Tên</th><th>API Key</th><th>Gán cho user</th><th>Trạng thái</th><th>Thao tác</th></tr>
+            </thead>
+            <tbody id="apikeys-tbody"></tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+
+    <!-- ===== PRICING TAB ===== -->
+    <div class="tab-content" id="pricing-tab">
+      <div class="card">
+        <h2>💲 Quản lý bảng giá</h2>
+        <p style="color:#888;font-size:0.85rem;margin-bottom:4px">
+          Giá tính tự động theo cân nặng khi user tạo đơn. Đơn vị: <strong>USD ($)</strong>.
+        </p>
+
+        <!-- USPS -->
+        <div class="carrier-header" style="margin-top:18px">
+          <span style="font-size:1.5rem">🇺🇸</span>
+          <span>USPS Services</span>
+        </div>
+        <div class="table-wrap">
+          <table>
+            <thead>
+              <tr>
+                <th>Cân nặng</th>
+                <th style="background:#e3f2fd;color:#1565c0;text-align:center">
+                  USPS Ground<br><small style="font-weight:400;color:#888">2-5 Business days</small>
+                </th>
+                <th style="background:#e8f5e9;color:#2e7d32;text-align:center">
+                  USPS Priority<br><small style="font-weight:400;color:#888">1-3 Business days</small>
+                </th>
+                <th style="background:#fff3e0;color:#e65100;text-align:center">
+                  USPS Express<br><small style="font-weight:400;color:#888">Next day to 2 day</small>
+                </th>
+              </tr>
+            </thead>
+            <tbody id="pricing-usps-tbody"></tbody>
+          </table>
+        </div>
+
+        <!-- UPS -->
+        <div class="carrier-header" style="margin-top:24px">
+          <span style="font-size:1.5rem">📦</span>
+          <span>UPS Services</span>
+        </div>
+        <div class="table-wrap">
+          <table>
+            <thead>
+              <tr>
+                <th>Cân nặng</th>
+                <th style="background:#fff9c4;color:#f57f17;text-align:center">
+                  UPS Next Day<br><small style="font-weight:400;color:#888">Overnight by 9:00 pm</small>
+                </th>
+                <th style="background:#fce4ec;color:#c62828;text-align:center">
+                  UPS Next Day Early/Sat<br><small style="font-weight:400;color:#888">Overnight by 11:00 am</small>
+                </th>
+              </tr>
+            </thead>
+            <tbody id="pricing-ups-tbody"></tbody>
+          </table>
+        </div>
+
+        <div style="display:flex;gap:10px;flex-wrap:wrap;margin-top:20px">
+          <button class="btn" style="max-width:180px" onclick="savePricing()">💾 Lưu bảng giá</button>
+          <button class="btn-sm btn-warning" onclick="resetPricingDefault()">🔄 Khôi phục mặc định</button>
+        </div>
+        <div id="pricing-msg" style="margin-top:12px"></div>
+      </div>
+
+      <div class="card">
+        <h2>👁️ Preview bảng giá</h2>
+        <div id="pricing-preview"></div>
+      </div>
+    </div>
+
+    <!-- ===== SETTINGS TAB ===== -->
+    <div class="tab-content" id="settings-tab">
+      <div class="card">
+        <h2>⚙️ Cài đặt hệ thống</h2>
+        <div class="form-group">
+          <label>Master API Key (shiplabel.net)</label>
+          <input type="text" id="setting-master-key" placeholder="1778|..."/>
+        </div>
+        <div class="form-group">
+          <label>Mã mời đăng ký (Invite Code)</label>
+          <input type="text" id="setting-invite" placeholder="SHIP2024"/>
+        </div>
+        <div class="form-group">
+          <label>Cho phép đăng ký tự do</label>
+          <select id="setting-open-reg">
+            <option value="0">Không — Bắt buộc có mã mời</option>
+            <option value="1">Có — Ai cũng đăng ký được</option>
+          </select>
+        </div>
+        <button class="btn" style="max-width:200px" onclick="saveSettings()">💾 Lưu cài đặt</button>
+        <div id="settings-msg" style="margin-top:12px"></div>
+      </div>
+    </div>
+
+  </div><!-- /main-content -->
+</div><!-- /app-screen -->
+
+<!-- ===== MODALS ===== -->
 <div class="modal-overlay" id="order-modal">
   <div class="modal">
     <h3>📋 Chi tiết đơn hàng</h3>
@@ -408,7 +531,17 @@
   </div>
 </div>
 
-<!-- ===== MODAL: ADD/EDIT USER ===== -->
+<div class="modal-overlay" id="label-modal">
+  <div class="modal">
+    <h3>✅ Tạo nhãn thành công!</h3>
+    <div id="label-detail"></div>
+    <div class="modal-actions">
+      <button class="btn-sm btn-outline" onclick="closeModal('label-modal')">Đóng</button>
+      <button class="btn-sm btn-success" onclick="downloadPDF()">⬇️ Tải PDF</button>
+    </div>
+  </div>
+</div>
+
 <div class="modal-overlay" id="user-modal">
   <div class="modal">
     <h3 id="user-modal-title">➕ Thêm người dùng</h3>
@@ -416,152 +549,271 @@
     <div class="form-group"><label>Username *</label><input type="text" id="um-username"/></div>
     <div class="form-group"><label>Họ tên *</label><input type="text" id="um-name"/></div>
     <div class="form-group"><label>Email</label><input type="email" id="um-email"/></div>
-    <div class="form-group"><label>Mật khẩu *</label><input type="password" id="um-pass"/></div>
+    <div class="form-group"><label>Mật khẩu</label><input type="password" id="um-pass" placeholder="Để trống = không đổi"/></div>
     <div class="form-group"><label>Số dư ($)</label><input type="number" id="um-balance" value="0" step="0.01"/></div>
     <div class="form-group">
       <label>Vai trò</label>
-      <select id="um-role">
-        <option value="user">User</option>
-        <option value="admin">Admin</option>
-      </select>
+      <select id="um-role"><option value="user">User</option><option value="admin">Admin</option></select>
+    </div>
+    <div class="form-group">
+      <label>Gán API Key</label>
+      <select id="um-apikey"><option value="">-- Dùng Master Key --</option></select>
     </div>
     <div class="modal-actions">
       <button class="btn-sm btn-outline" onclick="closeModal('user-modal')">Hủy</button>
-      <button class="btn-sm btn-success" onclick="saveUser()">Lưu</button>
+      <button class="btn-sm btn-success" onclick="saveUser()">💾 Lưu</button>
     </div>
   </div>
 </div>
 
-<!-- ===== MODAL: TOPUP ===== -->
 <div class="modal-overlay" id="topup-modal">
   <div class="modal">
     <h3>💰 Nạp tiền cho người dùng</h3>
     <div id="topup-msg"></div>
-    <div style="margin-bottom:12px;font-size:0.9rem;color:#555">
-      Tài khoản: <strong id="topup-username"></strong><br>
-      Số dư hiện tại: <strong id="topup-current"></strong>
+    <div style="margin-bottom:14px;padding:12px;background:#f5f5f5;border-radius:8px;font-size:0.9rem">
+      Tài khoản: <strong id="topup-uname"></strong><br>
+      Số dư hiện tại: <strong id="topup-current" style="color:#1a73e8"></strong>
     </div>
-    <div class="form-group"><label>Số tiền nạp ($)</label><input type="number" id="topup-amount" value="10" step="0.01" min="0.01"/></div>
+    <div class="form-group"><label>Số tiền nạp ($) *</label><input type="number" id="topup-amount" value="10" step="0.01" min="0.01"/></div>
+    <div class="form-group"><label>Ghi chú</label><input type="text" id="topup-note" placeholder="VD: Nạp tháng 4"/></div>
+    <div id="topup-hist-wrap" style="margin-top:10px"></div>
     <div class="modal-actions">
       <button class="btn-sm btn-outline" onclick="closeModal('topup-modal')">Hủy</button>
-      <button class="btn-sm btn-success" onclick="doTopup()">Nạp tiền</button>
+      <button class="btn-sm btn-success" onclick="doTopup()">✅ Nạp tiền</button>
     </div>
   </div>
 </div>
 
-<!-- ===== MODAL: SUCCESS LABEL ===== -->
-<div class="modal-overlay" id="label-modal">
+<div class="modal-overlay" id="apikey-modal">
   <div class="modal">
-    <h3>✅ Tạo nhãn thành công!</h3>
-    <div id="label-detail"></div>
+    <h3 id="apikey-modal-title">➕ Thêm API Key</h3>
+    <div id="apikey-modal-msg"></div>
+    <div class="form-group"><label>Tên / Nhãn *</label><input type="text" id="ak-label" placeholder="VD: Key tài khoản A"/></div>
+    <div class="form-group"><label>API Key *</label><input type="text" id="ak-key" placeholder="1234|abcdefg..."/></div>
+    <div class="form-group">
+      <label>Gán cho user</label>
+      <select id="ak-user"><option value="">-- Chưa gán --</option></select>
+    </div>
+    <div class="form-group">
+      <label>Trạng thái</label>
+      <select id="ak-status"><option value="active">Active</option><option value="inactive">Inactive</option></select>
+    </div>
     <div class="modal-actions">
-      <button class="btn-sm btn-outline" onclick="closeModal('label-modal')">Đóng</button>
-      <button class="btn-sm btn-success" id="download-pdf-btn" onclick="downloadPDF()">⬇️ Tải PDF</button>
+      <button class="btn-sm btn-outline" onclick="closeModal('apikey-modal')">Hủy</button>
+      <button class="btn-sm btn-success" onclick="saveApiKey()">💾 Lưu</button>
     </div>
   </div>
 </div>
 
 <script>
 // ============================================================
-//  DATA STORE (localStorage)
+// CONFIG
 // ============================================================
-const MASTER_API = '1779|80Ak8rf6cbMTQ2tKgwlLcuayMVQjtXAiLuV0dngN8628a916';
-const API_BASE   = 'https://shiplabel.net/api/v2';
+const DEFAULT_MASTER_API = '1778|qzErEvLkn2mf2Rm7sfBMXKgL9VVKljGECXEoEU713670668c';
+const API_BASE = 'https://shiplabel.net/api/v2';
+const DB_KEY   = 'sldb_v3';
 
+// ============================================================
+// PRICING CONFIG
+// ============================================================
+const WEIGHT_RANGES = [
+  { id:'w1', label:'1 - 5 lbs',   min:0.1, max:5   },
+  { id:'w2', label:'6 - 10 lbs',  min:6,   max:10  },
+  { id:'w3', label:'11 - 25 lbs', min:11,  max:25  },
+  { id:'w4', label:'26 - 40 lbs', min:26,  max:40  },
+  { id:'w5', label:'40 - 70 lbs', min:40,  max:70  },
+];
+
+const DEFAULT_PRICING = {
+  usps_ground:       { name:'USPS Ground',            time:'2-5 Business days',       carrier:'usps', prices:[6,  8,  10, 14, 18] },
+  usps_priority:     { name:'USPS Priority',          time:'1-3 Business days',       carrier:'usps', prices:[7,  9,  14, 18, 24] },
+  usps_express:      { name:'USPS Express',           time:'Next day to 2 day',       carrier:'usps', prices:[9,  12, 16, 22, 26] },
+  ups_nextday:       { name:'UPS Next Day',           time:'Overnight by 9:00 pm',    carrier:'ups',  prices:[10, 15, 18, 24, 30] },
+  ups_nextday_early: { name:'UPS Next Day Early/Sat', time:'Overnight by 11:00 am',   carrier:'ups',  prices:[14, 18, 24, 28, 35] },
+};
+
+// Map serviceKey → API label_id
+const SERVICE_API_MAP = {
+  usps_ground:       '201',
+  usps_priority:     '245',
+  usps_express:      '115',
+  ups_nextday:       '357',
+  ups_nextday_early: '358',
+};
+
+// ============================================================
+// STATE
+// ============================================================
+let currentUser      = null;
+let services         = [];
+let selectedService  = null;
+let lastPDF          = '';
+let topupTarget      = null;
+let editingApiKeyId  = null;
+
+// ============================================================
+// DB
+// ============================================================
 function getDB() {
-  const raw = localStorage.getItem('sldb');
-  if (!raw) return initDB();
-  return JSON.parse(raw);
+  try {
+    const raw = localStorage.getItem(DB_KEY);
+    if (raw) return JSON.parse(raw);
+  } catch(e) {}
+  return initDB();
 }
-function saveDB(db) { localStorage.setItem('sldb', JSON.stringify(db)); }
+function saveDB(db) { localStorage.setItem(DB_KEY, JSON.stringify(db)); }
 function initDB() {
   const db = {
+    settings: { master_api: DEFAULT_MASTER_API, invite_code: 'SHIP2024', open_register: false },
     users: [{
-      username: 'admin',
-      password: btoa('admin123'),
-      name: 'Administrator',
-      email: 'admin@shiplabel.net',
-      role: 'admin',
-      balance: 0,
-      orders: []
+      username:'admin', password:btoa('admin123'), name:'Administrator',
+      email:'admin@shiplabel.net', role:'admin', balance:0,
+      apiKeyId:null, orders:[], topup_history:[]
     }],
-    invite_code: 'SHIP2024'
+    api_keys: [],
+    pricing: JSON.parse(JSON.stringify(DEFAULT_PRICING))
   };
   saveDB(db);
   return db;
 }
 
-let currentUser = null;
-let services = [];
-let selectedService = null;
-let lastPDF = '';
-let topupTarget = null;
-
 // ============================================================
-//  AUTH
+// HELPERS
 // ============================================================
-function switchAuthTab(tab) {
-  document.querySelectorAll('.auth-tab').forEach(t => t.classList.remove('active'));
-  document.getElementById('login-form').style.display = 'none';
-  document.getElementById('register-form').style.display = 'none';
-  clearMsg('auth-msg');
-  if (tab === 'login') {
-    document.querySelectorAll('.auth-tab')[0].classList.add('active');
-    document.getElementById('login-form').style.display = 'block';
-  } else {
-    document.querySelectorAll('.auth-tab')[1].classList.add('active');
-    document.getElementById('register-form').style.display = 'block';
+function getMasterKey() {
+  const db = getDB();
+  return (db.settings && db.settings.master_api) ? db.settings.master_api : DEFAULT_MASTER_API;
+}
+function getApiKeyForUser(username) {
+  const db = getDB();
+  const user = db.users.find(u => u.username === username);
+  if (!user) return getMasterKey();
+  if (user.apiKeyId) {
+    const k = db.api_keys.find(k => k.id === user.apiKeyId && k.status === 'active');
+    if (k) return k.key;
   }
+  const assigned = db.api_keys.find(k => k.assignedUser === username && k.status === 'active');
+  if (assigned) return assigned.key;
+  return getMasterKey();
+}
+function getApiKeyLabelForUser(username) {
+  const db = getDB();
+  const user = db.users.find(u => u.username === username);
+  if (!user) return 'Master Key';
+  if (user.apiKeyId) {
+    const k = db.api_keys.find(k => k.id === user.apiKeyId && k.status === 'active');
+    if (k) return k.label;
+  }
+  const assigned = db.api_keys.find(k => k.assignedUser === username && k.status === 'active');
+  if (assigned) return assigned.label;
+  return 'Master Key';
+}
+function genId() { return Date.now().toString(36) + Math.random().toString(36).substr(2,5); }
+function maskKey(key) {
+  if (!key) return '';
+  return key.substring(0,8) + '••••' + key.substring(key.length-4);
+}
+function openModal(id)  { document.getElementById(id).classList.add('open'); }
+function closeModal(id) { document.getElementById(id).classList.remove('open'); }
+function showMsg(id, text, type) {
+  const el = document.getElementById(id);
+  if (!el) return;
+  el.textContent = text; el.className = 'msg ' + type;
+}
+function clearMsg(id) {
+  const el = document.getElementById(id);
+  if (!el) return;
+  el.textContent = ''; el.className = 'msg';
 }
 
+// ============================================================
+// PRICING LOGIC
+// ============================================================
+function getPricingDB() {
+  const db = getDB();
+  return db.pricing || JSON.parse(JSON.stringify(DEFAULT_PRICING));
+}
+function calcPrice(serviceKey, weight) {
+  const pricing = getPricingDB();
+  const svc = pricing[serviceKey];
+  if (!svc) return null;
+  for (let i = 0; i < WEIGHT_RANGES.length; i++) {
+    const r = WEIGHT_RANGES[i];
+    if (weight >= r.min && weight <= r.max) return svc.prices[i] || 0;
+  }
+  return svc.prices[WEIGHT_RANGES.length - 1] || 0;
+}
+function getServiceKeyByApiId(apiId) {
+  for (const [key, id] of Object.entries(SERVICE_API_MAP)) {
+    if (id === String(apiId)) return key;
+  }
+  return null;
+}
+function getPriceForOrder(apiLabelId, weight) {
+  const sk = getServiceKeyByApiId(apiLabelId);
+  if (!sk) return null;
+  return calcPrice(sk, weight);
+}
+
+// ============================================================
+// AUTH
+// ============================================================
+function switchAuthTab(tab) {
+  document.querySelectorAll('.auth-tab').forEach((t,i) => {
+    t.classList.toggle('active', (tab==='login'&&i===0)||(tab==='register'&&i===1));
+  });
+  document.getElementById('login-form').style.display    = tab==='login'    ? 'block':'none';
+  document.getElementById('register-form').style.display = tab==='register' ? 'block':'none';
+  clearMsg('auth-msg');
+}
 function doLogin() {
   const u = document.getElementById('login-user').value.trim();
   const p = document.getElementById('login-pass').value;
-  if (!u || !p) return showMsg('auth-msg', 'Vui lòng nhập đầy đủ thông tin', 'error');
+  if (!u||!p) return showMsg('auth-msg','Vui lòng nhập đầy đủ thông tin','error');
   const db = getDB();
-  const user = db.users.find(x => x.username === u && x.password === btoa(p));
-  if (!user) return showMsg('auth-msg', 'Sai tên đăng nhập hoặc mật khẩu', 'error');
-  currentUser = user;
+  const user = db.users.find(x => x.username===u && x.password===btoa(p));
+  if (!user) return showMsg('auth-msg','Sai tên đăng nhập hoặc mật khẩu','error');
+  currentUser = JSON.parse(JSON.stringify(user));
   enterApp();
 }
-
 function doRegister() {
-  const u = document.getElementById('reg-user').value.trim();
-  const n = document.getElementById('reg-name').value.trim();
-  const e = document.getElementById('reg-email').value.trim();
-  const p = document.getElementById('reg-pass').value;
+  const u   = document.getElementById('reg-user').value.trim();
+  const n   = document.getElementById('reg-name').value.trim();
+  const e   = document.getElementById('reg-email').value.trim();
+  const p   = document.getElementById('reg-pass').value;
   const inv = document.getElementById('reg-invite').value.trim();
-  if (!u || !n || !p) return showMsg('auth-msg', 'Vui lòng nhập đầy đủ thông tin bắt buộc', 'error');
+  if (!u||!n||!p) return showMsg('auth-msg','Vui lòng nhập đầy đủ thông tin bắt buộc','error');
   const db = getDB();
-  if (db.users.find(x => x.username === u)) return showMsg('auth-msg', 'Tên đăng nhập đã tồn tại', 'error');
-  if (inv && inv !== db.invite_code) return showMsg('auth-msg', 'Mã mời không hợp lệ', 'error');
-  const newUser = { username: u, password: btoa(p), name: n, email: e, role: 'user', balance: 0, orders: [] };
-  db.users.push(newUser);
-  saveDB(db);
-  showMsg('auth-msg', 'Tạo tài khoản thành công! Đang đăng nhập...', 'success');
-  setTimeout(() => { currentUser = newUser; enterApp(); }, 1000);
+  if (!db.settings.open_register) {
+    if (!inv) return showMsg('auth-msg','Cần mã mời để đăng ký','error');
+    if (inv !== db.settings.invite_code) return showMsg('auth-msg','Mã mời không hợp lệ','error');
+  }
+  if (db.users.find(x=>x.username===u)) return showMsg('auth-msg','Tên đăng nhập đã tồn tại','error');
+  const newUser = {
+    username:u, password:btoa(p), name:n, email:e,
+    role:'user', balance:0, apiKeyId:null, orders:[], topup_history:[]
+  };
+  db.users.push(newUser); saveDB(db);
+  showMsg('auth-msg','✅ Tạo tài khoản thành công! Đang đăng nhập...','success');
+  setTimeout(() => { currentUser = JSON.parse(JSON.stringify(newUser)); enterApp(); }, 1000);
 }
-
 function doLogout() {
-  currentUser = null;
-  document.getElementById('app-screen').style.display = 'none';
+  currentUser=null; services=[]; selectedService=null;
+  document.getElementById('app-screen').style.display  = 'none';
   document.getElementById('auth-screen').style.display = 'flex';
   document.getElementById('login-user').value = '';
   document.getElementById('login-pass').value = '';
   clearMsg('auth-msg');
 }
-
 function enterApp() {
   document.getElementById('auth-screen').style.display = 'none';
-  document.getElementById('app-screen').style.display = 'block';
+  document.getElementById('app-screen').style.display  = 'block';
   document.getElementById('topbar-username').textContent = '👤 ' + currentUser.name;
-  if (currentUser.role === 'admin') {
-    document.getElementById('admin-panel').style.display = 'block';
-    document.getElementById('tab-admin').style.display = 'block';
-  } else {
-    document.getElementById('admin-panel').style.display = 'none';
-    document.getElementById('tab-admin').style.display = 'none';
-  }
+  const isAdmin = currentUser.role === 'admin';
+  document.getElementById('admin-bar-wrap').style.display = isAdmin ? 'block' : 'none';
+  ['tab-admin','tab-apikeys','tab-pricing','tab-settings'].forEach(id => {
+    document.getElementById(id).style.display = isAdmin ? 'block' : 'none';
+  });
   openTab('create-tab');
   updateBalance();
   loadServices();
@@ -569,220 +821,323 @@ function enterApp() {
 }
 
 // ============================================================
-//  TABS
+// TABS
 // ============================================================
 function openTab(id) {
   document.querySelectorAll('.tab-content').forEach(t => t.classList.remove('active'));
   document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
-  document.getElementById(id).classList.add('active');
-  const map = { 'create-tab': 'tab-create', 'orders-tab': 'tab-orders', 'services-tab': 'tab-services', 'admin-tab': 'tab-admin' };
-  if (map[id]) document.getElementById(map[id]).classList.add('active');
-  if (id === 'services-tab') renderServicesTable();
-  if (id === 'admin-tab') renderUsersTable();
+  const el = document.getElementById(id);
+  if (el) el.classList.add('active');
+  const map = {
+    'create-tab':'tab-create','orders-tab':'tab-orders','services-tab':'tab-services',
+    'admin-tab':'tab-admin','apikeys-tab':'tab-apikeys','pricing-tab':'tab-pricing','settings-tab':'tab-settings'
+  };
+  if (map[id]) { const btn=document.getElementById(map[id]); if(btn) btn.classList.add('active'); }
+  if (id==='services-tab') renderServicesTable();
+  if (id==='admin-tab')    renderUsersTable();
+  if (id==='apikeys-tab')  renderApiKeysTable();
+  if (id==='pricing-tab')  renderPricingEditor();
+  if (id==='settings-tab') loadSettings();
 }
 
 // ============================================================
-//  BALANCE
+// BALANCE
 // ============================================================
 function updateBalance() {
   const db = getDB();
-  const u = db.users.find(x => x.username === currentUser.username);
-  if (u) { currentUser.balance = u.balance; }
-  document.getElementById('user-balance').textContent = '$' + (currentUser.balance || 0).toFixed(2);
+  const u  = db.users.find(x => x.username===currentUser.username);
+  if (u) currentUser.balance = u.balance;
+  document.getElementById('user-balance').textContent = '$'+(currentUser.balance||0).toFixed(2);
+  document.getElementById('active-key-info').textContent =
+    '🔑 Key: ' + getApiKeyLabelForUser(currentUser.username);
 }
 
 // ============================================================
-//  SERVICES
+// SERVICES
 // ============================================================
 async function loadServices() {
   document.getElementById('service-loading').style.display = 'block';
-  document.getElementById('service-list').style.display = 'none';
+  document.getElementById('service-list').style.display    = 'none';
+  const apiKey = getApiKeyForUser(currentUser.username);
   try {
-    const res = await fetch(API_BASE + '/services', {
-      method: 'POST',
-      headers: { 'Authorization': 'Bearer ' + MASTER_API, 'Content-Type': 'application/json' },
-      body: JSON.stringify({})
+    const res  = await fetch(API_BASE+'/services', {
+      method:'POST',
+      headers:{'Authorization':'Bearer '+apiKey,'Content-Type':'application/json'},
+      body:JSON.stringify({})
     });
     const json = await res.json();
-    if (json.success && json.data) {
-      services = json.data;
-      renderServiceList();
-    } else { throw new Error('API error'); }
+    if (json.success && json.data) { services = json.data; }
+    else throw new Error('API error');
   } catch(e) {
-    // Fallback demo data
-    services = [
-      { id: '201', name: 'USPS Ground Advantage (95)', max_weight: '70.00 lbs', price_ranges: [{ min_weight: '0.1 lbs', max_weight: '70.0 lbs', price: '$1.20' }] },
-      { id: '245', name: 'USPS Priority Mail (9488)', max_weight: '70.00 lbs', price_ranges: [{ min_weight: '0.1 lbs', max_weight: '70.0 lbs', price: '$1.20' }] },
-      { id: '115', name: 'USPS Express Platinum', max_weight: '70.00 lbs', price_ranges: [{ min_weight: '0.1 lbs', max_weight: '70.0 lbs', price: '$1.60' }] },
-      { id: '237', name: 'FedEx Ground, United States', max_weight: '70.00 lbs', price_ranges: [{ min_weight: '0.1 lbs', max_weight: '120.0 lbs', price: '$1.70' }] },
-      { id: '357', name: 'New - UPS Express Overnight', max_weight: '70.00 lbs', price_ranges: [{ min_weight: '0.1 lbs', max_weight: '100.0 lbs', price: '$2.00' }] },
-    ];
-    renderServiceList();
+    // Fallback: build from pricing config
+    services = Object.entries(SERVICE_API_MAP).map(([sk, apiId]) => {
+      const pricing = getPricingDB();
+      const svc = pricing[sk] || DEFAULT_PRICING[sk];
+      return {
+        id: apiId,
+        name: svc ? svc.name : sk,
+        max_weight: '70.00 lbs',
+        serviceKey: sk,
+        price_ranges: WEIGHT_RANGES.map((r,i) => ({
+          min_weight: r.label.split(' - ')[0]+' lbs',
+          max_weight: r.label.split(' - ')[1] || r.label,
+          price: '$'+(svc ? svc.prices[i] : 0)
+        }))
+      };
+    });
   }
   document.getElementById('service-loading').style.display = 'none';
-  document.getElementById('service-list').style.display = 'block';
+  document.getElementById('service-list').style.display    = 'block';
+  renderServiceList();
 }
 
 function renderServiceList() {
-  const el = document.getElementById('service-list');
-  el.innerHTML = services.map(s => {
-    const price = s.price_ranges && s.price_ranges.length ? s.price_ranges[0].price : 'N/A';
+  const el      = document.getElementById('service-list');
+  const pricing = getPricingDB();
+  el.innerHTML  = services.map(s => {
+    const sk    = getServiceKeyByApiId(s.id);
+    const svcP  = sk ? pricing[sk] : null;
+    const price = svcP ? '$'+svcP.prices[0].toFixed(2)+' – $'+svcP.prices[svcP.prices.length-1].toFixed(2) :
+                  (s.price_ranges && s.price_ranges.length ? s.price_ranges[0].price : 'N/A');
+    const time  = svcP ? svcP.time : '';
     return `<div class="service-item" id="svc-${s.id}" onclick="selectService('${s.id}')">
       <span class="sname">${s.name}</span>
       <span class="sprice">${price}</span><br>
       <span class="sweight">Max: ${s.max_weight}</span>
+      ${time ? `<div class="stime">⏱ ${time}</div>` : ''}
     </div>`;
   }).join('');
 }
 
 function selectService(id) {
   document.querySelectorAll('.service-item').forEach(el => el.classList.remove('selected'));
-  document.getElementById('svc-' + id).classList.add('selected');
-  selectedService = services.find(s => s.id === id);
+  const el = document.getElementById('svc-'+id);
+  if (el) el.classList.add('selected');
+  selectedService = services.find(s => s.id===id);
+  updatePriceEstimate();
 }
 
 function renderServicesTable() {
-  const wrap = document.getElementById('services-table-wrap');
-  if (!services.length) { wrap.innerHTML = '<div style="text-align:center;padding:30px;color:#aaa">Chưa có dữ liệu</div>'; return; }
-  wrap.innerHTML = `<table>
-    <thead><tr><th>ID</th><th>Tên dịch vụ</th><th>Max Weight</th><th>Giá từ</th><th>Giá đến</th><th>Đơn giá</th></tr></thead>
-    <tbody>${services.map(s => {
-      const pr = s.price_ranges && s.price_ranges.length ? s.price_ranges[0] : {};
-      return `<tr>
-        <td><span class="badge badge-pending">${s.id}</span></td>
-        <td>${s.name}</td>
-        <td>${s.max_weight}</td>
-        <td>${pr.min_weight || '-'}</td>
-        <td>${pr.max_weight || '-'}</td>
-        <td><strong style="color:#1a73e8">${pr.price || '-'}</strong></td>
-      </tr>`;
-    }).join('')}</tbody>
-  </table>`;
+  const wrap    = document.getElementById('services-table-wrap');
+  const pricing = getPricingDB();
+  if (!services.length) {
+    wrap.innerHTML = '<div style="text-align:center;padding:30px;color:#aaa">Chưa có dữ liệu</div>';
+    return;
+  }
+  wrap.innerHTML = `
+    <table>
+      <thead>
+        <tr>
+          <th>ID</th><th>Tên dịch vụ</th><th>Thời gian</th>
+          ${WEIGHT_RANGES.map(r=>`<th style="text-align:center">${r.label}</th>`).join('')}
+        </tr>
+      </thead>
+      <tbody>
+        ${services.map(s => {
+          const sk   = getServiceKeyByApiId(s.id);
+          const svcP = sk ? pricing[sk] : null;
+          return `<tr>
+            <td><span class="badge badge-pending">${s.id}</span></td>
+            <td><strong>${s.name}</strong></td>
+            <td><small style="color:#888">${svcP ? svcP.time : '-'}</small></td>
+            ${WEIGHT_RANGES.map((_,i) =>
+              `<td style="text-align:center">
+                <strong style="color:#1a73e8">
+                  ${svcP ? '$'+svcP.prices[i].toFixed(2) : '-'}
+                </strong>
+              </td>`
+            ).join('')}
+          </tr>`;
+        }).join('')}
+      </tbody>
+    </table>`;
 }
 
 // ============================================================
-//  CREATE ORDER
+// PRICE ESTIMATE
+// ============================================================
+function updatePriceEstimate() {
+  const box    = document.getElementById('price-estimate');
+  if (!box) return;
+  if (!selectedService) { box.style.display='none'; return; }
+  const weight = parseFloat(document.getElementById('weight').value)||0;
+  if (weight<=0) { box.style.display='none'; return; }
+  const price  = getPriceForOrder(selectedService.id, weight);
+  if (price===null) { box.style.display='none'; return; }
+  box.style.display = 'block';
+  box.innerHTML = `💡 Giá dự kiến: <strong style="color:#2e7d32;font-size:1.1rem">$${price.toFixed(2)}</strong>
+    <span style="color:#888;font-size:0.82rem"> — ${selectedService.name} / ${weight} lbs</span>`;
+}
+
+// ============================================================
+// CREATE ORDER
 // ============================================================
 async function createOrder() {
   clearMsg('create-msg');
-  if (!selectedService) return showMsg('create-msg', '⚠️ Vui lòng chọn dịch vụ vận chuyển', 'error');
-  const fields = ['fromName','fromAddress','fromCity','fromState','fromZip','toName','toAddress','toCity','toState','toZip','weight'];
-  for (const f of fields) {
-    if (!document.getElementById(f).value.trim()) {
-      return showMsg('create-msg', `⚠️ Vui lòng điền đầy đủ thông tin bắt buộc (${f})`, 'error');
-    }
+  if (!selectedService) return showMsg('create-msg','⚠️ Vui lòng chọn dịch vụ vận chuyển','error');
+  const required = ['fromName','fromAddress','fromCity','fromState','fromZip',
+                    'toName','toAddress','toCity','toState','toZip','weight'];
+  for (const f of required) {
+    if (!document.getElementById(f).value.trim())
+      return showMsg('create-msg',`⚠️ Vui lòng điền: ${f}`,'error');
   }
+  const db = getDB();
+  const u  = db.users.find(x => x.username===currentUser.username);
+  if (!u || (u.balance||0)<=0)
+    return showMsg('create-msg','⚠️ Số dư không đủ. Liên hệ admin để nạp tiền.','error');
+
   const btn = document.getElementById('create-btn');
-  btn.disabled = true; btn.innerHTML = '<span class="spinner"></span> Đang tạo nhãn...';
+  btn.disabled = true;
+  btn.innerHTML = '<span class="spinner"></span> Đang tạo nhãn...';
+
+  const apiKey = getApiKeyForUser(currentUser.username);
+  const weight = parseFloat(document.getElementById('weight').value)||0;
 
   const payload = {
-    label_id: selectedService.id,
-    fromName: document.getElementById('fromName').value.trim(),
-    fromCompany: document.getElementById('fromCompany').value.trim(),
-    fromAddress: document.getElementById('fromAddress').value.trim(),
+    label_id:     selectedService.id,
+    fromName:     document.getElementById('fromName').value.trim(),
+    fromCompany:  document.getElementById('fromCompany').value.trim(),
+    fromAddress:  document.getElementById('fromAddress').value.trim(),
     fromAddress2: document.getElementById('fromAddress2').value.trim(),
-    fromZip: document.getElementById('fromZip').value.trim(),
-    fromState: document.getElementById('fromState').value.trim().toUpperCase(),
-    fromCity: document.getElementById('fromCity').value.trim(),
-    fromCountry: document.getElementById('fromCountry').value.trim() || 'US',
-    toName: document.getElementById('toName').value.trim(),
-    toCompany: document.getElementById('toCompany').value.trim(),
-    toAddress: document.getElementById('toAddress').value.trim(),
-    toAddress2: document.getElementById('toAddress2').value.trim(),
-    toZip: document.getElementById('toZip').value.trim(),
-    toState: document.getElementById('toState').value.trim().toUpperCase(),
-    toCity: document.getElementById('toCity').value.trim(),
-    toCountry: document.getElementById('toCountry').value.trim() || 'US',
-    weight: parseFloat(document.getElementById('weight').value) || 0,
-    length: parseFloat(document.getElementById('length').value) || 0,
-    height: parseFloat(document.getElementById('height').value) || 0,
-    width: parseFloat(document.getElementById('width').value) || 0,
-    reference_1: document.getElementById('ref1').value.trim(),
-    reference_2: document.getElementById('ref2').value.trim(),
-    discription: document.getElementById('desc').value.trim()
+    fromZip:      document.getElementById('fromZip').value.trim(),
+    fromState:    document.getElementById('fromState').value.trim().toUpperCase(),
+    fromCity:     document.getElementById('fromCity').value.trim(),
+    fromCountry:  document.getElementById('fromCountry').value.trim()||'US',
+    toName:       document.getElementById('toName').value.trim(),
+    toCompany:    document.getElementById('toCompany').value.trim(),
+    toAddress:    document.getElementById('toAddress').value.trim(),
+    toAddress2:   document.getElementById('toAddress2').value.trim(),
+    toZip:        document.getElementById('toZip').value.trim(),
+    toState:      document.getElementById('toState').value.trim().toUpperCase(),
+    toCity:       document.getElementById('toCity').value.trim(),
+    toCountry:    document.getElementById('toCountry').value.trim()||'US',
+    weight:       weight,
+    length:       parseFloat(document.getElementById('length').value)||0,
+    height:       parseFloat(document.getElementById('height').value)||0,
+    width:        parseFloat(document.getElementById('width').value)||0,
+    reference_1:  document.getElementById('ref1').value.trim(),
+    reference_2:  document.getElementById('ref2').value.trim(),
+    discription:  document.getElementById('desc').value.trim()
   };
 
   try {
-    const res = await fetch(API_BASE + '/create-order', {
-      method: 'POST',
-      headers: { 'Authorization': 'Bearer ' + MASTER_API, 'Content-Type': 'application/json' },
-      body: JSON.stringify(payload)
+    const res  = await fetch(API_BASE+'/create-order', {
+      method:'POST',
+      headers:{'Authorization':'Bearer '+apiKey,'Content-Type':'application/json'},
+      body:JSON.stringify(payload)
     });
     const json = await res.json();
     if (json.success && json.data) {
       const d = json.data;
-      // Deduct balance & save order
-      const db = getDB();
-      const u = db.users.find(x => x.username === currentUser.username);
-      if (u) {
-        u.balance = Math.max(0, (u.balance || 0) - (d.price || 0));
-        if (!u.orders) u.orders = [];
-        u.orders.unshift({ ...d, service: selectedService.name, created_at: new Date().toLocaleString('vi-VN') });
-        saveDB(db);
-        currentUser = u;
+      // Tính giá local (ưu tiên bảng giá admin)
+      const localPrice = getPriceForOrder(selectedService.id, weight);
+      const finalPrice = localPrice !== null ? localPrice : (parseFloat(d.price)||0);
+
+      const db2 = getDB();
+      const u2  = db2.users.find(x => x.username===currentUser.username);
+      if (u2) {
+        u2.balance = Math.max(0, (u2.balance||0) - finalPrice);
+        if (!u2.orders) u2.orders = [];
+        u2.orders.unshift({
+          ...d,
+          price:         finalPrice,
+          service:       selectedService.name,
+          serviceKey:    getServiceKeyByApiId(selectedService.id),
+          weight:        weight,
+          length:        payload.length,
+          width:         payload.width,
+          height:        payload.height,
+          fromName:      payload.fromName,
+          fromAddress:   payload.fromAddress,
+          fromCity:      payload.fromCity,
+          fromState:     payload.fromState,
+          fromZip:       payload.fromZip,
+          toName:        payload.toName,
+          toAddress:     payload.toAddress,
+          toCity:        payload.toCity,
+          toState:       payload.toState,
+          toZip:         payload.toZip,
+          created_at:    new Date().toLocaleString('vi-VN'),
+          api_key_label: getApiKeyLabelForUser(currentUser.username)
+        });
+        saveDB(db2);
+        currentUser = JSON.parse(JSON.stringify(u2));
       }
       updateBalance();
       loadOrders();
-      showLabelModal(d);
+      showLabelModal(d, finalPrice);
     } else {
-      showMsg('create-msg', '❌ Lỗi: ' + (json.message || 'Không thể tạo nhãn'), 'error');
+      showMsg('create-msg','❌ '+(json.message||'Không thể tạo nhãn'),'error');
     }
   } catch(e) {
-    showMsg('create-msg', '❌ Lỗi kết nối API: ' + e.message, 'error');
+    showMsg('create-msg','❌ Lỗi kết nối: '+e.message,'error');
   }
-  btn.disabled = false; btn.innerHTML = '🚀 Tạo nhãn vận chuyển';
+  btn.disabled = false;
+  btn.innerHTML = '🚀 Tạo nhãn vận chuyển';
 }
 
-function showLabelModal(d) {
+function showLabelModal(d, finalPrice) {
   lastPDF = d.pdf || '';
   document.getElementById('label-detail').innerHTML = `
-    <div class="detail-row"><span class="key">Tracking ID</span><span class="val" style="color:#1a73e8;font-size:1.05rem">${d.tracking_id}</span></div>
-    <div class="detail-row"><span class="key">Dịch vụ</span><span class="val">${selectedService ? selectedService.name : '-'}</span></div>
-    <div class="detail-row"><span class="key">Người gửi</span><span class="val">${d.fromName}</span></div>
-    <div class="detail-row"><span class="key">Người nhận</span><span class="val">${d.toName}</span></div>
-    <div class="detail-row"><span class="key">Cân nặng</span><span class="val">${d.weight} lbs</span></div>
-    <div class="detail-row"><span class="key">Giá</span><span class="val" style="color:#2e7d32;font-size:1.1rem">$${d.price}</span></div>
-    ${d.pdf ? `<div style="margin-top:12px;padding:10px;background:#e8f5e9;border-radius:8px;text-align:center">
-      <a href="${d.pdf}" target="_blank" style="color:#2e7d32;font-weight:700;text-decoration:none">📄 Xem PDF nhãn</a>
+    <div class="detail-row"><span class="key">Tracking ID</span>
+      <span class="val" style="color:#1a73e8">${d.tracking_id||'-'}</span></div>
+    <div class="detail-row"><span class="key">Dịch vụ</span>
+      <span class="val">${selectedService ? selectedService.name : '-'}</span></div>
+    <div class="detail-row"><span class="key">Người gửi</span>
+      <span class="val">${d.fromName||payload||'-'}</span></div>
+    <div class="detail-row"><span class="key">Người nhận</span>
+      <span class="val">${d.toName||'-'}</span></div>
+    <div class="detail-row"><span class="key">Cân nặng</span>
+      <span class="val">${d.weight||0} lbs</span></div>
+    <div class="detail-row"><span class="key">Giá thanh toán</span>
+      <span class="val" style="color:#2e7d32;font-size:1.15rem;font-weight:700">
+        $${parseFloat(finalPrice).toFixed(2)}
+      </span></div>
+    ${d.pdf ? `
+    <div style="margin-top:14px;padding:12px;background:#e8f5e9;border-radius:8px;text-align:center">
+      <a href="${d.pdf}" target="_blank"
+        style="color:#2e7d32;font-weight:700;text-decoration:none;font-size:1rem">
+        📄 Xem / Tải PDF nhãn
+      </a>
     </div>` : ''}
   `;
   openModal('label-modal');
 }
 
-function downloadPDF() { if (lastPDF) window.open(lastPDF, '_blank'); }
+function downloadPDF() { if (lastPDF) window.open(lastPDF,'_blank'); }
 
 // ============================================================
-//  ORDERS
+// ORDERS
 // ============================================================
 function loadOrders() {
   const db = getDB();
-  const u = db.users.find(x => x.username === currentUser.username);
-  const orders = (u && u.orders) ? u.orders : [];
-  renderOrdersTable(orders);
+  const u  = db.users.find(x => x.username===currentUser.username);
+  renderOrdersTable((u && u.orders) ? u.orders : []);
 }
 
 function renderOrdersTable(orders) {
-  const search = (document.getElementById('search-order') || {}).value || '';
+  const search   = (document.getElementById('search-order')||{}).value||'';
   const filtered = orders.filter(o =>
     !search || (o.tracking_id && o.tracking_id.toLowerCase().includes(search.toLowerCase()))
   );
   const tbody = document.getElementById('orders-tbody');
   if (!filtered.length) {
-    tbody.innerHTML = '<tr><td colspan="8" style="text-align:center;color:#aaa;padding:30px">Chưa có đơn hàng nào</td></tr>';
+    tbody.innerHTML = '<tr><td colspan="9" style="text-align:center;color:#aaa;padding:30px">Chưa có đơn hàng nào</td></tr>';
     return;
   }
-  tbody.innerHTML = filtered.map((o, i) => `
+  tbody.innerHTML = filtered.map((o,i) => `
     <tr>
-      <td>${i + 1}</td>
-      <td><code style="font-size:0.82rem;color:#1a73e8">${o.tracking_id || '-'}</code></td>
-      <td>${o.fromName || '-'}<br><small style="color:#aaa">${o.fromCity || ''}, ${o.fromState || ''}</small></td>
-      <td>${o.toName || '-'}<br><small style="color:#aaa">${o.toCity || ''}, ${o.toState || ''}</small></td>
-      <td><small>${o.service || '-'}</small></td>
-      <td><strong style="color:#2e7d32">$${o.price || '0'}</strong></td>
-      <td><span class="badge badge-success">✓ Thành công</span></td>
+      <td>${i+1}</td>
+      <td><code style="font-size:0.82rem;color:#1a73e8">${o.tracking_id||'-'}</code></td>
+      <td>${o.fromName||'-'}<br><small style="color:#aaa">${o.fromCity||''}, ${o.fromState||''}</small></td>
+      <td>${o.toName||'-'}<br><small style="color:#aaa">${o.toCity||''}, ${o.toState||''}</small></td>
+      <td><small>${o.service||'-'}</small></td>
+      <td><small>${o.weight||0} lbs</small></td>
+      <td><strong style="color:#2e7d32">$${parseFloat(o.price||0).toFixed(2)}</strong></td>
+      <td><small style="color:#888">${o.created_at||'-'}</small></td>
       <td>
-        <div style="display:flex;gap:4px">
-          ${o.pdf ? `<button class="btn-sm btn-success" onclick="window.open('${o.pdf}','_blank')">PDF</button>` : ''}
+        <div style="display:flex;gap:4px;flex-wrap:wrap">
+          ${o.pdf ? `<button class="btn-sm btn-success" onclick="window.open('${o.pdf}','_blank')">📄 PDF</button>` : ''}
           <button class="btn-sm btn-outline" onclick="viewOrderDetail(${i})">Chi tiết</button>
         </div>
       </td>
@@ -790,165 +1145,517 @@ function renderOrdersTable(orders) {
   `).join('');
 }
 
-document.addEventListener('DOMContentLoaded', () => {
-  const si = document.getElementById('search-order');
-  if (si) si.addEventListener('input', loadOrders);
-});
-
 function viewOrderDetail(idx) {
   const db = getDB();
-  const u = db.users.find(x => x.username === currentUser.username);
-  const o = u && u.orders ? u.orders[idx] : null;
+  const u  = db.users.find(x => x.username===currentUser.username);
+  const o  = u && u.orders ? u.orders[idx] : null;
   if (!o) return;
   document.getElementById('order-detail-content').innerHTML = `
-    <div class="detail-row"><span class="key">Tracking ID</span><span class="val" style="color:#1a73e8">${o.tracking_id}</span></div>
-    <div class="detail-row"><span class="key">Dịch vụ</span><span class="val">${o.service || '-'}</span></div>
-    <div class="detail-row"><span class="key">Ngày tạo</span><span class="val">${o.created_at || '-'}</span></div>
+    <div class="detail-row"><span class="key">Tracking ID</span>
+      <span class="val" style="color:#1a73e8">${o.tracking_id||'-'}</span></div>
+    <div class="detail-row"><span class="key">Dịch vụ</span><span class="val">${o.service||'-'}</span></div>
+    <div class="detail-row"><span class="key">Ngày tạo</span><span class="val">${o.created_at||'-'}</span></div>
+    <div class="detail-row"><span class="key">API Key dùng</span><span class="val">${o.api_key_label||'Master Key'}</span></div>
     <hr style="margin:10px 0;border:none;border-top:1px solid #eee">
-    <div class="detail-row"><span class="key">Người gửi</span><span class="val">${o.fromName}</span></div>
-    <div class="detail-row"><span class="key">Địa chỉ gửi</span><span class="val">${o.fromAddress}, ${o.fromCity}, ${o.fromState} ${o.fromZip}</span></div>
+    <div class="detail-row"><span class="key">Người gửi</span><span class="val">${o.fromName||'-'}</span></div>
+    <div class="detail-row"><span class="key">Địa chỉ gửi</span>
+      <span class="val">${o.fromAddress||''}, ${o.fromCity||''}, ${o.fromState||''} ${o.fromZip||''}</span></div>
     <hr style="margin:10px 0;border:none;border-top:1px solid #eee">
-    <div class="detail-row"><span class="key">Người nhận</span><span class="val">${o.toName}</span></div>
-    <div class="detail-row"><span class="key">Địa chỉ nhận</span><span class="val">${o.toAddress}, ${o.toCity}, ${o.toState} ${o.toZip}</span></div>
+    <div class="detail-row"><span class="key">Người nhận</span><span class="val">${o.toName||'-'}</span></div>
+    <div class="detail-row"><span class="key">Địa chỉ nhận</span>
+      <span class="val">${o.toAddress||''}, ${o.toCity||''}, ${o.toState||''} ${o.toZip||''}</span></div>
     <hr style="margin:10px 0;border:none;border-top:1px solid #eee">
-    <div class="detail-row"><span class="key">Cân nặng</span><span class="val">${o.weight} lbs</span></div>
-    <div class="detail-row"><span class="key">Kích thước</span><span class="val">${o.length || 0}" × ${o.width || 0}" × ${o.height || 0}"</span></div>
-    <div class="detail-row"><span class="key">Giá</span><span class="val" style="color:#2e7d32;font-size:1.1rem">$${o.price}</span></div>
+    <div class="detail-row"><span class="key">Cân nặng</span><span class="val">${o.weight||0} lbs</span></div>
+    <div class="detail-row"><span class="key">Kích thước</span>
+      <span class="val">${o.length||0}" × ${o.width||0}" × ${o.height||0}"</span></div>
+    <div class="detail-row"><span class="key">Giá thanh toán</span>
+      <span class="val" style="color:#2e7d32;font-size:1.1rem">$${parseFloat(o.price||0).toFixed(2)}</span></div>
     ${o.pdf ? `<div style="margin-top:12px;text-align:center">
-      <a href="${o.pdf}" target="_blank" style="color:#1a73e8;font-weight:700">📄 Tải nhãn PDF</a>
+      <a href="${o.pdf}" target="_blank"
+        style="color:#1a73e8;font-weight:700;text-decoration:none">📄 Tải nhãn PDF</a>
     </div>` : ''}
   `;
   openModal('order-modal');
 }
 
 // ============================================================
-//  ADMIN
+// ADMIN - USERS
 // ============================================================
 function renderUsersTable() {
-  const db = getDB();
+  const db    = getDB();
   const tbody = document.getElementById('users-tbody');
-  tbody.innerHTML = db.users.map((u, i) => `
-    <tr>
+  if (!db.users.length) {
+    tbody.innerHTML = '<tr><td colspan="8" style="text-align:center;color:#aaa;padding:20px">Chưa có người dùng</td></tr>';
+    return;
+  }
+  tbody.innerHTML = db.users.map(u => {
+    const keyLabel  = getApiKeyLabelForUser(u.username);
+    const isMaster  = keyLabel === 'Master Key';
+    return `<tr>
       <td><strong>${u.username}</strong></td>
       <td>${u.name}</td>
-      <td>${u.email || '-'}</td>
-      <td><strong style="color:#2e7d32">$${(u.balance || 0).toFixed(2)}</strong></td>
-      <td><span class="badge ${u.role === 'admin' ? 'badge-error' : 'badge-success'}">${u.role}</span></td>
-      <td>${(u.orders || []).length}</td>
+      <td>${u.email||'-'}</td>
+      <td><strong style="color:#2e7d32">$${(u.balance||0).toFixed(2)}</strong></td>
+      <td><span class="badge ${u.role==='admin'?'badge-error':'badge-success'}">${u.role}</span></td>
+      <td>
+        <span class="key-badge" style="${isMaster?'background:#e3f2fd;color:#1565c0':''}">
+          ${keyLabel}
+        </span>
+      </td>
+      <td>${(u.orders||[]).length}</td>
       <td>
         <div class="user-actions">
-          <button class="btn-sm btn-success" onclick="openTopup('${u.username}')">💰 Nạp tiền</button>
-          <button class="btn-sm btn-outline" onclick="editUser('${u.username}')">✏️</button>
-          ${u.username !== 'admin' ? `<button class="btn-sm btn-danger" onclick="deleteUser('${u.username}')">🗑️</button>` : ''}
+          <button class="btn-sm btn-success" onclick="openTopup('${u.username}')">💰 Nạp</button>
+          <button class="btn-sm btn-outline" onclick="editUser('${u.username}')">✏️ Sửa</button>
+          ${u.username!=='admin'
+            ? `<button class="btn-sm btn-danger" onclick="deleteUser('${u.username}')">🗑️</button>`
+            : ''}
         </div>
       </td>
-    </tr>
-  `).join('');
+    </tr>`;
+  }).join('');
 }
 
 function openAddUserModal() {
   document.getElementById('user-modal-title').textContent = '➕ Thêm người dùng';
-  document.getElementById('um-username').value = '';
-  document.getElementById('um-name').value = '';
-  document.getElementById('um-email').value = '';
-  document.getElementById('um-pass').value = '';
-  document.getElementById('um-balance').value = '0';
-  document.getElementById('um-role').value = 'user';
+  document.getElementById('um-username').value  = '';
+  document.getElementById('um-username').disabled = false;
+  document.getElementById('um-name').value      = '';
+  document.getElementById('um-email').value     = '';
+  document.getElementById('um-pass').value      = '';
+  document.getElementById('um-balance').value   = '0';
+  document.getElementById('um-role').value      = 'user';
   document.getElementById('um-username').dataset.edit = '';
+  populateApiKeySelect('um-apikey','');
   clearMsg('user-modal-msg');
   openModal('user-modal');
 }
 
 function editUser(username) {
   const db = getDB();
-  const u = db.users.find(x => x.username === username);
+  const u  = db.users.find(x => x.username===username);
   if (!u) return;
-  document.getElementById('user-modal-title').textContent = '✏️ Sửa người dùng';
-  document.getElementById('um-username').value = u.username;
-  document.getElementById('um-name').value = u.name;
-  document.getElementById('um-email').value = u.email || '';
-  document.getElementById('um-pass').value = '';
-  document.getElementById('um-balance').value = u.balance || 0;
-  document.getElementById('um-role').value = u.role;
+  document.getElementById('user-modal-title').textContent = '✏️ Sửa: '+username;
+  document.getElementById('um-username').value    = u.username;
+  document.getElementById('um-username').disabled = true;
+  document.getElementById('um-name').value        = u.name;
+  document.getElementById('um-email').value       = u.email||'';
+  document.getElementById('um-pass').value        = '';
+  document.getElementById('um-balance').value     = (u.balance||0).toFixed(2);
+  document.getElementById('um-role').value        = u.role;
   document.getElementById('um-username').dataset.edit = username;
+  populateApiKeySelect('um-apikey', u.apiKeyId||'');
   clearMsg('user-modal-msg');
   openModal('user-modal');
 }
 
+function populateApiKeySelect(selectId, selectedId) {
+  const db  = getDB();
+  const sel = document.getElementById(selectId);
+  sel.innerHTML = '<option value="">-- Dùng Master Key --</option>' +
+    db.api_keys.map(k =>
+      `<option value="${k.id}" ${k.id===selectedId?'selected':''}>
+        ${k.label} (${maskKey(k.key)}) — ${k.status}
+      </option>`
+    ).join('');
+}
+
 function saveUser() {
   const editTarget = document.getElementById('um-username').dataset.edit;
-  const username = document.getElementById('um-username').value.trim();
-  const name = document.getElementById('um-name').value.trim();
-  const email = document.getElementById('um-email').value.trim();
-  const pass = document.getElementById('um-pass').value;
-  const balance = parseFloat(document.getElementById('um-balance').value) || 0;
-  const role = document.getElementById('um-role').value;
-  if (!username || !name) return showMsg('user-modal-msg', 'Vui lòng điền đầy đủ thông tin', 'error');
+  const username   = document.getElementById('um-username').value.trim();
+  const name       = document.getElementById('um-name').value.trim();
+  const email      = document.getElementById('um-email').value.trim();
+  const pass       = document.getElementById('um-pass').value;
+  const balance    = parseFloat(document.getElementById('um-balance').value)||0;
+  const role       = document.getElementById('um-role').value;
+  const apiKeyId   = document.getElementById('um-apikey').value||null;
+
+  if (!username||!name)
+    return showMsg('user-modal-msg','⚠️ Vui lòng điền đầy đủ thông tin bắt buộc','error');
+
   const db = getDB();
   if (editTarget) {
-    const u = db.users.find(x => x.username === editTarget);
-    if (u) {
-      u.name = name; u.email = email; u.balance = balance; u.role = role;
-      if (pass) u.password = btoa(pass);
-    }
+    const u = db.users.find(x => x.username===editTarget);
+    if (!u) return;
+    u.name=name; u.email=email; u.balance=balance; u.role=role; u.apiKeyId=apiKeyId;
+    if (pass) u.password = btoa(pass);
+    showMsg('user-modal-msg','✅ Cập nhật thành công!','success');
   } else {
-    if (!pass) return showMsg('user-modal-msg', 'Vui lòng nhập mật khẩu', 'error');
-    if (db.users.find(x => x.username === username)) return showMsg('user-modal-msg', 'Username đã tồn tại', 'error');
-    db.users.push({ username, password: btoa(pass), name, email, role, balance, orders: [] });
+    if (!pass) return showMsg('user-modal-msg','⚠️ Vui lòng nhập mật khẩu','error');
+    if (db.users.find(x=>x.username===username))
+      return showMsg('user-modal-msg','⚠️ Username đã tồn tại','error');
+    db.users.push({
+      username, password:btoa(pass), name, email,
+      role, balance, apiKeyId, orders:[], topup_history:[]
+    });
+    showMsg('user-modal-msg','✅ Thêm người dùng thành công!','success');
   }
   saveDB(db);
-  closeModal('user-modal');
-  renderUsersTable();
+  setTimeout(() => { closeModal('user-modal'); renderUsersTable(); }, 800);
 }
 
 function deleteUser(username) {
-  if (!confirm('Xóa người dùng ' + username + '?')) return;
+  if (!confirm(`Xác nhận xóa người dùng "${username}"?\nThao tác này không thể hoàn tác.`)) return;
   const db = getDB();
-  db.users = db.users.filter(x => x.username !== username);
+  db.users = db.users.filter(x => x.username!==username);
   saveDB(db);
   renderUsersTable();
 }
 
+// ============================================================
+// ADMIN - TOPUP
+// ============================================================
 function openTopup(username) {
   const db = getDB();
-  const u = db.users.find(x => x.username === username);
+  const u  = db.users.find(x => x.username===username);
   if (!u) return;
   topupTarget = username;
-  document.getElementById('topup-username').textContent = username;
-  document.getElementById('topup-current').textContent = '$' + (u.balance || 0).toFixed(2);
+  document.getElementById('topup-uname').textContent   = username+' ('+u.name+')';
+  document.getElementById('topup-current').textContent = '$'+(u.balance||0).toFixed(2);
   document.getElementById('topup-amount').value = '10';
+  document.getElementById('topup-note').value   = '';
   clearMsg('topup-msg');
+
+  const hist = u.topup_history||[];
+  const wrap = document.getElementById('topup-hist-wrap');
+  if (hist.length) {
+    wrap.innerHTML = `
+      <div style="font-size:0.82rem;font-weight:700;color:#888;margin-bottom:6px">📋 Lịch sử nạp tiền:</div>
+      <div style="max-height:150px;overflow-y:auto;border:1px solid #f0f0f0;border-radius:6px;padding:6px">
+        ${hist.slice(0,15).map(h => `
+          <div class="topup-hist-row">
+            <span style="color:#888">${h.date}</span>
+            <span style="color:#2e7d32;font-weight:700">+$${h.amount.toFixed(2)}</span>
+            <span style="color:#555">→ $${h.after.toFixed(2)}</span>
+            ${h.note ? `<span style="color:#aaa;font-style:italic">${h.note}</span>` : ''}
+          </div>`).join('')}
+      </div>`;
+  } else {
+    wrap.innerHTML = '<div style="color:#aaa;font-size:0.82rem;text-align:center;padding:8px">Chưa có lịch sử nạp tiền</div>';
+  }
   openModal('topup-modal');
 }
 
 function doTopup() {
   const amount = parseFloat(document.getElementById('topup-amount').value);
-  if (!amount || amount <= 0) return showMsg('topup-msg', 'Số tiền không hợp lệ', 'error');
+  const note   = document.getElementById('topup-note').value.trim();
+  if (!amount||amount<=0) return showMsg('topup-msg','⚠️ Số tiền không hợp lệ','error');
   const db = getDB();
-  const u = db.users.find(x => x.username === topupTarget);
+  const u  = db.users.find(x => x.username===topupTarget);
   if (!u) return;
-  u.balance = (u.balance || 0) + amount;
+  u.balance = (u.balance||0) + amount;
+  if (!u.topup_history) u.topup_history = [];
+  u.topup_history.unshift({
+    date:   new Date().toLocaleString('vi-VN'),
+    amount: amount,
+    after:  u.balance,
+    note:   note,
+    by:     currentUser.username
+  });
   saveDB(db);
-  showMsg('topup-msg', `✅ Nạp $${amount.toFixed(2)} thành công! Số dư mới: $${u.balance.toFixed(2)}`, 'success');
-  document.getElementById('topup-current').textContent = '$' + u.balance.toFixed(2);
-  if (currentUser.username === topupTarget) { currentUser.balance = u.balance; updateBalance(); }
-  setTimeout(() => { closeModal('topup-modal'); renderUsersTable(); }, 1500);
+  showMsg('topup-msg',`✅ Nạp $${amount.toFixed(2)} thành công! Số dư mới: $${u.balance.toFixed(2)}`,'success');
+  document.getElementById('topup-current').textContent = '$'+u.balance.toFixed(2);
+  if (currentUser.username===topupTarget) { currentUser.balance=u.balance; updateBalance(); }
+  setTimeout(() => { closeModal('topup-modal'); renderUsersTable(); }, 1200);
 }
 
 // ============================================================
-//  UTILS
+// ADMIN - API KEYS
 // ============================================================
-function openModal(id) { document.getElementById(id).classList.add('open'); }
-function closeModal(id) { document.getElementById(id).classList.remove('open'); }
-function showMsg(id, text, type) {
-  const el = document.getElementById(id);
-  el.textContent = text; el.className = 'msg ' + type;
-}
-function clearMsg(id) { const el = document.getElementById(id); el.textContent = ''; el.className = 'msg'; }
+function renderApiKeysTable() {
+  const db    = getDB();
+  const tbody = document.getElementById('apikeys-tbody');
+  const masterRow = `
+    <tr style="background:#f8f9ff">
+      <td><strong>Master Key</strong> <span class="badge badge-info">System</span></td>
+      <td><code class="key-badge">${maskKey(getMasterKey())}</code></td>
+      <td><span style="color:#888;font-size:0.82rem">Tất cả user không gán key riêng</span></td>
+      <td><span class="badge badge-success">active</span></td>
+      <td><span style="color:#aaa;font-size:0.8rem">Chỉnh trong Cài đặt</span></td>
+    </tr>`;
 
-// Close modal on overlay click
-document.querySelectorAll('.modal-overlay').forEach(el => {
-  el.addEventListener('click', function(e) { if (e.target === this) this.classList.remove('open'); });
+  if (!db.api_keys||!db.api_keys.length) {
+    tbody.innerHTML = masterRow +
+      '<tr><td colspan="5" style="text-align:center;color:#aaa;padding:16px">Chưa có API key tùy chỉnh</td></tr>';
+    return;
+  }
+  const rows = db.api_keys.map(k => {
+    const assignedUser = k.assignedUser
+      ? `<span class="badge badge-pending">${k.assignedUser}</span>`
+      : '<span style="color:#aaa;font-size:0.82rem">Chưa gán</span>';
+    return `<tr>
+      <td><strong>${k.label}</strong></td>
+      <td>
+        <code class="key-badge">${maskKey(k.key)}</code>
+        <button class="btn-sm btn-outline"
+          style="padding:3px 8px;font-size:0.72rem;margin-left:6px"
+          onclick="copyKey('${k.key}')">📋</button>
+      </td>
+      <td>${assignedUser}</td>
+      <td><span class="badge ${k.status==='active'?'badge-success':'badge-error'}">${k.status}</span></td>
+      <td>
+        <div style="display:flex;gap:5px">
+          <button class="btn-sm btn-outline" onclick="editApiKey('${k.id}')">✏️ Sửa</button>
+          <button class="btn-sm btn-danger"  onclick="deleteApiKey('${k.id}')">🗑️</button>
+        </div>
+      </td>
+    </tr>`;
+  }).join('');
+  tbody.innerHTML = masterRow + rows;
+}
+
+function copyKey(key) {
+  navigator.clipboard.writeText(key)
+    .then(()  => alert('✅ Đã copy API key!'))
+    .catch(()  => prompt('Copy key này:',key));
+}
+
+function openAddApiKeyModal() {
+  editingApiKeyId = null;
+  document.getElementById('apikey-modal-title').textContent = '➕ Thêm API Key';
+  document.getElementById('ak-label').value  = '';
+  document.getElementById('ak-key').value    = '';
+  document.getElementById('ak-status').value = 'active';
+  populateUserSelect('ak-user','');
+  clearMsg('apikey-modal-msg');
+  openModal('apikey-modal');
+}
+
+function editApiKey(id) {
+  const db = getDB();
+  const k  = db.api_keys.find(x => x.id===id);
+  if (!k) return;
+  editingApiKeyId = id;
+  document.getElementById('apikey-modal-title').textContent = '✏️ Sửa API Key';
+  document.getElementById('ak-label').value  = k.label;
+  document.getElementById('ak-key').value    = k.key;
+  document.getElementById('ak-status').value = k.status;
+  populateUserSelect('ak-user', k.assignedUser||'');
+  clearMsg('apikey-modal-msg');
+  openModal('apikey-modal');
+}
+
+function populateUserSelect(selectId, selectedUsername) {
+  const db  = getDB();
+  const sel = document.getElementById(selectId);
+  sel.innerHTML = '<option value="">-- Chưa gán --</option>' +
+    db.users.map(u =>
+      `<option value="${u.username}" ${u.username===selectedUsername?'selected':''}>
+        ${u.username} (${u.name})
+      </option>`
+    ).join('');
+}
+
+function saveApiKey() {
+  const label        = document.getElementById('ak-label').value.trim();
+  const key          = document.getElementById('ak-key').value.trim();
+  const status       = document.getElementById('ak-status').value;
+  const assignedUser = document.getElementById('ak-user').value;
+
+  if (!label||!key)
+    return showMsg('apikey-modal-msg','⚠️ Vui lòng điền đầy đủ thông tin','error');
+  if (!key.includes('|'))
+    return showMsg('apikey-modal-msg','⚠️ API key không đúng định dạng (VD: 1234|abcdef...)','error');
+
+  const db = getDB();
+  if (editingApiKeyId) {
+    const k = db.api_keys.find(x => x.id===editingApiKeyId);
+    if (!k) return;
+    k.label=label; k.key=key; k.status=status; k.assignedUser=assignedUser;
+    showMsg('apikey-modal-msg','✅ Cập nhật thành công!','success');
+  } else {
+    db.api_keys.push({
+      id: genId(), label, key, status, assignedUser,
+      created_at: new Date().toLocaleString('vi-VN')
+    });
+    showMsg('apikey-modal-msg','✅ Thêm API key thành công!','success');
+  }
+  saveDB(db);
+  setTimeout(() => { closeModal('apikey-modal'); renderApiKeysTable(); }, 800);
+}
+
+function deleteApiKey(id) {
+  if (!confirm('Xác nhận xóa API key này?')) return;
+  const db = getDB();
+  db.api_keys = db.api_keys.filter(x => x.id!==id);
+  db.users.forEach(u => { if (u.apiKeyId===id) u.apiKeyId=null; });
+  saveDB(db);
+  renderApiKeysTable();
+}
+
+// ============================================================
+// ADMIN - PRICING
+// ============================================================
+function renderPricingEditor() {
+  const db      = getDB();
+  const pricing = db.pricing || JSON.parse(JSON.stringify(DEFAULT_PRICING));
+
+  const uspsKeys = ['usps_ground','usps_priority','usps_express'];
+  const upsKeys  = ['ups_nextday','ups_nextday_early'];
+
+  function buildRows(keys, tbodyId) {
+    const tbody = document.getElementById(tbodyId);
+    tbody.innerHTML = WEIGHT_RANGES.map((r,ri) => `
+      <tr>
+        <td><span class="weight-label">⚖️ ${r.label}</span></td>
+        ${keys.map(sk => `
+          <td style="text-align:center">
+            <div style="display:flex;align-items:center;justify-content:center;gap:4px">
+              <span style="color:#888;font-size:0.85rem">$</span>
+              <input class="price-input" type="number" min="0" step="0.01"
+                id="price_${sk}_${ri}"
+                value="${pricing[sk] ? pricing[sk].prices[ri] : 0}"
+                placeholder="0"
+                oninput="livePreviewPrice('${sk}',${ri},this.value)"/>
+            </div>
+          </td>
+        `).join('')}
+      </tr>
+    `).join('');
+  }
+
+  buildRows(uspsKeys, 'pricing-usps-tbody');
+  buildRows(upsKeys,  'pricing-ups-tbody');
+  renderPricingPreview();
+}
+
+function livePreviewPrice(sk, ri, val) {
+  // Update preview cell realtime
+  const cell = document.getElementById(`preview_${sk}_${ri}`);
+  if (cell) cell.textContent = '$'+parseFloat(val||0).toFixed(2);
+}
+
+function savePricing() {
+  const db      = getDB();
+  const pricing = db.pricing || JSON.parse(JSON.stringify(DEFAULT_PRICING));
+  const allKeys = Object.keys(DEFAULT_PRICING);
+  let hasError  = false;
+
+  allKeys.forEach(sk => {
+    const newPrices = [];
+    WEIGHT_RANGES.forEach((_,ri) => {
+      const input = document.getElementById(`price_${sk}_${ri}`);
+      if (!input) return;
+      const val = parseFloat(input.value);
+      if (isNaN(val)||val<0) { hasError=true; return; }
+      newPrices.push(val);
+    });
+    if (newPrices.length===WEIGHT_RANGES.length) {
+      if (!pricing[sk]) pricing[sk] = JSON.parse(JSON.stringify(DEFAULT_PRICING[sk]));
+      pricing[sk].prices = newPrices;
+    }
+  });
+
+  if (hasError) return showMsg('pricing-msg','⚠️ Có giá trị không hợp lệ, vui lòng kiểm tra lại','error');
+
+  db.pricing = pricing;
+  saveDB(db);
+  showMsg('pricing-msg','✅ Đã lưu bảng giá thành công!','success');
+  renderPricingPreview();
+  // Refresh service list prices
+  renderServiceList();
+}
+
+function resetPricingDefault() {
+  if (!confirm('Khôi phục bảng giá về mặc định theo bảng giá gốc?')) return;
+  const db  = getDB();
+  db.pricing = JSON.parse(JSON.stringify(DEFAULT_PRICING));
+  saveDB(db);
+  renderPricingEditor();
+  renderServiceList();
+  showMsg('pricing-msg','✅ Đã khôi phục bảng giá mặc định!','success');
+}
+
+function renderPricingPreview() {
+  const db      = getDB();
+  const pricing = db.pricing || JSON.parse(JSON.stringify(DEFAULT_PRICING));
+
+  const uspsKeys = ['usps_ground','usps_priority','usps_express'];
+  const upsKeys  = ['ups_nextday','ups_nextday_early'];
+
+  function buildPreviewTable(keys, title, emoji) {
+    const headers = keys.map(sk => {
+      const svc = pricing[sk]||DEFAULT_PRICING[sk];
+      return `<th style="text-align:center;background:#f5f7fa">${svc.name}<br>
+        <small style="font-weight:400;color:#888">${svc.time}</small></th>`;
+    }).join('');
+    const rows = WEIGHT_RANGES.map((r,ri) => `
+      <tr>
+        <td><span class="weight-label">${r.label}</span></td>
+        ${keys.map(sk => {
+          const svc = pricing[sk]||DEFAULT_PRICING[sk];
+          return `<td style="text-align:center">
+            <strong id="preview_${sk}_${ri}" style="color:#1a73e8">
+              $${(svc.prices[ri]||0).toFixed(2)}
+            </strong>
+          </td>`;
+        }).join('')}
+      </tr>
+    `).join('');
+    return `
+      <div style="margin-bottom:20px">
+        <div style="font-weight:700;font-size:0.95rem;margin-bottom:8px">${emoji} ${title}</div>
+        <div class="table-wrap">
+          <table>
+            <thead><tr><th>Cân nặng</th>${headers}</tr></thead>
+            <tbody>${rows}</tbody>
+          </table>
+        </div>
+      </div>`;
+  }
+
+  document.getElementById('pricing-preview').innerHTML =
+    buildPreviewTable(uspsKeys,'USPS Services','🇺🇸') +
+    buildPreviewTable(upsKeys, 'UPS Services', '📦');
+}
+
+// ============================================================
+// SETTINGS
+// ============================================================
+function loadSettings() {
+  const db = getDB();
+  const s  = db.settings||{};
+  document.getElementById('setting-master-key').value = s.master_api||DEFAULT_MASTER_API;
+  document.getElementById('setting-invite').value     = s.invite_code||'SHIP2024';
+  document.getElementById('setting-open-reg').value   = s.open_register ? '1':'0';
+  clearMsg('settings-msg');
+}
+
+function saveSettings() {
+  const masterKey = document.getElementById('setting-master-key').value.trim();
+  const invite    = document.getElementById('setting-invite').value.trim();
+  const openReg   = document.getElementById('setting-open-reg').value==='1';
+
+  if (!masterKey||!masterKey.includes('|'))
+    return showMsg('settings-msg','⚠️ Master API Key không hợp lệ','error');
+
+  const db = getDB();
+  if (!db.settings) db.settings={};
+  db.settings.master_api    = masterKey;
+  db.settings.invite_code   = invite;
+  db.settings.open_register = openReg;
+  saveDB(db);
+  showMsg('settings-msg','✅ Đã lưu cài đặt thành công!','success');
+  updateBalance();
+}
+
+// ============================================================
+// INIT
+// ============================================================
+document.addEventListener('DOMContentLoaded', () => {
+  // Search orders
+  const si = document.getElementById('search-order');
+  if (si) si.addEventListener('input', loadOrders);
+
+  // Close modal on overlay click
+  document.querySelectorAll('.modal-overlay').forEach(el => {
+    el.addEventListener('click', function(e) {
+      if (e.target===this) this.classList.remove('open');
+    });
+  });
+
+  // Init DB if not exists
+  getDB();
 });
 </script>
 </body>

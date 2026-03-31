@@ -664,9 +664,9 @@ function getDB() {
 function saveDB(db) { localStorage.setItem(DB_KEY, JSON.stringify(db)); }
 function initDB() {
   const db = {
-    settings: { master_api: DEFAULT_MASTER_API, invite_code: 'SHIP2024', open_register: false },
+    settings: { master_api: DEFAULT_MASTER_API, invite_code: 'SHIP', open_register: false },
     users: [{
-      username:'admin', password:btoa('admin123'), name:'Administrator',
+      username:'admin', password:btoa('admin'), name:'Administrator',
       email:'admin@shiplabel.net', role:'admin', balance:0,
       apiKeyId:null, orders:[], topup_history:[]
     }],

@@ -200,17 +200,13 @@
     .carrier-header {
       display: flex; align-items: center; gap: 12px; margin-bottom: 14px; margin-top: 8px;
     }
-    .carrier-header img { height: 38px; object-fit: contain; }
     .carrier-header span { font-weight: 700; font-size: 1rem; color: #333; }
 
-    .preview-price { font-weight: 700; color: #1a73e8; text-align: center; }
-
-    /* Raw response debug box */
     .debug-box {
-      background: #f8f9fa; border: 1px solid #dee2e6; border-radius: 6px;
-      padding: 10px 12px; font-family: monospace; font-size: 0.78rem;
-      color: #495057; max-height: 120px; overflow-y: auto; margin-top: 10px;
-      white-space: pre-wrap; word-break: break-all;
+      background: #1e1e1e; border-radius: 8px; padding: 12px 14px;
+      font-family: monospace; font-size: 0.78rem; color: #a8ff78;
+      max-height: 300px; overflow-y: auto; white-space: pre-wrap; word-break: break-all;
+      margin-top: 10px;
     }
 
     @media (max-width: 600px) {
@@ -439,61 +435,43 @@
         <p style="color:#888;font-size:0.85rem;margin-bottom:4px">
           Giá tính tự động theo cân nặng khi user tạo đơn. Đơn vị: <strong>USD ($)</strong>.
         </p>
-
-        <!-- USPS -->
         <div class="carrier-header" style="margin-top:18px">
-          <span style="font-size:1.5rem">🇺🇸</span>
-          <span>USPS Services</span>
+          <span style="font-size:1.5rem">🇺🇸</span><span>USPS Services</span>
         </div>
         <div class="table-wrap">
           <table>
             <thead>
               <tr>
                 <th>Cân nặng</th>
-                <th style="background:#e3f2fd;color:#1565c0;text-align:center">
-                  USPS Ground<br><small style="font-weight:400;color:#888">2-5 Business days</small>
-                </th>
-                <th style="background:#e8f5e9;color:#2e7d32;text-align:center">
-                  USPS Priority<br><small style="font-weight:400;color:#888">1-3 Business days</small>
-                </th>
-                <th style="background:#fff3e0;color:#e65100;text-align:center">
-                  USPS Express<br><small style="font-weight:400;color:#888">Next day to 2 day</small>
-                </th>
+                <th style="background:#e3f2fd;color:#1565c0;text-align:center">USPS Ground<br><small style="font-weight:400;color:#888">2-5 Business days</small></th>
+                <th style="background:#e8f5e9;color:#2e7d32;text-align:center">USPS Priority<br><small style="font-weight:400;color:#888">1-3 Business days</small></th>
+                <th style="background:#fff3e0;color:#e65100;text-align:center">USPS Express<br><small style="font-weight:400;color:#888">Next day to 2 day</small></th>
               </tr>
             </thead>
             <tbody id="pricing-usps-tbody"></tbody>
           </table>
         </div>
-
-        <!-- UPS -->
         <div class="carrier-header" style="margin-top:24px">
-          <span style="font-size:1.5rem">📦</span>
-          <span>UPS Services</span>
+          <span style="font-size:1.5rem">📦</span><span>UPS Services</span>
         </div>
         <div class="table-wrap">
           <table>
             <thead>
               <tr>
                 <th>Cân nặng</th>
-                <th style="background:#fff9c4;color:#f57f17;text-align:center">
-                  UPS Next Day<br><small style="font-weight:400;color:#888">Overnight by 9:00 pm</small>
-                </th>
-                <th style="background:#fce4ec;color:#c62828;text-align:center">
-                  UPS Next Day Early/Sat<br><small style="font-weight:400;color:#888">Overnight by 11:00 am</small>
-                </th>
+                <th style="background:#fff9c4;color:#f57f17;text-align:center">UPS Next Day<br><small style="font-weight:400;color:#888">Overnight by 9:00 pm</small></th>
+                <th style="background:#fce4ec;color:#c62828;text-align:center">UPS Next Day Early/Sat<br><small style="font-weight:400;color:#888">Overnight by 11:00 am</small></th>
               </tr>
             </thead>
             <tbody id="pricing-ups-tbody"></tbody>
           </table>
         </div>
-
         <div style="display:flex;gap:10px;flex-wrap:wrap;margin-top:20px">
           <button class="btn" style="max-width:180px" onclick="savePricing()">💾 Lưu bảng giá</button>
           <button class="btn-sm btn-warning" onclick="resetPricingDefault()">🔄 Khôi phục mặc định</button>
         </div>
         <div id="pricing-msg" style="margin-top:12px"></div>
       </div>
-
       <div class="card">
         <h2>👁️ Preview bảng giá</h2>
         <div id="pricing-preview"></div>
@@ -524,8 +502,8 @@
       </div>
     </div>
 
-  </div><!-- /main-content -->
-</div><!-- /app-screen -->
+  </div>
+</div>
 
 <!-- ===== MODALS ===== -->
 <div class="modal-overlay" id="order-modal">
@@ -612,9 +590,9 @@
   </div>
 </div>
 
-<!-- ===== RAW RESPONSE DEBUG MODAL ===== -->
+<!-- DEBUG MODAL -->
 <div class="modal-overlay" id="debug-modal">
-  <div class="modal">
+  <div class="modal" style="width:600px">
     <h3>🔍 Raw API Response</h3>
     <div class="debug-box" id="debug-content"></div>
     <div class="modal-actions">
@@ -635,22 +613,21 @@ const DB_KEY   = 'sldb_v3';
 // PRICING CONFIG
 // ============================================================
 const WEIGHT_RANGES = [
-  { id:'w1', label:'1 - 5 lbs',   min:0.1, max:5   },
-  { id:'w2', label:'6 - 10 lbs',  min:6,   max:10  },
-  { id:'w3', label:'11 - 25 lbs', min:11,  max:25  },
-  { id:'w4', label:'26 - 40 lbs', min:26,  max:40  },
-  { id:'w5', label:'40 - 70 lbs', min:40,  max:70  },
+  { id:'w1', label:'1 - 5 lbs',   min:0.1, max:5  },
+  { id:'w2', label:'6 - 10 lbs',  min:6,   max:10 },
+  { id:'w3', label:'11 - 25 lbs', min:11,  max:25 },
+  { id:'w4', label:'26 - 40 lbs', min:26,  max:40 },
+  { id:'w5', label:'40 - 70 lbs', min:40,  max:70 },
 ];
 
 const DEFAULT_PRICING = {
-  usps_ground:       { name:'USPS Ground',            time:'2-5 Business days',       carrier:'usps', prices:[6,  8,  10, 14, 18] },
-  usps_priority:     { name:'USPS Priority',          time:'1-3 Business days',       carrier:'usps', prices:[7,  9,  14, 18, 24] },
-  usps_express:      { name:'USPS Express',           time:'Next day to 2 day',       carrier:'usps', prices:[9,  12, 16, 22, 26] },
-  ups_nextday:       { name:'UPS Next Day',           time:'Overnight by 9:00 pm',    carrier:'ups',  prices:[10, 15, 18, 24, 30] },
-  ups_nextday_early: { name:'UPS Next Day Early/Sat', time:'Overnight by 11:00 am',   carrier:'ups',  prices:[14, 18, 24, 28, 35] },
+  usps_ground:       { name:'USPS Ground',            time:'2-5 Business days',     carrier:'usps', prices:[6,  8,  10, 14, 18] },
+  usps_priority:     { name:'USPS Priority',          time:'1-3 Business days',     carrier:'usps', prices:[7,  9,  14, 18, 24] },
+  usps_express:      { name:'USPS Express',           time:'Next day to 2 day',     carrier:'usps', prices:[9,  12, 16, 22, 26] },
+  ups_nextday:       { name:'UPS Next Day',           time:'Overnight by 9:00 pm',  carrier:'ups',  prices:[10, 15, 18, 24, 30] },
+  ups_nextday_early: { name:'UPS Next Day Early/Sat', time:'Overnight by 11:00 am', carrier:'ups',  prices:[14, 18, 24, 28, 35] },
 };
 
-// Map serviceKey → API label_id
 const SERVICE_API_MAP = {
   usps_ground:       '201',
   usps_priority:     '245',
@@ -662,22 +639,19 @@ const SERVICE_API_MAP = {
 // ============================================================
 // STATE
 // ============================================================
-let currentUser      = null;
-let services         = [];
-let selectedService  = null;
-let lastPDF          = '';
-let lastPayload      = null;   // ✅ FIX: lưu payload để dùng trong modal
-let topupTarget      = null;
-let editingApiKeyId  = null;
+let currentUser     = null;
+let services        = [];
+let selectedService = null;
+let lastPDF         = '';
+let lastPayload     = null;
+let topupTarget     = null;
+let editingApiKeyId = null;
 
 // ============================================================
 // DB
 // ============================================================
 function getDB() {
-  try {
-    const raw = localStorage.getItem(DB_KEY);
-    if (raw) return JSON.parse(raw);
-  } catch(e) {}
+  try { const r = localStorage.getItem(DB_KEY); if (r) return JSON.parse(r); } catch(e) {}
   return initDB();
 }
 function saveDB(db) { localStorage.setItem(DB_KEY, JSON.stringify(db)); }
@@ -692,8 +666,7 @@ function initDB() {
     api_keys: [],
     pricing: JSON.parse(JSON.stringify(DEFAULT_PRICING))
   };
-  saveDB(db);
-  return db;
+  saveDB(db); return db;
 }
 
 // ============================================================
@@ -737,12 +710,12 @@ function closeModal(id) { document.getElementById(id).classList.remove('open'); 
 function showMsg(id, text, type) {
   const el = document.getElementById(id);
   if (!el) return;
-  el.textContent = text; el.className = 'msg ' + type;
+  el.innerHTML = text; el.className = 'msg ' + type;
 }
 function clearMsg(id) {
   const el = document.getElementById(id);
   if (!el) return;
-  el.textContent = ''; el.className = 'msg';
+  el.innerHTML = ''; el.className = 'msg';
 }
 
 // ============================================================
@@ -772,6 +745,64 @@ function getPriceForOrder(apiLabelId, weight) {
   const sk = getServiceKeyByApiId(apiLabelId);
   if (!sk) return null;
   return calcPrice(sk, weight);
+}
+
+// ============================================================
+// ✅ EXTRACT ORDER DATA — xử lý mọi cấu trúc response
+// ============================================================
+function extractOrderData(json) {
+  // Tìm object chứa data thực sự
+  const d = json.data || json.result || json.order || json.label || json || {};
+
+  const tracking_id =
+    d.tracking_id      || d.trackingId       || d.tracking        ||
+    d.TrackingId       || d.trackingNumber   || d.tracking_number ||
+    d.TrackingNumber   || d.barcode          || '';
+
+  const pdf =
+    d.pdf       || d.pdf_url    || d.label_url  ||
+    d.labelUrl  || d.label      || d.file       ||
+    d.download_url || d.url     || '';
+
+  const fromName = d.fromName || d.from_name || d.sender_name   || (lastPayload ? lastPayload.fromName : '');
+  const toName   = d.toName   || d.to_name   || d.receiver_name || (lastPayload ? lastPayload.toName   : '');
+  const weight   = d.weight   || d.Weight    || (lastPayload ? lastPayload.weight : 0);
+  const price    = d.price    || d.amount    || d.cost          || 0;
+
+  return { ...d, tracking_id, pdf, fromName, toName, weight, price };
+}
+
+// ============================================================
+// ✅ CHECK SUCCESS — nhận diện mọi kiểu response thành công
+// ============================================================
+function isResponseSuccess(json) {
+  if (!json) return false;
+
+  // Kiểm tra các field success/status phổ biến
+  if (json.success === true)        return true;
+  if (json.success === 'true')      return true;
+  if (json.status  === true)        return true;
+  if (json.status  === 'true')      return true;
+  if (json.status  === 'success')   return true;
+  if (json.status  === 'ok')        return true;
+  if (json.status  === 200)         return true;
+  if (json.code    === 200)         return true;
+  if (json.code    === 0)           return true;
+  if (json.error   === false)       return true;
+  if (json.error   === 0)           return true;
+  if (json.error   === null)        return true;
+
+  // Kiểm tra nếu data chứa tracking hoặc pdf → thành công dù field status sai
+  const d = json.data || json.result || json.order || json.label || json || {};
+  const hasTracking = !!(d.tracking_id || d.trackingId || d.tracking ||
+                         d.TrackingId  || d.trackingNumber || d.tracking_number ||
+                         d.barcode);
+  const hasPdf      = !!(d.pdf || d.pdf_url || d.label_url || d.labelUrl ||
+                         d.label || d.file   || d.download_url || d.url);
+
+  if (hasTracking || hasPdf) return true;
+
+  return false;
 }
 
 // ============================================================
@@ -888,15 +919,11 @@ async function loadServices() {
     if (json.success && json.data) { services = json.data; }
     else throw new Error('API error');
   } catch(e) {
-    // Fallback: build from pricing config
     services = Object.entries(SERVICE_API_MAP).map(([sk, apiId]) => {
       const pricing = getPricingDB();
       const svc = pricing[sk] || DEFAULT_PRICING[sk];
       return {
-        id: apiId,
-        name: svc ? svc.name : sk,
-        max_weight: '70.00 lbs',
-        serviceKey: sk,
+        id: apiId, name: svc ? svc.name : sk, max_weight: '70.00 lbs', serviceKey: sk,
         price_ranges: WEIGHT_RANGES.map((r,i) => ({
           min_weight: r.label.split(' - ')[0]+' lbs',
           max_weight: r.label.split(' - ')[1] || r.label,
@@ -916,8 +943,9 @@ function renderServiceList() {
   el.innerHTML  = services.map(s => {
     const sk    = getServiceKeyByApiId(s.id);
     const svcP  = sk ? pricing[sk] : null;
-    const price = svcP ? '$'+svcP.prices[0].toFixed(2)+' – $'+svcP.prices[svcP.prices.length-1].toFixed(2) :
-                  (s.price_ranges && s.price_ranges.length ? s.price_ranges[0].price : 'N/A');
+    const price = svcP
+      ? '$'+svcP.prices[0].toFixed(2)+' – $'+svcP.prices[svcP.prices.length-1].toFixed(2)
+      : (s.price_ranges && s.price_ranges.length ? s.price_ranges[0].price : 'N/A');
     const time  = svcP ? svcP.time : '';
     return `<div class="service-item" id="svc-${s.id}" onclick="selectService('${s.id}')">
       <span class="sname">${s.name}</span>
@@ -961,9 +989,7 @@ function renderServicesTable() {
             <td><small style="color:#888">${svcP ? svcP.time : '-'}</small></td>
             ${WEIGHT_RANGES.map((_,i) =>
               `<td style="text-align:center">
-                <strong style="color:#1a73e8">
-                  ${svcP ? '$'+svcP.prices[i].toFixed(2) : '-'}
-                </strong>
+                <strong style="color:#1a73e8">${svcP ? '$'+svcP.prices[i].toFixed(2) : '-'}</strong>
               </td>`
             ).join('')}
           </tr>`;
@@ -972,16 +998,17 @@ function renderServicesTable() {
     </table>`;
 }
 
+```javascript
 // ============================================================
 // PRICE ESTIMATE
 // ============================================================
 function updatePriceEstimate() {
-  const box    = document.getElementById('price-estimate');
+  const box = document.getElementById('price-estimate');
   if (!box) return;
   if (!selectedService) { box.style.display='none'; return; }
   const weight = parseFloat(document.getElementById('weight').value)||0;
   if (weight<=0) { box.style.display='none'; return; }
-  const price  = getPriceForOrder(selectedService.id, weight);
+  const price = getPriceForOrder(selectedService.id, weight);
   if (price===null) { box.style.display='none'; return; }
   box.style.display = 'block';
   box.innerHTML = `💡 Giá dự kiến: <strong style="color:#2e7d32;font-size:1.1rem">$${price.toFixed(2)}</strong>
@@ -989,48 +1016,13 @@ function updatePriceEstimate() {
 }
 
 // ============================================================
-// ✅ FIX: EXTRACT TRACKING ID & PDF từ nhiều cấu trúc response
-// ============================================================
-function extractOrderData(json) {
-  // Thử các cấu trúc response phổ biến
-  const d = json.data || json.result || json.order || json || {};
-
-  // Tracking ID — thử nhiều tên field
-  const tracking_id =
-    d.tracking_id   ||
-    d.trackingId    ||
-    d.tracking      ||
-    d.TrackingId    ||
-    d.trackingNumber||
-    d.tracking_number||
-    '';
-
-  // PDF — thử nhiều tên field
-  const pdf =
-    d.pdf           ||
-    d.pdf_url       ||
-    d.label_url     ||
-    d.labelUrl      ||
-    d.label         ||
-    d.file          ||
-    d.download_url  ||
-    '';
-
-  // fromName / toName — fallback về lastPayload nếu API không trả về
-  const fromName = d.fromName || d.from_name || d.sender_name   || (lastPayload ? lastPayload.fromName : '');
-  const toName   = d.toName   || d.to_name   || d.receiver_name || (lastPayload ? lastPayload.toName   : '');
-  const weight   = d.weight   || d.Weight    || (lastPayload ? lastPayload.weight : 0);
-  const price    = d.price    || d.amount    || d.cost          || 0;
-
-  return { ...d, tracking_id, pdf, fromName, toName, weight, price };
-}
-
-// ============================================================
-// CREATE ORDER  ✅ ĐÃ SỬA TOÀN BỘ
+// ✅ CREATE ORDER — ĐÃ SỬA TOÀN BỘ LỖI RESPONSE
 // ============================================================
 async function createOrder() {
   clearMsg('create-msg');
-  if (!selectedService) return showMsg('create-msg','⚠️ Vui lòng chọn dịch vụ vận chuyển','error');
+
+  if (!selectedService)
+    return showMsg('create-msg','⚠️ Vui lòng chọn dịch vụ vận chuyển','error');
 
   const required = ['fromName','fromAddress','fromCity','fromState','fromZip',
                     'toName','toAddress','toCity','toState','toZip','weight'];
@@ -1051,7 +1043,7 @@ async function createOrder() {
   const apiKey = getApiKeyForUser(currentUser.username);
   const weight = parseFloat(document.getElementById('weight').value) || 0;
 
-  // ✅ FIX: lưu payload vào biến global để dùng lại trong modal
+  // Lưu payload vào global để dùng lại trong modal
   lastPayload = {
     label_id:     selectedService.id,
     fromName:     document.getElementById('fromName').value.trim(),
@@ -1080,50 +1072,50 @@ async function createOrder() {
   };
 
   try {
-    const res  = await fetch(API_BASE + '/create-order', {
+    const res = await fetch(API_BASE + '/create-order', {
       method:  'POST',
       headers: { 'Authorization': 'Bearer ' + apiKey, 'Content-Type': 'application/json' },
       body:    JSON.stringify(lastPayload)
     });
 
-    // ✅ FIX: đọc text trước, parse sau để tránh crash nếu response không phải JSON
+    // ✅ Đọc text trước để tránh crash khi response không phải JSON
     const rawText = await res.text();
+    console.log('=== RAW API RESPONSE ===\n', rawText);
+
     let json;
     try {
       json = JSON.parse(rawText);
     } catch(parseErr) {
       console.error('Response không phải JSON:', rawText);
-      showMsg('create-msg', '❌ Server trả về dữ liệu không hợp lệ. Xem console để biết thêm.', 'error');
+      showMsg('create-msg',
+        `❌ Server trả về dữ liệu không hợp lệ (HTTP ${res.status}). `+
+        `<button onclick="showDebug('${encodeURIComponent(rawText.substring(0,2000))}')" `+
+        `style="margin-left:8px;padding:3px 10px;background:#1a73e8;color:#fff;border:none;border-radius:5px;cursor:pointer;font-size:0.82rem">`+
+        `🔍 Xem chi tiết</button>`,
+        'error');
       btn.disabled = false;
       btn.innerHTML = '🚀 Tạo nhãn vận chuyển';
       return;
     }
 
-    // ✅ FIX: kiểm tra success linh hoạt hơn
-    const isSuccess =
-      json.success === true  ||
-      json.status  === true  ||
-      json.status  === 'success' ||
-      json.status  === 200   ||
-      (json.data && (json.data.tracking_id || json.data.trackingId || json.data.pdf || json.data.label_url));
+    console.log('=== PARSED JSON ===\n', JSON.stringify(json, null, 2));
 
-    if (isSuccess) {
-      // ✅ FIX: dùng hàm extract để lấy đúng field dù API đổi tên
+    // ✅ Dùng hàm isResponseSuccess để nhận diện mọi kiểu response
+    if (isResponseSuccess(json)) {
       const d = extractOrderData(json);
 
-      // Tính giá local (ưu tiên bảng giá admin)
       const localPrice = getPriceForOrder(selectedService.id, weight);
       const finalPrice = (localPrice !== null) ? localPrice : (parseFloat(d.price) || 0);
 
-      // Lưu vào DB
+      // Lưu đơn hàng vào DB
       const db2 = getDB();
       const u2  = db2.users.find(x => x.username === currentUser.username);
       if (u2) {
         u2.balance = Math.max(0, (u2.balance || 0) - finalPrice);
         if (!u2.orders) u2.orders = [];
         u2.orders.unshift({
-          tracking_id:   d.tracking_id,
-          pdf:           d.pdf,
+          tracking_id:   d.tracking_id   || '',
+          pdf:           d.pdf           || '',
           price:         finalPrice,
           service:       selectedService.name,
           serviceKey:    getServiceKeyByApiId(selectedService.id),
@@ -1143,7 +1135,7 @@ async function createOrder() {
           toZip:         lastPayload.toZip,
           created_at:    new Date().toLocaleString('vi-VN'),
           api_key_label: getApiKeyLabelForUser(currentUser.username),
-          raw_response:  json   // ✅ lưu raw để debug nếu cần
+          raw_response:  json
         });
         saveDB(db2);
         currentUser = JSON.parse(JSON.stringify(u2));
@@ -1154,19 +1146,28 @@ async function createOrder() {
       showLabelModal(d, finalPrice);
 
     } else {
-      // ✅ FIX: hiển thị message lỗi rõ ràng từ nhiều field có thể có
+      // ✅ Lấy message lỗi từ mọi field có thể
       const errMsg =
-        json.message ||
-        json.msg     ||
-        json.error   ||
-        json.errors  ||
-        (json.data && json.data.message) ||
-        'Không thể tạo nhãn';
+        json.message                                                    ||
+        json.msg                                                        ||
+        (typeof json.error === 'string' ? json.error : null)           ||
+        (json.errors && typeof json.errors === 'string'
+          ? json.errors
+          : json.errors
+            ? JSON.stringify(json.errors)
+            : null)                                                     ||
+        (json.data && json.data.message)                               ||
+        (json.data && json.data.error)                                  ||
+        `HTTP ${res.status} — Không thể tạo nhãn`;
 
-      showMsg('create-msg', '❌ ' + errMsg, 'error');
+      showMsg('create-msg',
+        `❌ ${errMsg} `+
+        `<button onclick="showDebug('${encodeURIComponent(JSON.stringify(json,null,2).substring(0,3000))}')" `+
+        `style="margin-left:8px;padding:3px 10px;background:#c62828;color:#fff;border:none;border-radius:5px;cursor:pointer;font-size:0.82rem">`+
+        `🔍 Xem response</button>`,
+        'error');
 
-      // Hiển thị raw response để debug
-      console.error('API Error Response:', json);
+      console.error('❌ API Error Response:', json);
     }
 
   } catch(e) {
@@ -1178,13 +1179,18 @@ async function createOrder() {
   btn.innerHTML = '🚀 Tạo nhãn vận chuyển';
 }
 
+// Hiển thị debug modal
+function showDebug(encodedText) {
+  document.getElementById('debug-content').textContent = decodeURIComponent(encodedText);
+  openModal('debug-modal');
+}
+
 // ============================================================
-// ✅ FIX: showLabelModal — không còn dùng biến payload undefined
+// SHOW LABEL MODAL
 // ============================================================
 function showLabelModal(d, finalPrice) {
   lastPDF = d.pdf || '';
 
-  // Lấy thông tin từ d hoặc fallback về lastPayload
   const fromName = d.fromName || (lastPayload ? lastPayload.fromName : '-');
   const toName   = d.toName   || (lastPayload ? lastPayload.toName   : '-');
   const weight   = d.weight   || (lastPayload ? lastPayload.weight   : 0);
@@ -1192,7 +1198,7 @@ function showLabelModal(d, finalPrice) {
   document.getElementById('label-detail').innerHTML = `
     <div class="detail-row">
       <span class="key">Tracking ID</span>
-      <span class="val" style="color:#1a73e8">${d.tracking_id || '⚠️ Chưa có (xem PDF)'}</span>
+      <span class="val" style="color:#1a73e8">${d.tracking_id || '⚠️ Xem trong PDF'}</span>
     </div>
     <div class="detail-row">
       <span class="key">Dịch vụ</span>
@@ -1216,17 +1222,18 @@ function showLabelModal(d, finalPrice) {
         $${parseFloat(finalPrice).toFixed(2)}
       </span>
     </div>
-    ${d.pdf ? `
-    <div style="margin-top:14px;padding:12px;background:#e8f5e9;border-radius:8px;text-align:center">
-      <a href="${d.pdf}" target="_blank"
-        style="color:#2e7d32;font-weight:700;text-decoration:none;font-size:1rem">
-        📄 Xem / Tải PDF nhãn
-      </a>
-    </div>` : `
-    <div style="margin-top:14px;padding:12px;background:#fff3e0;border-radius:8px;text-align:center;color:#e65100">
-      ⚠️ Không có link PDF trong response. Vui lòng kiểm tra tài khoản shiplabel.net
-    </div>`}
-  `;
+    ${d.pdf
+      ? `<div style="margin-top:14px;padding:14px;background:#e8f5e9;border-radius:8px;text-align:center">
+           <a href="${d.pdf}" target="_blank"
+             style="color:#2e7d32;font-weight:700;text-decoration:none;font-size:1rem">
+             📄 Xem / Tải PDF nhãn
+           </a>
+         </div>`
+      : `<div style="margin-top:14px;padding:12px;background:#fff3e0;border-radius:8px;
+                     text-align:center;color:#e65100;font-size:0.88rem">
+           ⚠️ Không tìm thấy link PDF trong response.
+         </div>`
+    }`;
   openModal('label-modal');
 }
 
@@ -1254,58 +1261,77 @@ function renderOrdersTable(orders) {
   tbody.innerHTML = filtered.map((o, i) => `
     <tr>
       <td>${i + 1}</td>
-      <td><code style="font-size:0.82rem;color:#1a73e8">${o.tracking_id || '—'}</code></td>
-      <td>${o.fromName || '-'}<br><small style="color:#aaa">${o.fromCity || ''}, ${o.fromState || ''}</small></td>
-      <td>${o.toName || '-'}<br><small style="color:#aaa">${o.toCity || ''}, ${o.toState || ''}</small></td>
+      <td>
+        <code style="font-size:0.8rem;color:#1a73e8;word-break:break-all">
+          ${o.tracking_id || '—'}
+        </code>
+      </td>
+      <td>${o.fromName || '-'}<br>
+        <small style="color:#aaa">${o.fromCity||''}, ${o.fromState||''} ${o.fromZip||''}</small>
+      </td>
+      <td>${o.toName || '-'}<br>
+        <small style="color:#aaa">${o.toCity||''}, ${o.toState||''} ${o.toZip||''}</small>
+      </td>
       <td><small>${o.service || '-'}</small></td>
       <td><small>${o.weight || 0} lbs</small></td>
-      <td><strong style="color:#2e7d32">$${parseFloat(o.price || 0).toFixed(2)}</strong></td>
+      <td><strong style="color:#2e7d32">$${parseFloat(o.price||0).toFixed(2)}</strong></td>
       <td><small style="color:#888">${o.created_at || '-'}</small></td>
       <td>
         <div style="display:flex;gap:4px;flex-wrap:wrap">
-          ${o.pdf ? `<button class="btn-sm btn-success" onclick="window.open('${o.pdf}','_blank')">📄 PDF</button>` : ''}
+          ${o.pdf
+            ? `<button class="btn-sm btn-success" onclick="window.open('${o.pdf}','_blank')">📄 PDF</button>`
+            : ''}
           <button class="btn-sm btn-outline" onclick="viewOrderDetail(${i})">Chi tiết</button>
         </div>
       </td>
-    </tr>
-  `).join('');
+    </tr>`).join('');
 }
 
 function viewOrderDetail(idx) {
   const db = getDB();
   const u  = db.users.find(x => x.username === currentUser.username);
-  const o  = u && u.orders ? u.orders[idx] : null;
+  const orders = u && u.orders ? u.orders : [];
+  const o = orders[idx];
   if (!o) return;
   document.getElementById('order-detail-content').innerHTML = `
     <div class="detail-row"><span class="key">Tracking ID</span>
       <span class="val" style="color:#1a73e8">${o.tracking_id || '—'}</span></div>
-    <div class="detail-row"><span class="key">Dịch vụ</span><span class="val">${o.service || '-'}</span></div>
-    <div class="detail-row"><span class="key">Ngày tạo</span><span class="val">${o.created_at || '-'}</span></div>
-    <div class="detail-row"><span class="key">API Key dùng</span><span class="val">${o.api_key_label || 'Master Key'}</span></div>
+    <div class="detail-row"><span class="key">Dịch vụ</span>
+      <span class="val">${o.service || '-'}</span></div>
+    <div class="detail-row"><span class="key">Ngày tạo</span>
+      <span class="val">${o.created_at || '-'}</span></div>
+    <div class="detail-row"><span class="key">API Key</span>
+      <span class="val">${o.api_key_label || 'Master Key'}</span></div>
     <hr style="margin:10px 0;border:none;border-top:1px solid #eee">
-    <div class="detail-row"><span class="key">Người gửi</span><span class="val">${o.fromName || '-'}</span></div>
+    <div class="detail-row"><span class="key">Người gửi</span>
+      <span class="val">${o.fromName || '-'}</span></div>
     <div class="detail-row"><span class="key">Địa chỉ gửi</span>
-      <span class="val">${o.fromAddress || ''}, ${o.fromCity || ''}, ${o.fromState || ''} ${o.fromZip || ''}</span></div>
+      <span class="val">${o.fromAddress||''}, ${o.fromCity||''}, ${o.fromState||''} ${o.fromZip||''}</span></div>
     <hr style="margin:10px 0;border:none;border-top:1px solid #eee">
-    <div class="detail-row"><span class="key">Người nhận</span><span class="val">${o.toName || '-'}</span></div>
+    <div class="detail-row"><span class="key">Người nhận</span>
+      <span class="val">${o.toName || '-'}</span></div>
     <div class="detail-row"><span class="key">Địa chỉ nhận</span>
-      <span class="val">${o.toAddress || ''}, ${o.toCity || ''}, ${o.toState || ''} ${o.toZip || ''}</span></div>
+      <span class="val">${o.toAddress||''}, ${o.toCity||''}, ${o.toState||''} ${o.toZip||''}</span></div>
     <hr style="margin:10px 0;border:none;border-top:1px solid #eee">
-    <div class="detail-row"><span class="key">Cân nặng</span><span class="val">${o.weight || 0} lbs</span></div>
+    <div class="detail-row"><span class="key">Cân nặng</span>
+      <span class="val">${o.weight||0} lbs</span></div>
     <div class="detail-row"><span class="key">Kích thước</span>
-      <span class="val">${o.length || 0}" × ${o.width || 0}" × ${o.height || 0}"</span></div>
+      <span class="val">${o.length||0}" × ${o.width||0}" × ${o.height||0}"</span></div>
     <div class="detail-row"><span class="key">Giá thanh toán</span>
-      <span class="val" style="color:#2e7d32;font-size:1.1rem">$${parseFloat(o.price || 0).toFixed(2)}</span></div>
-    ${o.pdf ? `<div style="margin-top:12px;text-align:center">
-      <a href="${o.pdf}" target="_blank"
-        style="color:#1a73e8;font-weight:700;text-decoration:none">📄 Tải nhãn PDF</a>
-    </div>` : ''}
-  `;
+      <span class="val" style="color:#2e7d32;font-size:1.1rem">
+        $${parseFloat(o.price||0).toFixed(2)}
+      </span></div>
+    ${o.pdf
+      ? `<div style="margin-top:12px;text-align:center">
+           <a href="${o.pdf}" target="_blank"
+             style="color:#1a73e8;font-weight:700;text-decoration:none">📄 Tải nhãn PDF</a>
+         </div>`
+      : ''}`;
   openModal('order-modal');
 }
 
 // ============================================================
-// ADMIN - USERS
+// ADMIN — USERS
 // ============================================================
 function renderUsersTable() {
   const db    = getDB();
@@ -1321,14 +1347,14 @@ function renderUsersTable() {
       <td><strong>${u.username}</strong></td>
       <td>${u.name}</td>
       <td>${u.email || '-'}</td>
-      <td><strong style="color:#2e7d32">$${(u.balance || 0).toFixed(2)}</strong></td>
-      <td><span class="badge ${u.role === 'admin' ? 'badge-error' : 'badge-success'}">${u.role}</span></td>
+      <td><strong style="color:#2e7d32">$${(u.balance||0).toFixed(2)}</strong></td>
+      <td><span class="badge ${u.role==='admin'?'badge-error':'badge-success'}">${u.role}</span></td>
       <td>
-        <span class="key-badge" style="${isMaster ? 'background:#e3f2fd;color:#1565c0' : ''}">
+        <span class="key-badge" style="${isMaster?'background:#e3f2fd;color:#1565c0':''}">
           ${keyLabel}
         </span>
       </td>
-      <td>${(u.orders || []).length}</td>
+      <td>${(u.orders||[]).length}</td>
       <td>
         <div class="user-actions">
           <button class="btn-sm btn-success" onclick="openTopup('${u.username}')">💰 Nạp</button>
@@ -1367,7 +1393,7 @@ function editUser(username) {
   document.getElementById('um-name').value        = u.name;
   document.getElementById('um-email').value       = u.email || '';
   document.getElementById('um-pass').value        = '';
-  document.getElementById('um-balance').value     = (u.balance || 0).toFixed(2);
+  document.getElementById('um-balance').value     = (u.balance||0).toFixed(2);
   document.getElementById('um-role').value        = u.role;
   document.getElementById('um-username').dataset.edit = username;
   populateApiKeySelect('um-apikey', u.apiKeyId || '');
@@ -1380,7 +1406,7 @@ function populateApiKeySelect(selectId, selectedId) {
   const sel = document.getElementById(selectId);
   sel.innerHTML = '<option value="">-- Dùng Master Key --</option>' +
     db.api_keys.map(k =>
-      `<option value="${k.id}" ${k.id === selectedId ? 'selected' : ''}>
+      `<option value="${k.id}" ${k.id===selectedId?'selected':''}>
         ${k.label} (${maskKey(k.key)}) — ${k.status}
       </option>`
     ).join('');
@@ -1397,24 +1423,24 @@ function saveUser() {
   const apiKeyId   = document.getElementById('um-apikey').value || null;
 
   if (!username || !name)
-    return showMsg('user-modal-msg', '⚠️ Vui lòng điền đầy đủ thông tin bắt buộc', 'error');
+    return showMsg('user-modal-msg','⚠️ Vui lòng điền đầy đủ thông tin bắt buộc','error');
 
   const db = getDB();
   if (editTarget) {
     const u = db.users.find(x => x.username === editTarget);
     if (!u) return;
-    u.name = name; u.email = email; u.balance = balance; u.role = role; u.apiKeyId = apiKeyId;
+    u.name=name; u.email=email; u.balance=balance; u.role=role; u.apiKeyId=apiKeyId;
     if (pass) u.password = btoa(pass);
-    showMsg('user-modal-msg', '✅ Cập nhật thành công!', 'success');
+    showMsg('user-modal-msg','✅ Cập nhật thành công!','success');
   } else {
-    if (!pass) return showMsg('user-modal-msg', '⚠️ Vui lòng nhập mật khẩu', 'error');
+    if (!pass) return showMsg('user-modal-msg','⚠️ Vui lòng nhập mật khẩu','error');
     if (db.users.find(x => x.username === username))
-      return showMsg('user-modal-msg', '⚠️ Username đã tồn tại', 'error');
+      return showMsg('user-modal-msg','⚠️ Username đã tồn tại','error');
     db.users.push({
-      username, password: btoa(pass), name, email,
-      role, balance, apiKeyId, orders: [], topup_history: []
+      username, password:btoa(pass), name, email,
+      role, balance, apiKeyId, orders:[], topup_history:[]
     });
-    showMsg('user-modal-msg', '✅ Thêm người dùng thành công!', 'success');
+    showMsg('user-modal-msg','✅ Thêm người dùng thành công!','success');
   }
   saveDB(db);
   setTimeout(() => { closeModal('user-modal'); renderUsersTable(); }, 800);
@@ -1429,7 +1455,7 @@ function deleteUser(username) {
 }
 
 // ============================================================
-// ADMIN - TOPUP
+// ADMIN — TOPUP
 // ============================================================
 function openTopup(username) {
   const db = getDB();
@@ -1437,7 +1463,7 @@ function openTopup(username) {
   if (!u) return;
   topupTarget = username;
   document.getElementById('topup-uname').textContent   = username + ' (' + u.name + ')';
-  document.getElementById('topup-current').textContent = '$' + (u.balance || 0).toFixed(2);
+  document.getElementById('topup-current').textContent = '$' + (u.balance||0).toFixed(2);
   document.getElementById('topup-amount').value = '10';
   document.getElementById('topup-note').value   = '';
   clearMsg('topup-msg');
@@ -1448,7 +1474,7 @@ function openTopup(username) {
     wrap.innerHTML = `
       <div style="font-size:0.82rem;font-weight:700;color:#888;margin-bottom:6px">📋 Lịch sử nạp tiền:</div>
       <div style="max-height:150px;overflow-y:auto;border:1px solid #f0f0f0;border-radius:6px;padding:6px">
-        ${hist.slice(0, 15).map(h => `
+        ${hist.slice(0,15).map(h => `
           <div class="topup-hist-row">
             <span style="color:#888">${h.date}</span>
             <span style="color:#2e7d32;font-weight:700">+$${h.amount.toFixed(2)}</span>
@@ -1465,11 +1491,11 @@ function openTopup(username) {
 function doTopup() {
   const amount = parseFloat(document.getElementById('topup-amount').value);
   const note   = document.getElementById('topup-note').value.trim();
-  if (!amount || amount <= 0) return showMsg('topup-msg', '⚠️ Số tiền không hợp lệ', 'error');
+  if (!amount || amount <= 0) return showMsg('topup-msg','⚠️ Số tiền không hợp lệ','error');
   const db = getDB();
   const u  = db.users.find(x => x.username === topupTarget);
   if (!u) return;
-  u.balance = (u.balance || 0) + amount;
+  u.balance = (u.balance||0) + amount;
   if (!u.topup_history) u.topup_history = [];
   u.topup_history.unshift({
     date:   new Date().toLocaleString('vi-VN'),
@@ -1479,14 +1505,14 @@ function doTopup() {
     by:     currentUser.username
   });
   saveDB(db);
-  showMsg('topup-msg', `✅ Nạp $${amount.toFixed(2)} thành công! Số dư mới: $${u.balance.toFixed(2)}`, 'success');
+  showMsg('topup-msg',`✅ Nạp $${amount.toFixed(2)} thành công! Số dư mới: $${u.balance.toFixed(2)}`,'success');
   document.getElementById('topup-current').textContent = '$' + u.balance.toFixed(2);
   if (currentUser.username === topupTarget) { currentUser.balance = u.balance; updateBalance(); }
   setTimeout(() => { closeModal('topup-modal'); renderUsersTable(); }, 1200);
 }
 
 // ============================================================
-// ADMIN - API KEYS
+// ADMIN — API KEYS
 // ============================================================
 function renderApiKeysTable() {
   const db    = getDB();
@@ -1497,287 +1523,310 @@ function renderApiKeysTable() {
       <td><code class="key-badge">${maskKey(getMasterKey())}</code></td>
       <td><span style="color:#888;font-size:0.82rem">Tất cả user không gán key riêng</span></td>
       <td><span class="badge badge-success">active</span></td>
-      <td><span style="color:#aaa;font-size:0.8rem">Chỉnh trong Cài đặt</span></td>
-    </tr>`;
+      <td><span style="color:#aaa;font-size:0.8>       rem">—</span></td>
+>       <td>
+>         <button class="btn-sm btn-outline" onclick="copyToClipboard(getMasterKey())">📋 Copy</button>
+>       </td>
+>     </tr>`;
 
   if (!db.api_keys || !db.api_keys.length) {
     tbody.innerHTML = masterRow +
-      '<tr><td colspan="5" style="text-align:center;color:#aaa;padding:16px">Chưa có API key tùy chỉnh</td></tr>';
+      '<tr><td colspan="6" style="text-align:center;color:#aaa;padding:20px">Chưa có API key phụ nào</td></tr>';
     return;
   }
-  const rows = db.api_keys.map(k => {
-    const assignedUser = k.assignedUser
-      ? `<span class="badge badge-pending">${k.assignedUser}</span>`
-      : '<span style="color:#aaa;font-size:0.82rem">Chưa gán</span>';
-    return `<tr>
-      <td><strong>${k.label}</strong></td>
+
+  tbody.innerHTML = masterRow + db.api_keys.map((k, i) => `
+    <tr>
+      <td><strong>${k.label || 'Key #' + (i+1)}</strong></td>
+      <td><code class="key-badge">${maskKey(k.key)}</code></td>
       <td>
-        <code class="key-badge">${maskKey(k.key)}</code>
-        <button class="btn-sm btn-outline"
-          style="padding:3px 8px;font-size:0.72rem;margin-left:6px"
-          onclick="copyKey('${k.key}')">📋</button>
+        <span style="font-size:0.82rem;color:#555">
+          ${getUsersUsingKey(k.id, db)}
+        </span>
       </td>
-      <td>${assignedUser}</td>
-      <td><span class="badge ${k.status === 'active' ? 'badge-success' : 'badge-error'}">${k.status}</span></td>
       <td>
-        <div style="display:flex;gap:5px">
+        <span class="badge ${k.status === 'active' ? 'badge-success' : 'badge-error'}">
+          ${k.status || 'active'}
+        </span>
+      </td>
+      <td><span style="color:#888;font-size:0.8rem">${k.created_at || '—'}</span></td>
+      <td>
+        <div style="display:flex;gap:4px;flex-wrap:wrap">
+          <button class="btn-sm btn-outline" onclick="copyToClipboard('${k.key}')">📋 Copy</button>
           <button class="btn-sm btn-outline" onclick="editApiKey('${k.id}')">✏️ Sửa</button>
           <button class="btn-sm btn-danger"  onclick="deleteApiKey('${k.id}')">🗑️</button>
         </div>
       </td>
-    </tr>`;
-  }).join('');
-  tbody.innerHTML = masterRow + rows;
+    </tr>`).join('');
 }
 
-function copyKey(key) {
-  navigator.clipboard.writeText(key)
-    .then(()  => alert('✅ Đã copy API key!'))
-    .catch(()  => prompt('Copy key này:', key));
+// Trả về danh sách username đang dùng key này
+function getUsersUsingKey(keyId, db) {
+  const users = (db.users || []).filter(u => u.apiKeyId === keyId);
+  if (!users.length) return '<span style="color:#aaa">Chưa gán cho ai</span>';
+  return users.map(u =>
+    `<span class="key-badge" style="margin:1px 2px">${u.username}</span>`
+  ).join('');
 }
 
+// ============================================================
+// ADMIN — ADD / EDIT API KEY MODAL
+// ============================================================
 function openAddApiKeyModal() {
-  editingApiKeyId = null;
   document.getElementById('apikey-modal-title').textContent = '➕ Thêm API Key';
   document.getElementById('ak-label').value  = '';
   document.getElementById('ak-key').value    = '';
   document.getElementById('ak-status').value = 'active';
-  populateUserSelect('ak-user', '');
+  document.getElementById('ak-label').dataset.editId = '';
   clearMsg('apikey-modal-msg');
   openModal('apikey-modal');
 }
 
-function editApiKey(id) {
+function editApiKey(keyId) {
   const db = getDB();
-  const k  = db.api_keys.find(x => x.id === id);
+  const k  = (db.api_keys || []).find(x => x.id === keyId);
   if (!k) return;
-  editingApiKeyId = id;
   document.getElementById('apikey-modal-title').textContent = '✏️ Sửa API Key';
-  document.getElementById('ak-label').value  = k.label;
-  document.getElementById('ak-key').value    = k.key;
-  document.getElementById('ak-status').value = k.status;
-  populateUserSelect('ak-user', k.assignedUser || '');
+  document.getElementById('ak-label').value  = k.label  || '';
+  document.getElementById('ak-key').value    = k.key    || '';
+  document.getElementById('ak-status').value = k.status || 'active';
+  document.getElementById('ak-label').dataset.editId = keyId;
   clearMsg('apikey-modal-msg');
   openModal('apikey-modal');
-}
-
-function populateUserSelect(selectId, selectedUsername) {
-  const db  = getDB();
-  const sel = document.getElementById(selectId);
-  sel.innerHTML = '<option value="">-- Chưa gán --</option>' +
-    db.users.map(u =>
-      `<option value="${u.username}" ${u.username === selectedUsername ? 'selected' : ''}>
-        ${u.username} (${u.name})
-      </option>`
-    ).join('');
 }
 
 function saveApiKey() {
-  const label        = document.getElementById('ak-label').value.trim();
-  const key          = document.getElementById('ak-key').value.trim();
-  const status       = document.getElementById('ak-status').value;
-  const assignedUser = document.getElementById('ak-user').value;
+  const editId = document.getElementById('ak-label').dataset.editId;
+  const label  = document.getElementById('ak-label').value.trim();
+  const key    = document.getElementById('ak-key').value.trim();
+  const status = document.getElementById('ak-status').value;
 
   if (!label || !key)
-    return showMsg('apikey-modal-msg', '⚠️ Vui lòng điền đầy đủ thông tin', 'error');
-  if (!key.includes('|'))
-    return showMsg('apikey-modal-msg', '⚠️ API key không đúng định dạng (VD: 1234|abcdef...)', 'error');
+    return showMsg('apikey-modal-msg', '⚠️ Vui lòng điền đầy đủ Label và Key', 'error');
 
   const db = getDB();
-  if (editingApiKeyId) {
-    const k = db.api_keys.find(x => x.id === editingApiKeyId);
+  if (!db.api_keys) db.api_keys = [];
+
+  if (editId) {
+    // Chỉnh sửa key hiện có
+    const k = db.api_keys.find(x => x.id === editId);
     if (!k) return;
-    k.label = label; k.key = key; k.status = status; k.assignedUser = assignedUser;
-    showMsg('apikey-modal-msg', '✅ Cập nhật thành công!', 'success');
+    k.label  = label;
+    k.key    = key;
+    k.status = status;
+    showMsg('apikey-modal-msg', '✅ Cập nhật API Key thành công!', 'success');
   } else {
+    // Thêm key mới — kiểm tra trùng
+    if (db.api_keys.find(x => x.key === key))
+      return showMsg('apikey-modal-msg', '⚠️ Key này đã tồn tại trong hệ thống', 'error');
     db.api_keys.push({
-      id: genId(), label, key, status, assignedUser,
+      id:         'key_' + Date.now(),
+      label:      label,
+      key:        key,
+      status:     status,
       created_at: new Date().toLocaleString('vi-VN')
     });
-    showMsg('apikey-modal-msg', '✅ Thêm API key thành công!', 'success');
+    showMsg('apikey-modal-msg', '✅ Thêm API Key thành công!', 'success');
   }
+
   saveDB(db);
   setTimeout(() => { closeModal('apikey-modal'); renderApiKeysTable(); }, 800);
 }
 
-function deleteApiKey(id) {
-  if (!confirm('Xác nhận xóa API key này?')) return;
-  const db = getDB();
-  db.api_keys = db.api_keys.filter(x => x.id !== id);
-  db.users.forEach(u => { if (u.apiKeyId === id) u.apiKeyId = null; });
+function deleteApiKey(keyId) {
+  const db    = getDB();
+  const k     = (db.api_keys || []).find(x => x.id === keyId);
+  const label = k ? k.label : keyId;
+
+  if (!confirm(`Xác nhận xóa API Key "${label}"?\nCác user đang dùng key này sẽ tự động chuyển về Master Key.`))
+    return;
+
+  // Gỡ key khỏi tất cả user đang dùng
+  (db.users || []).forEach(u => {
+    if (u.apiKeyId === keyId) u.apiKeyId = null;
+  });
+
+  db.api_keys = (db.api_keys || []).filter(x => x.id !== keyId);
   saveDB(db);
   renderApiKeysTable();
+  renderUsersTable(); // cập nhật lại cột Key của bảng user
 }
 
 // ============================================================
-// ADMIN - PRICING
+// ADMIN — PRICE CONFIG
 // ============================================================
-function renderPricingEditor() {
+function renderPriceConfig() {
   const db      = getDB();
-  const pricing = db.pricing || JSON.parse(JSON.stringify(DEFAULT_PRICING));
+  const prices  = db.prices || {};
+  const tbody   = document.getElementById('price-tbody');
 
-  const uspsKeys = ['usps_ground', 'usps_priority', 'usps_express'];
-  const upsKeys  = ['ups_nextday', 'ups_nextday_early'];
-
-  function buildRows(keys, tbodyId) {
-    const tbody = document.getElementById(tbodyId);
-    tbody.innerHTML = WEIGHT_RANGES.map((r, ri) => `
-      <tr>
-        <td><span class="weight-label">⚖️ ${r.label}</span></td>
-        ${keys.map(sk => `
-          <td style="text-align:center">
-            <div style="display:flex;align-items:center;justify-content:center;gap:4px">
-              <span style="color:#888;font-size:0.85rem">$</span>
-              <input class="price-input" type="number" min="0" step="0.01"
-                id="price_${sk}_${ri}"
-                value="${pricing[sk] ? pricing[sk].prices[ri] : 0}"
-                placeholder="0"
-                oninput="livePreviewPrice('${sk}',${ri},this.value)"/>
-            </div>
-          </td>
-        `).join('')}
-      </tr>
-    `).join('');
+  if (!db.services || !db.services.length) {
+    tbody.innerHTML = '<tr><td colspan="4" style="text-align:center;color:#aaa;padding:20px">Chưa có dịch vụ nào</td></tr>';
+    return;
   }
 
-  buildRows(uspsKeys, 'pricing-usps-tbody');
-  buildRows(upsKeys,  'pricing-ups-tbody');
-  renderPricingPreview();
-}
-
-function livePreviewPrice(sk, ri, val) {
-  const cell = document.getElementById(`preview_${sk}_${ri}`);
-  if (cell) cell.textContent = '$' + parseFloat(val || 0).toFixed(2);
-}
-
-function savePricing() {
-  const db      = getDB();
-  const pricing = db.pricing || JSON.parse(JSON.stringify(DEFAULT_PRICING));
-  const allKeys = Object.keys(DEFAULT_PRICING);
-  let hasError  = false;
-
-  allKeys.forEach(sk => {
-    const newPrices = [];
-    WEIGHT_RANGES.forEach((_, ri) => {
-      const input = document.getElementById(`price_${sk}_${ri}`);
-      if (!input) return;
-      const val = parseFloat(input.value);
-      if (isNaN(val) || val < 0) { hasError = true; return; }
-      newPrices.push(val);
-    });
-    if (newPrices.length === WEIGHT_RANGES.length) {
-      if (!pricing[sk]) pricing[sk] = JSON.parse(JSON.stringify(DEFAULT_PRICING[sk]));
-      pricing[sk].prices = newPrices;
-    }
-  });
-
-  if (hasError) return showMsg('pricing-msg', '⚠️ Có giá trị không hợp lệ, vui lòng kiểm tra lại', 'error');
-
-  db.pricing = pricing;
-  saveDB(db);
-  showMsg('pricing-msg', '✅ Đã lưu bảng giá thành công!', 'success');
-  renderPricingPreview();
-  renderServiceList();
-}
-
-function resetPricingDefault() {
-  if (!confirm('Khôi phục bảng giá về mặc định theo bảng giá gốc?')) return;
-  const db  = getDB();
-  db.pricing = JSON.parse(JSON.stringify(DEFAULT_PRICING));
-  saveDB(db);
-  renderPricingEditor();
-  renderServiceList();
-  showMsg('pricing-msg', '✅ Đã khôi phục bảng giá mặc định!', 'success');
-}
-
-function renderPricingPreview() {
-  const db      = getDB();
-  const pricing = db.pricing || JSON.parse(JSON.stringify(DEFAULT_PRICING));
-
-  const uspsKeys = ['usps_ground', 'usps_priority', 'usps_express'];
-  const upsKeys  = ['ups_nextday', 'ups_nextday_early'];
-
-  function buildPreviewTable(keys, title, emoji) {
-    const headers = keys.map(sk => {
-      const svc = pricing[sk] || DEFAULT_PRICING[sk];
-      return `<th style="text-align:center;background:#f5f7fa">${svc.name}<br>
-        <small style="font-weight:400;color:#888">${svc.time}</small></th>`;
-    }).join('');
-    const rows = WEIGHT_RANGES.map((r, ri) => `
-      <tr>
-        <td><span class="weight-label">${r.label}</span></td>
-        ${keys.map(sk => {
-          const svc = pricing[sk] || DEFAULT_PRICING[sk];
-          return `<td style="text-align:center">
-            <strong id="preview_${sk}_${ri}" style="color:#1a73e8">
-              $${(svc.prices[ri] || 0).toFixed(2)}
-            </strong>
-          </td>`;
-        }).join('')}
-      </tr>
-    `).join('');
+  tbody.innerHTML = db.services.map(svc => {
+    const tiers = prices[svc.id] || [];
     return `
-      <div style="margin-bottom:20px">
-        <div style="font-weight:700;font-size:0.95rem;margin-bottom:8px">${emoji} ${title}</div>
-        <div class="table-wrap">
-          <table>
-            <thead><tr><th>Cân nặng</th>${headers}</tr></thead>
-            <tbody>${rows}</tbody>
-          </table>
-        </div>
-      </div>`;
+      <tr>
+        <td><strong>${svc.name}</strong><br>
+          <small style="color:#aaa">${svc.id}</small>
+        </td>
+        <td>
+          <div id="tiers-${svc.id}">
+            ${renderTierRows(svc.id, tiers)}
+          </div>
+          <button class="btn-sm btn-outline" style="margin-top:6px"
+            onclick="addTierRow('${svc.id}')">
+            ➕ Thêm mức
+          </button>
+        </td>
+        <td style="vertical-align:top;padding-top:10px">
+          <button class="btn-sm btn-success" onclick="savePriceTiers('${svc.id}')">
+            💾 Lưu
+          </button>
+        </td>
+      </tr>`;
+  }).join('');
+}
+
+function renderTierRows(svcId, tiers) {
+  if (!tiers.length)
+    return `<div style="color:#aaa;font-size:0.82rem;padding:4px 0">Chưa có mức giá</div>`;
+  return tiers.map((t, i) => `
+    <div class="tier-row" id="tier-${svcId}-${i}" style="display:flex;gap:6px;align-items:center;margin-bottom:4px">
+      <input type="number" min="0" step="0.1" value="${t.min_weight}"
+        placeholder="Từ (lbs)" style="width:80px"
+        class="tier-min" data-svc="${svcId}" data-idx="${i}">
+      <span style="color:#aaa">—</span>
+      <input type="number" min="0" step="0.1" value="${t.max_weight === 9999 ? '' : t.max_weight}"
+        placeholder="Đến (lbs)" style="width:80px"
+        class="tier-max" data-svc="${svcId}" data-idx="${i}">
+      <span style="color:#aaa">lbs →</span>
+      <input type="number" min="0" step="0.01" value="${t.price}"
+        placeholder="Giá $" style="width:80px"
+        class="tier-price" data-svc="${svcId}" data-idx="${i}">
+      <span style="color:#aaa">$</span>
+      <button class="btn-sm btn-danger" onclick="removeTierRow('${svcId}',${i})">✕</button>
+    </div>`).join('');
+}
+
+function addTierRow(svcId) {
+  const db    = getDB();
+  const tiers = (db.prices || {})[svcId] || [];
+  tiers.push({ min_weight: 0, max_weight: 9999, price: 0 });
+  if (!db.prices) db.prices = {};
+  db.prices[svcId] = tiers;
+  saveDB(db);
+  document.getElementById('tiers-' + svcId).innerHTML = renderTierRows(svcId, tiers);
+}
+
+function removeTierRow(svcId, idx) {
+  const db    = getDB();
+  const tiers = (db.prices || {})[svcId] || [];
+  tiers.splice(idx, 1);
+  db.prices[svcId] = tiers;
+  saveDB(db);
+  document.getElementById('tiers-' + svcId).innerHTML = renderTierRows(svcId, tiers);
+}
+
+function savePriceTiers(svcId) {
+  const db = getDB();
+  if (!db.prices) db.prices = {};
+
+  const minInputs   = document.querySelectorAll(`.tier-min[data-svc="${svcId}"]`);
+  const maxInputs   = document.querySelectorAll(`.tier-max[data-svc="${svcId}"]`);
+  const priceInputs = document.querySelectorAll(`.tier-price[data-svc="${svcId}"]`);
+
+  const tiers = [];
+  for (let i = 0; i < minInputs.length; i++) {
+    tiers.push({
+      min_weight: parseFloat(minInputs[i].value)   || 0,
+      max_weight: parseFloat(maxInputs[i].value)   || 9999,
+      price:      parseFloat(priceInputs[i].value) || 0
+    });
   }
 
-  document.getElementById('pricing-preview').innerHTML =
-    buildPreviewTable(uspsKeys, 'USPS Services', '🇺🇸') +
-    buildPreviewTable(upsKeys,  'UPS Services',  '📦');
-}
-
-// ============================================================
-// SETTINGS
-// ============================================================
-function loadSettings() {
-  const db = getDB();
-  const s  = db.settings || {};
-  document.getElementById('setting-master-key').value = s.master_api    || DEFAULT_MASTER_API;
-  document.getElementById('setting-invite').value     = s.invite_code   || 'SHIP2024';
-  document.getElementById('setting-open-reg').value   = s.open_register ? '1' : '0';
-  clearMsg('settings-msg');
-}
-
-function saveSettings() {
-  const masterKey = document.getElementById('setting-master-key').value.trim();
-  const invite    = document.getElementById('setting-invite').value.trim();
-  const openReg   = document.getElementById('setting-open-reg').value === '1';
-
-  if (!masterKey || !masterKey.includes('|'))
-    return showMsg('settings-msg', '⚠️ Master API Key không hợp lệ', 'error');
-
-  const db = getDB();
-  if (!db.settings) db.settings = {};
-  db.settings.master_api    = masterKey;
-  db.settings.invite_code   = invite;
-  db.settings.open_register = openReg;
+  // Sắp xếp theo min_weight tăng dần
+  tiers.sort((a, b) => a.min_weight - b.min_weight);
+  db.prices[svcId] = tiers;
   saveDB(db);
-  showMsg('settings-msg', '✅ Đã lưu cài đặt thành công!', 'success');
-  updateBalance();
+
+  showToast(`✅ Đã lưu bảng giá cho dịch vụ!`);
+  renderPriceConfig();
 }
 
 // ============================================================
-// INIT
+// UTILITY — TOAST NOTIFICATION
+// ============================================================
+function showToast(msg, duration = 2800) {
+  let toast = document.getElementById('toast-global');
+  if (!toast) {
+    toast = document.createElement('div');
+    toast.id = 'toast-global';
+    toast.style.cssText = `
+      position:fixed;bottom:28px;right:28px;z-index:99999;
+      background:#323232;color:#fff;padding:12px 22px;
+      border-radius:8px;font-size:0.92rem;box-shadow:0 4px 18px rgba(0,0,0,0.22);
+      opacity:0;transition:opacity 0.3s;pointer-events:none`;
+    document.body.appendChild(toast);
+  }
+  toast.textContent = msg;
+  toast.style.opacity = '1';
+  clearTimeout(toast._t);
+  toast._t = setTimeout(() => { toast.style.opacity = '0'; }, duration);
+}
+
+// ============================================================
+// UTILITY — COPY TO CLIPBOARD
+// ============================================================
+function copyToClipboard(text) {
+  if (!text) return;
+  navigator.clipboard.writeText(text)
+    .then(() => showToast('📋 Đã sao chép vào clipboard!'))
+    .catch(() => {
+      // Fallback cho trình duyệt cũ
+      const el = document.createElement('textarea');
+      el.value = text;
+      el.style.position = 'fixed';
+      el.style.opacity  = '0';
+      document.body.appendChild(el);
+      el.select();
+      document.execCommand('copy');
+      document.body.removeChild(el);
+      showToast('📋 Đã sao chép!');
+    });
+}
+
+// ============================================================
+// UTILITY — MASK API KEY
+// ============================================================
+function maskKey(key) {
+  if (!key || key.length < 10) return key || '—';
+  return key.substring(0, 6) + '••••••••' + key.slice(-4);
+}
+
+// ============================================================
+// INIT — KHỞI ĐỘNG ỨNG DỤNG
 // ============================================================
 document.addEventListener('DOMContentLoaded', () => {
-  const si = document.getElementById('search-order');
-  if (si) si.addEventListener('input', loadOrders);
+  initDB();
 
-  document.querySelectorAll('.modal-overlay').forEach(el => {
-    el.addEventListener('click', function(e) {
-      if (e.target === this) this.classList.remove('open');
-    });
-  });
+  if (currentUser) {
+    showApp();
+  } else {
+    showLogin();
+  }
 
-  getDB();
+  // Gắn sự kiện tìm kiếm đơn hàng
+  const searchInput = document.getElementById('search-order');
+  if (searchInput) {
+    searchInput.addEventListener('input', loadOrders);
+  }
+
+  // Gắn sự kiện weight input → cập nhật giá dự kiến
+  const weightInput = document.getElementById('weight');
+  if (weightInput) {
+    weightInput.addEventListener('input', updatePriceEstimate);
+  }
 });
-</script>
-</body>
-</html>
